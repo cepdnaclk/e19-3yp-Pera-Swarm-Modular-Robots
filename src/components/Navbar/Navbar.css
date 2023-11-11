@@ -1,0 +1,22 @@
+nav {
+  background-color: rgba(0, 0, 0, 0);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+li {
+  margin: 10px;
+}
+
+.active {
+  color: red;
+}
