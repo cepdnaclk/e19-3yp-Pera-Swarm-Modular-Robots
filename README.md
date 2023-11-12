@@ -16,7 +16,7 @@ $ git reset --hard
 Next remove any files or folders that are unnecessary. (Do a dry run first and make sure nothing important is getting deleted):
 ```
 $ git clean -d --dry-run
-$ git clean -d
+$ git clean -d -f
 ```
 
 Start local development server:
