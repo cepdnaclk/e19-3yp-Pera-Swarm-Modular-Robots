@@ -1,57 +1,27 @@
 ___
-# DELETE THIS INSTRUCTIONS AND ADD AN INTRODUCTION ABOUT YOUR PROJECT
+<div align="center">
+ <div align="center">
+  <img src="/docs/images/pera-swarm-logo.png" alt="PeraSwarm Modular Robot Logo" width="100">
+  <h1 style="display: inline-block; margin-left: 20px;">Pera-Swarm Modular Robot</h1>
+</div>
+  <p>Revolutionizing robotics with modular, adaptable, and swarm-capable robots.</p>
+</div>
 ___
 
-# eYY-3yp-project-template
+##Overview
 
-This is a sample repository you can use for your Embedded Systems project. Once you followed these instructions, remove the text and add a brief introduction to here.
+## Features
+- **Modularity:** Easily attach and detach a variety of modules for versatile functionality.
+- **Swarm Capability:** Coordinate multiple robots to perform complex tasks efficiently.
+- **IoT Integration:** Real-time connectivity and data sharing for enhanced coordination.
+- **User-Friendly Interface:** Intuitive control through browser and mobile applications.
+- **Scalability:** Expand the swarm by adding more robots and modules as needed.
 
-### Enable GitHub Pages
 
-You can put the things to be shown in GitHub pages into the _docs/_ folder. Both html and md file formats are supported. You need to go to settings and enable GitHub pages and select _main_ branch and _docs_ folder from the dropdowns, as shown in the below image.
+## Getting Started
+Clone the repository and follow these steps to set up the PeraSwarm Modular Robot locally:
+...
 
-![image](https://user-images.githubusercontent.com/11540782/98789936-028d3600-2429-11eb-84be-aaba665fdc75.png)
-
-### Special Configurations
-
-These projects will be automatically added into [https://projects.ce.pdn.ac.lk](). If you like to show more details about your project on this site, you can fill the parameters in the file, _/docs/index.json_
-
-```
-{
-  "title": "This is the title of the project",
-  "team": [
-    {
-      "name": "Team Member Name 1",
-      "email": "email@eng.pdn.ac.lk",
-      "eNumber": "E/yy/xxx"
-    },
-    {
-      "name": "Team Member Name 2",
-      "email": "email@eng.pdn.ac.lk",
-      "eNumber": "E/yy/xxx"
-    },
-    {
-      "name": "Team Member Name 3",
-      "email": "email@eng.pdn.ac.lk",
-      "eNumber": "E/yy/xxx"
-    }
-  ],
-  "supervisors": [
-    {
-      "name": "Dr. Supervisor 1",
-      "email": "email@eng.pdn.ac.lk"
-    },
-    {
-      "name": "Supervisor 2",
-      "email": "email@eng.pdn.ac.lk"
-    }
-  ],
-  "tags": ["Web", "Embedded Systems"]
-}
-```
-
-Once you filled this _index.json_ file, please verify the syntax is correct. (You can use [this](https://jsonlint.com/) tool).
-
-### Page Theme
-
-A custom theme integrated with this GitHub Page, which is based on [github.com/cepdnaclk/eYY-project-theme](https://github.com/cepdnaclk/eYY-project-theme). If you like to remove this default theme, you can remove the file, _docs/\_config.yml_ and use HTML based website.
+<div align="center">
+  <p>Feel free to ⭐️ this repository if you find it exciting! 🚀</p>
+</div>
