@@ -1,13 +1,14 @@
 <div align="center">
   <img src="/docs/images/pera-swarm-logo.png" alt="PeraSwarm Modular Robot Logo" width="100">
-  <h1 style="display: inline-block; margin-left: 20px;">Pera-Swarm Modular Robot</h1>
+  <h1 style="display: inline-block; margin-left: 20px;">Pera-Swarm Modular Robots</h1>
+  <p>Revolutionizing robotics with modular, adaptable, and swarm-capable robots.</p>
+
 </div>
 
 ___
 
 ## Overview
 
-<p>Revolutionizing robotics with modular, adaptable, and swarm-capable robots.</p>
 
 ## Features
 - **Modularity:** Easily attach and detach a variety of modules for versatile functionality.
