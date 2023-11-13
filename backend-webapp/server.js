@@ -13,17 +13,13 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Initialize connection to Mongodb
+require('./src/db/conn');
+
 // Public routes
 app.use('/user', require('./src/routes/users')) // authorization
 
 // TODO: Authentication Middleware
-
-// MongoDB Connection
-const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connection.on('connected', () => {
-    console.log('Connected to MongoDB');
-});
 
 // Private routes
 app.use('', require('./src/routes'));
