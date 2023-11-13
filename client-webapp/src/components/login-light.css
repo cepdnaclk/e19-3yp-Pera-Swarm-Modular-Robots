@@ -1,0 +1,69 @@
+.card{
+    background-color: rgb(200,230,255);
+    width: 30em;
+    height: 30em;
+    position: relative;
+    
+    border-radius: 1em;
+    display:block;
+    justify-content: space-around;
+    
+    padding: 3em;
+    padding-top: 0.1em;
+
+
+}
+
+.header {
+    display:flex; 
+    margin-bottom: 2em;
+    margin-left: 20px;
+    
+    
+}
+
+.h1{
+    color:rgb(0,101,144);
+    font-size: large;
+    font-weight: 200;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+.logo {
+    margin-right: 30px; /* Add some space between the image and heading */
+    margin-left: 70px;
+}
+
+.form-items {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block; 
+    
+    
+}
+.email,.password{
+    text-align: left;
+    font-size: large;
+    
+}
+
+input {
+    width: 100%; 
+    padding: 8px; 
+    box-sizing: border-box; 
+    box-shadow: inset;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 15px;
+    
+}
+.button{
+    margin-top: 3em;
+    width:20%;
+    background-color: rgb(0,101,144);
+    color: white;
+   
+}
