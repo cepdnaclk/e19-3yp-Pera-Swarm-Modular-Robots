@@ -7,6 +7,24 @@
 
 ___
 
+<div align="center">
+
+[![Contributors][contributors-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/graphs/contributors)&ensp;
+[![Forks][forks-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/network/members)&ensp;
+[![Stargazers][stars-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/stargazers)&ensp;
+[![Issues][issues-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/issues)
+
+</div>
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots.svg?style=for-the-badge
+
+---
+
 ## Overview
 
 
