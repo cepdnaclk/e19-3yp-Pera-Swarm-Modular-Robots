@@ -7,10 +7,17 @@
 
 ___
 
-[![Contributors][contributors-shield]][https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/graphs/contributors]
-[![Forks][forks-shield]][https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/fork]
-[![Stargazers][stars-shield]][https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/stars]
-[![Issues][issues-shield]][https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/issues]
+[![Contributors][contributors-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/graphs/contributors)
+[![Forks][forks-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/network/members)
+[![Stargazers][stars-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/stargazers)
+[![Issues][issues-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/issues)
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
 
 ---
 
