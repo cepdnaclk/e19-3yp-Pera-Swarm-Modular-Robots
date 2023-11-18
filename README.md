@@ -6,12 +6,11 @@
 </div>
 
 ___
-<center>
+
 [![Contributors][contributors-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/graphs/contributors)
 [![Forks][forks-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/network/members)
 [![Stargazers][stars-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/stargazers)
 [![Issues][issues-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/issues)
-</center>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
