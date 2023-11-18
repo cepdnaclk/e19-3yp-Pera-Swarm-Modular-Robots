@@ -7,10 +7,10 @@
 
 ___
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
+[![Contributors][contributors-shield]][https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/graphs/contributors]
+[![Forks][forks-shield]][https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/fork]
+[![Stargazers][stars-shield]][https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/stars]
+[![Issues][issues-shield]][https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/issues]
 
 ---
 
