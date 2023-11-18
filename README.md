@@ -21,6 +21,14 @@ ___
 Clone the repository and follow these steps to set up the PeraSwarm Modular Robot locally:
 ...
 
+---
+
 <div align="center">
-  <p>Feel free to ⭐️ this repository if you find it exciting! 🚀</p>
+  <p>🚀 <b>PeraSwarm Modular Robots Technical Design Manual</b> 🚀</p>
+  <p>👥 <b>Authors:</b> <a href="https://github.com/nandun00">Nadun Jayawardhana</a>, <a href=https://github.com/sanka-p> Sanka Peeris</a>,<a href=https://github.com/manodyaSenevirathne> Manodya Senevirathne</a>,<a href=https://github.com/GeethalWickramasinghe> Geethal Wickramasingha</a>,<a href=https://github.com/KalinduWijerathna> Kalindu Wijerathna</a></p>
+  <p>🌐 Visit the <a href=https://cepdnaclk.github.io/e19-3yp-Pera-Swarm-Modular-Robots/>Project Website</a> for more information 🌐</p>
+  <p>📃 Read the <a href=https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/wiki/Home>Technical Design Manual</a> for more information 📃</p>
+  <p>📚 Found a bug or want to contribute? Check out our [Contribution Guidelines](<link-to-your-contribution-guidelines>) 📚</p> 
+  <p>⭐️ Star this repository if you find it helpful! ⭐️</p>
 </div>
+
