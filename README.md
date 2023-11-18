@@ -14,10 +14,10 @@ ___
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robotse.svg?style=for-the-badge
 
 ---
 
