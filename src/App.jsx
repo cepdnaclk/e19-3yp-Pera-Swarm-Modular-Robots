@@ -12,7 +12,7 @@ import Overview from './components/Overview/Overview';
 
 function App() {
 
-  // const pages = [Home, About, Contact];
+  
   // const homeRef = useRef(null);
   // const aboutRef = useRef(null);
   // const contactRef = useRef(null);
@@ -20,7 +20,7 @@ function App() {
 
   return (
   <>
-    <Overview/>
+    <Overview heading='Modular robot developed for multipurpose uses' text='Overview of project' showButton={true} />
    
   </>
   )

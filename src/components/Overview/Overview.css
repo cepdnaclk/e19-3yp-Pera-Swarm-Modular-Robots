@@ -39,6 +39,14 @@
     margin-right: 180px;
   }
   
+  .overview-header {
+    padding-top: 50px;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 30px;
+    /* Add any additional styles for the text as needed */
+  }
+
   .overview-text {
     padding-top: 50px;
     color: white;

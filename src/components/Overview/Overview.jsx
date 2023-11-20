@@ -1,26 +1,25 @@
+
 import React from 'react';
 import Navbar from '../Navbar/Navbar';
 import './Overview.css';
-import video_robot from 'assets/moduler.mp4';
 import video_robot_assemble from 'assets/360vid.mp4';
 
-const Overview = () => {
+const Overview = (props) => {
+  const { heading, text,showButton=false } = props;//Overview as prop to include ut in all pages
+
   return (
     <div className='overview-card'>
-      <Navbar/>
-        <video className="background-video" autoPlay loop muted>
-          <source src={video_robot_assemble} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        
-        <div className='overview-content'>
-        <div className='overview-text'>Multipurpose Robot developed for Swarm Uses.</div>
-          <button className="repo-button">View Repository</button>
-          
+      <Navbar />
+      <video className="background-video" autoPlay loop muted>
+        <source src={video_robot_assemble} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
 
-            
-        </div>
-      
+      <div className='overview-content'>
+        <div className='overview-header'>{heading}</div>
+        <div className='overview-text'>{text}</div>
+        {showButton && <button className="repo-button">View Repository</button>}
+      </div>
     </div>
   );
 }
