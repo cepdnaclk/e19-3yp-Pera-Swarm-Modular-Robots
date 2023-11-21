@@ -37,8 +37,12 @@
 // Navbar.js
 
 import React from 'react';
+
 import './Navbar.css';
 import logo from 'assets/logo.svg';
+import { Outlet, Link } from "react-router-dom";
+
+
 
 const Navbar = () => {
   return (
@@ -47,13 +51,14 @@ const Navbar = () => {
   
       <div className="navbar-title"><img src={logo}/> Swarm Modular Robot</div>
       <div className="navbar-links">
-        <a href="#" className="navbar-link">Home</a>
-        <a href="#" className="navbar-link">Design</a>
-        <a href="#" className="navbar-link">Docs</a>
-        <a href="#" className="navbar-link">About Us</a>
+        <Link className="navbar-link" to='/'>Home</Link>
+        <Link className="navbar-link" to= '/docs'>Docs</Link>
+        <Link className="navbar-link" to= '/design'>Design</Link>
+        <Link className="navbar-link" to= '/about'>About Us</Link>
       </div>
-      <button className="navbar-button">Downlod App</button>
+      <button className="navbar-button">Download App</button>
     </nav>
+    <Outlet />
     </div>
     
   );
