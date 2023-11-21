@@ -1,29 +1,28 @@
-import { useRef } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import "./App.css";
+// App.jsx
 
-//import Navbar from "components/Navbar";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import Docs from './pages/Docs';
+import Design from './pages/Design';
+import About from './pages/About';
 
-import Home from "pages/Home";
-import About from "pages/About";
-import Contact from "pages/Contact";
-import Overview from './components/Overview/Overview';
-
-function App() {
-
-  
-  // const homeRef = useRef(null);
-  // const aboutRef = useRef(null);
-  // const contactRef = useRef(null);
-  // const refs = [homeRef, aboutRef, contactRef];
-
+const App = () => {
   return (
-  <>
-    <Overview heading='Modular robot developed for multipurpose uses' text='Overview of project' showButton={true} />
-   
-  </>
-  )
+    <Router>
+      <div>
+        
+        <Routes>
+          <Route path="/" element={<Home />} /> 
+          <Route path="/docs"element={<Docs />} /> 
+          <Route path="/design"element={<Design />} /> 
+          <Route path="/about"element={<About />} /> 
+      
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
-export default App
+export default App;
+
