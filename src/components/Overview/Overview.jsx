@@ -1,6 +1,7 @@
 
 import React from 'react';
 import Navbar from '../Navbar/Navbar';
+
 import './Overview.css';
 import video_robot_assemble from 'assets/360vid.mp4';
 
@@ -18,7 +19,7 @@ const Overview = (props) => {
       <div className='overview-content'>
         <div className='overview-header'>{heading}</div>
         <div className='overview-text'>{text}</div>
-        {showButton && <button className="repo-button">View Repository</button>}
+        {showButton && <a href='https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots.git'><button className="repo-button">View Repository</button></a>}
       </div>
     </div>
   );
