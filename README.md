@@ -7,6 +7,24 @@
 
 ___
 
+<div align="center">
+
+[![Contributors][contributors-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/graphs/contributors)&ensp;
+[![Forks][forks-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/network/members)&ensp;
+[![Stargazers][stars-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/stargazers)&ensp;
+[![Issues][issues-shield]](https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/issues)
+
+</div>
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots.svg?style=for-the-badge
+
+---
+
 ## Overview
 
 
@@ -22,5 +40,11 @@ Clone the repository and follow these steps to set up the PeraSwarm Modular Robo
 ...
 
 <div align="center">
-  <p>Feel free to ⭐️ this repository if you find it exciting! 🚀</p>
+  <p>⚙️ <b>PeraSwarm Modular Robots </b> ⚙️</p>
+  <p>👥 <b>Contributors:</b> <a href="https://github.com/nandun00">Nadun Jayawardhana</a>, <a href=https://github.com/sanka-p> Sanka Peeris</a>,<a href=https://github.com/manodyaSenevirathne> Manodya Senevirathne</a>,<a href=https://github.com/GeethalWickramasinghe> Geethal Wickramasingha</a>,<a href=https://github.com/KalinduWijerathna> Kalindu Wijerathna</a></p>
+  <p>🌐 Visit the <a href=https://cepdnaclk.github.io/e19-3yp-Pera-Swarm-Modular-Robots/>Project Website</a> for more information 🌐</p>
+  <p>📃 Read the <a href=https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots/wiki/Home>Technical Design Manual</a> for more information 📃</p>
+  <p>📚 Found a bug or want to contribute? Check out our [Contribution Guidelines](<link-to-your-contribution-guidelines>) 📚</p> 
+  <p>⭐️ Star this repository if you find it helpful! ⭐️</p>
 </div>
+
