@@ -1,7 +1,7 @@
 // App.jsx
 
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Docs from "./pages/Docs";
 import Design from "./pages/Design";
