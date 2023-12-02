@@ -3,20 +3,23 @@ layout: home
 permalink: index.html
 
 # Please update this with your repository name and project title
-repository-name: eYY-3yp-project-template
-title: Project Template
+repository-name: e19-3yp-Pera-Swarm-Modular-Robots
+title: Pera Swarm Modular Robots
+
 ---
 
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
 
-# Project Title
+# Pera Swarm Modular Robots
 
 ---
 
 ## Team
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
+-  E/19/170, K.N.N. Jayawardhana, [email](e19170@eng.pdn.ac.lk)
+-  E/19/275, M.S. Peeris, [email](e19275@eng.pdn.ac.lk)
+-  E/19/366, W.A.M.P. Senevirathne, [email](e19366@eng.pdn.ac.lk)
+-  E/19/436, G.T.G. Wickramasinghe, [email](e19436@eng.pdn.ac.lk)
+-  E/19/446, I.M.K.D.I. Wijerathna, [email](e19446@eng.pdn.ac.lk)
 
 <!-- Image (photo/drawing of the final hardware) should be here -->
 
