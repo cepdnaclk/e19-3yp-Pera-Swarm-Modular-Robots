@@ -1,9 +1,12 @@
 // Load environment variables
 require('dotenv').config({ path: `./.env.${process.env.NODE_ENV}` })
 
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const user =require('./src/schemas/user')
+user.create({name:"swarmbot",type:"admin",email:"mail@mail.com",password:"mail123"})
 
 const app = express();
 const port = process.env.PORT || 3001;
