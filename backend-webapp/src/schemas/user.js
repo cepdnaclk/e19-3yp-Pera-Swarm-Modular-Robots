@@ -22,13 +22,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
-  },
-  experiments: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Experiment',
-    },
-  ]
+  }
 })
 
 // Hash the password before saving to the database

@@ -16,7 +16,7 @@ const experimentSchema = new mongoose.Schema({
   videoFile: {
     type: mongoose.Schema.Types.Mixed,
     required: true,
-  },
+  }
 });
 
 module.exports = mongoose.model('Experiment', experimentSchema);
