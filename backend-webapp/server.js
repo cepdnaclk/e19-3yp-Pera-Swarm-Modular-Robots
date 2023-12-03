@@ -22,7 +22,9 @@ require('./src/db/conn');
 // Public routes
 app.use('/user', require('./src/routes/users')) // authorization
 
-// TODO: Authentication Middleware
+// jwt authentication
+const { authenticateToken } = require("./src/middleware/auth");
+//app.use(authenticateToken);
 
 // Private routes
 app.use('', require('./src/routes'));
