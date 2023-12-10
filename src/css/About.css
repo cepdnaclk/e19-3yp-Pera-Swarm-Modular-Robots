@@ -1,0 +1,23 @@
+.card-set{
+    background-color: rgb(38, 39, 39);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.title{
+    color: azure;
+    background-color: rgb(38, 39, 39);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 15vh;
+    
+}
+.title h1{
+    font-size:40px;
+    font-style:normal;
+}
