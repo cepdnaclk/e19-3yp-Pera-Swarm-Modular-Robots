@@ -15,7 +15,14 @@ function authenticateToken(req, res, next) {
             next();
         });
     } catch (err) {
-        next(err);
+        //next(err);
+        if (err.name === 'TokenExpiredError') {
+            return res.sendStatus(401).json({ error: 'Token expired' });
+        } else if (err.name === 'JsonWebTokenError') {
+            return res.sendStatus(401).json({ error: 'Invalid token' });
+        } else {
+            return res.sendStatus(401).json({ error: 'Token verification failed' });
+        }
     }
 
 }
