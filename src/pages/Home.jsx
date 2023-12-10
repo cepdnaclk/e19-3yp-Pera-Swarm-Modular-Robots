@@ -8,6 +8,9 @@ import "aos/dist/aos.css";
 import "../css/About.css";
 
 const Home = () => {
+  const spanStyle = {
+    fontWeight: "bold",
+  };
   useEffect(() => {
     AOS.init({ duration: 1000, offset: 200, once: true });
   }, []);
@@ -36,24 +39,24 @@ const Home = () => {
           content={
             <ul>
               <li>
-                Modularity: Easily attach and detach a variety of modules for
-                versatile functionality.
+                <span style={spanStyle}>Modularity:</span> Easily attach and
+                detach a variety of modules for versatile functionality.
               </li>
               <li>
-                Swarm Capability: Coordinate multiple robots to perform complex
-                tasks efficiently.
+                <span style={spanStyle}>Swarm Capability:</span> Coordinate
+                multiple robots to perform complex tasks efficiently.
               </li>
               <li>
-                IoT Integration: Real-time connectivity and data sharing for
-                enhanced coordination.
+                <span style={spanStyle}>IoT Integration:</span> Real-time
+                connectivity and data sharing for enhanced coordination.
               </li>
               <li>
-                User-Friendly Interface: Intuitive control through browser and
-                mobile applications.
+                <span style={spanStyle}>User-Friendly Interface:</span>{" "}
+                Intuitive control through browser and mobile applications.
               </li>
               <li>
-                Scalability: Expand the swarm by adding more robots and modules
-                as needed.
+                <span style={spanStyle}>Scalability:</span> Expand the swarm by
+                adding more robots and modules as needed.
               </li>
             </ul>
           }
