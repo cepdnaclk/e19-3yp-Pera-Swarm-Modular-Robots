@@ -3,7 +3,7 @@ import React from 'react';
 import Navbar from '../Navbar/Navbar';
 
 import './Overview.css';
-import video_robot_assemble from 'assets/360vid.mp4';
+import video_robot_assemble from 'assets/robot360WebOptimized.mp4';
 
 const Overview = (props) => {
   const { heading, text,showButton=false } = props;//Overview as prop to include ut in all pages
