@@ -1,0 +1,44 @@
+/* styles.css */
+
+  
+
+.block {
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease;
+    display: flex;
+    align-items: center;
+    margin: 50px;
+    margin-top: 0px;
+    background-color: rgb(16, 209, 209);
+    padding:10px;
+    z-index: 1;
+    border-radius: 5px;
+  }
+
+  .block.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .block img {
+    max-width: 500px; /* Ensure the image does not exceed the container width */
+    margin-right: 20px; /* Adjust the margin as needed */
+    border-radius: 5px;
+  }
+  
+  .block-content {
+    flex: 1; /* Take up remaining space */
+  }
+  
+  .block h1 {
+    margin-bottom: 10px; /* Adjust the margin as needed */
+  }
+  
+  .block p {
+    /* Add any additional styles for the paragraph */
+    font-size: medium;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  

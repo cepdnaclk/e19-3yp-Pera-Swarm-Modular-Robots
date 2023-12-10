@@ -13,7 +13,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: -1;
+    z-index: 0;
   }
   
   .overview-content {
@@ -28,6 +28,7 @@
   }
   
   .repo-button {
+    position: relative;
     background-color: #098a41;
     color: white;
     font-size: 15px;
@@ -36,6 +37,7 @@
     cursor: pointer;
     padding: 15px;
     margin-top: 100px;
+    z-index: 3;
     
   }
 

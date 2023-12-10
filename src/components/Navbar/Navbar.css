@@ -1,7 +1,9 @@
 /* Navbar.css */
 .navbar-card{
+  position: relative;
   border-radius: 10px;
   border-color: black;
+  z-index: 2;
 
 }
 .navbar {
