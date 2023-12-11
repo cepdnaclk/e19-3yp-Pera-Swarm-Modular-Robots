@@ -6,6 +6,12 @@
     background-color: rgb(38, 39, 39);
 }
 
+.vid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
 .home-vid video{
     width="60%";
     height="50%";
