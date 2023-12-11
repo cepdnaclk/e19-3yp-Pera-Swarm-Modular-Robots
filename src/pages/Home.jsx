@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Overview from "../components/Overview/Overview";
 import Block from "../components/Block/Block";
 import robot from "../assets/robot.jfif";
+import homevid from "../assets/homevid.mp4";
 import "../css/Home.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -24,7 +25,11 @@ const Home = () => {
         />
       }
       <div className="content">
-        <div className="vid"><video className="home-vid" src="../assets/homevid.mp4"</div>
+        <Block
+          vidUrl={homevid}
+          title="Progress Until Now"
+          content="Video of our currunt progress with design,print"
+          />
         <Block
           imageUrl={robot}
           title="Introduction to Swarm modular Robot"

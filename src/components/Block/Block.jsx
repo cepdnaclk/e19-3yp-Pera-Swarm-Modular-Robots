@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import "./Block.css";
 
-const Block = ({ title, content, imageUrl }) => {
+const Block = ({ title, content, imageUrl, vidUrl }) => {
   const blockRef = useRef();
 
   useEffect(() => {
@@ -27,6 +27,12 @@ const Block = ({ title, content, imageUrl }) => {
   return (
     <div className="block" ref={blockRef}>
       {imageUrl && <img src={imageUrl} alt={"Load failed"} />}
+      {vidUrl && <video autoPlay loop muted>
+        <source src={vidUrl}/>
+        Your browser does not support the video tag.
+      </video>}
+      
+
       <div className="block-content">
         <h1>{title}</h1>
         <p>{content}</p>
