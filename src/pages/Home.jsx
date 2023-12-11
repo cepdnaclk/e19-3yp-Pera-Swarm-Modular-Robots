@@ -24,6 +24,7 @@ const Home = () => {
         />
       }
       <div className="content">
+        <div><video className="home-vid" src="../assets/homevid.mp4"</div>
         <Block
           imageUrl={robot}
           title="Introduction to Swarm modular Robot"
