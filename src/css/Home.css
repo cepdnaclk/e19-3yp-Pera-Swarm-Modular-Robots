@@ -5,3 +5,9 @@
     padding-bottom: 50px;
     background-color: rgb(38, 39, 39);
 }
+
+.home-vid video{
+    width="60%";
+    height="50%";
+    
+}
