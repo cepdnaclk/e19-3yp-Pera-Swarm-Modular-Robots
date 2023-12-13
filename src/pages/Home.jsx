@@ -27,9 +27,9 @@ const Home = () => {
       <div className="content">
         <Block
           vidUrl={homevid}
-          title="Progress Until Now"
-          content="Video of our currunt progress with design,print"
-          />
+          title="Progress Upto Now"
+          content="Discover the current strides in our project through an insightful video. Witness the fusion of art and technology as we design our robot with precision in Fusion 360, 3D print essential components, and unveil a sleek and intuitive web app login UI. Stay tuned as innovation unfolds at every turn. "
+        />
         <Block
           imageUrl={robot}
           title="Introduction to Swarm modular Robot"
@@ -43,7 +43,7 @@ const Home = () => {
         <Block
           title="We offer..."
           content={
-            <ul>
+            <ul style={{ listStyle: "none" }}>
               <li>
                 <span style={spanStyle}>Modularity:</span> Easily attach and
                 detach a variety of modules for versatile functionality.

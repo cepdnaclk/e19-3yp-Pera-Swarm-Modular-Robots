@@ -27,11 +27,12 @@ const Block = ({ title, content, imageUrl, vidUrl }) => {
   return (
     <div className="block" ref={blockRef}>
       {imageUrl && <img src={imageUrl} alt={"Load failed"} />}
-      {vidUrl && <video autoPlay loop muted>
-        <source src={vidUrl}/>
-        Your browser does not support the video tag.
-      </video>}
-      
+      {vidUrl && (
+        <video autoPlay controls playsInline>
+          <source src={vidUrl} />
+          Your browser does not support the video tag.
+        </video>
+      )}
 
       <div className="block-content">
         <h1>{title}</h1>

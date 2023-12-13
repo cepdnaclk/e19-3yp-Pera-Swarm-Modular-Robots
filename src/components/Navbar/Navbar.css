@@ -51,7 +51,10 @@
   color:cyan;
   transition: 0.3s;
 }
-
+.navbar-link:active {
+  color: rgb(0, 255, 255); 
+  text-decoration: underline;
+}
 
 .navbar-button {
   padding: 8px 16px;
