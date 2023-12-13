@@ -28,7 +28,7 @@ const Block = ({ title, content, imageUrl, vidUrl }) => {
     <div className="block" ref={blockRef}>
       {imageUrl && <img src={imageUrl} alt={"Load failed"} />}
       {vidUrl && (
-        <video autoPlay controls playsInline>
+        <video controls playsInline>
           <source src={vidUrl} />
           Your browser does not support the video tag.
         </video>

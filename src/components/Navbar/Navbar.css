@@ -1,11 +1,13 @@
 /* Navbar.css */
-.navbar-card{
+
+
+.navbar-card {
   position: relative;
   border-radius: 10px;
   border-color: black;
   z-index: 2;
-
 }
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -13,30 +15,23 @@
   background: transparent;
   /* background-color: #333; */
   padding: 10px 20px;
-  
-  
 }
 
 .navbar-title {
-  color:aqua;
-  font-size: 2.0em;
-  font-family:fantasy;
+  color: aqua;
+  font-size: 2.2em;
+  font-family: popins;
   margin-bottom: 5px;
-  
+  font-weight: bolder;
 }
 
 .navbar-title img {
-  
-   width: 40px;
-  height: 40px; 
-  
+  width: 40px;
+  height: 40px;
 }
 
 .navbar-links {
   display: flex;
-  
-  
- 
 }
 
 .navbar-link {
@@ -44,17 +39,19 @@
   text-decoration: none;
   padding: 20px 0 20px 20px;
   font-size: 18px;
- 
 }
 
-.navbar-link:hover{
-  color:cyan;
+.navbar-link:hover {
+  color: cyan;
   transition: 0.3s;
 }
-.navbar-link:active {
-  color: rgb(0, 255, 255); 
-  text-decoration: underline;
+
+.active-link {
+  border-bottom: 2px solid #43c3e6; /* Adjust the color as needed */
+  color: cyan;
+
 }
+
 
 .navbar-button {
   padding: 8px 16px;
@@ -65,8 +62,7 @@
   cursor: pointer;
 }
 
-.navbar-button:hover{
+.navbar-button:hover {
   filter: brightness(1.2);
   transition: 0.4s;
-  
 }

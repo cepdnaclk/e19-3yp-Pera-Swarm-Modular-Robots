@@ -4,5 +4,40 @@
     padding-top: 50px;
     padding-bottom: 50px;
     background-color: rgb(38, 39, 39);
+    font-family: Popins;
 }
 
+
+
+/* YourComponent.css (or create a new CSS file) */
+
+.features-set {
+    text-align: center; /* Center the content */
+    
+    align-items: center;
+    margin: 50px;
+    margin-top: 0px;
+    background-color: rgb(69,69,69);
+    padding:10px;
+
+    border-radius: 5px;
+  }
+  
+  
+  .features-set h1 {
+    margin-bottom: 20px; /* Add some space below the title */
+    color: aliceblue;
+
+    
+  }
+  
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the cards horizontally */
+  }
+  
+  .card {
+    margin: 0 10px 20px; /* Add some space around each card */
+  }
+  

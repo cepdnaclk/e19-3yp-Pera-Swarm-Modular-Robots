@@ -1,0 +1,48 @@
+/* Card.css */
+
+.card {
+    margin-bottom: 30px;
+    margin-left: 30px;
+
+  }
+  
+  .icon-box {
+    background: rgba(255, 252, 252, 0.555);
+    
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    margin-left: 5ch;
+    margin-bottom: 5vh;
+    width: 40ch;
+    height: 20vh;
+    
+  }
+  
+  .icon {
+    font-size: 36px;
+    color: #43c3e6; /* Adjust the icon color as needed */
+  }
+  
+  .icon-box h4 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 15px 0;
+    color: #efff15;
+    font-family: Poppins ,sans-serif;
+    
+  }
+  
+  .icon-box p {
+    font-size: 18px;
+    color: #ffffff;
+    font-family: Nunito;
+    
+  }
+  
+  .icon-box:hover {
+    transform: translateY(-5px);
+  }
+  

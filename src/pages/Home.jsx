@@ -7,6 +7,7 @@ import "../css/Home.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "../css/About.css";
+import Card from "../components/Card/Card";
 
 const Home = () => {
   const spanStyle = {
@@ -40,33 +41,42 @@ const Home = () => {
           title="Problems we are addressing"
           content="Limited scalability and Limited scope of tasks of ordinary modular robots"
         />
-        <Block
-          title="We offer..."
-          content={
-            <ul style={{ listStyle: "none" }}>
-              <li>
-                <span style={spanStyle}>Modularity:</span> Easily attach and
-                detach a variety of modules for versatile functionality.
-              </li>
-              <li>
-                <span style={spanStyle}>Swarm Capability:</span> Coordinate
-                multiple robots to perform complex tasks efficiently.
-              </li>
-              <li>
-                <span style={spanStyle}>IoT Integration:</span> Real-time
-                connectivity and data sharing for enhanced coordination.
-              </li>
-              <li>
-                <span style={spanStyle}>User-Friendly Interface:</span>{" "}
-                Intuitive control through browser and mobile applications.
-              </li>
-              <li>
-                <span style={spanStyle}>Scalability:</span> Expand the swarm by
-                adding more robots and modules as needed.
-              </li>
-            </ul>
-          }
-        />
+
+        <div className="features-set">
+          <h1>We Offer...</h1>
+          <div className="features">
+            <Card
+              title={"Modularity"}
+              description={
+                "Easily attach and detach a variety of modules for versatile functionality."
+              }
+            />
+            <Card
+              title={"Swarm Capability"}
+              description={
+                "Coordinate multiple robots to perform complex tasks efficiently"
+              }
+            />
+            <Card
+              title={"IoT Integration"}
+              description={
+                "Real-time connectivity and data sharing for enhanced coordination"
+              }
+            />
+            <Card
+              title={"User-Friendly Interface"}
+              description={
+                "Intuitive control through browser and mobile applications"
+              }
+            />
+            <Card
+              title={"Scalability"}
+              description={
+                "Expand the swarm by adding more robots and modules as needed"
+              }
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 .design-block{
     padding: 50px;
     background-color: rgb(38, 39, 39);
-    display:list-item;
+    display: block;
     justify-content: center;
     align-items: center;
     flex-wrap: nowrap;
@@ -10,7 +10,16 @@
 
 .design-block h1{
     color: aliceblue;
+
 }
 .design-block .video{
-    height: 400px;
+    
+    height: 500px;
+}
+.design-block h1{
+    font-family: popins;
+}
+#bp {
+    width: 100%;
+    height: 100%;
 }

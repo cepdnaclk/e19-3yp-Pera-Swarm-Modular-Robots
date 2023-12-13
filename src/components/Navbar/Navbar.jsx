@@ -37,7 +37,7 @@
 // Navbar.js
 
 import React from "react";
-
+import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 import logo from "assets/logo.svg";
 import { Outlet, Link } from "react-router-dom";
@@ -50,18 +50,35 @@ const Navbar = () => {
           <img src={logo} /> Swarm Modular Robot
         </div>
         <div className="navbar-links">
-          <Link className="navbar-link" to="/">
+          <NavLink
+            className="navbar-link"
+            to="/"
+            exact
+            activeClassName="active-link"
+          >
             Home
-          </Link>
-          <Link className="navbar-link" to="/docs">
+          </NavLink>
+          <NavLink
+            className="navbar-link"
+            to="/docs"
+            activeClassName="active-link"
+          >
             Docs
-          </Link>
-          <Link className="navbar-link" to="/design">
+          </NavLink>
+          <NavLink
+            className="navbar-link"
+            to="/design"
+            activeClassName="active-link"
+          >
             Design
-          </Link>
-          <Link className="navbar-link" to="/about">
+          </NavLink>
+          <NavLink
+            className="navbar-link"
+            to="/about"
+            activeClassName="active-link"
+          >
             About Us
-          </Link>
+          </NavLink>
         </div>
         <button className="navbar-button">Download App</button>
       </nav>
