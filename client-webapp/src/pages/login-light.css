@@ -1,4 +1,12 @@
-.card {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+
+
+.login-card {
     background-color: rgb(200, 230, 255);
     width: 30em;
     height: 30em;
@@ -15,7 +23,7 @@
   }
   
 
-.header {
+.login-header {
     display:flex; 
     margin-bottom: 2em;
     margin-left: 20px;
@@ -23,20 +31,22 @@
     
 }
 
-.h1{
+.login-header .h1{
     color:rgb(0,101,144);
     font-size: large;
     font-weight: 200;
     font-family: Arial, Helvetica, sans-serif;
-
+    margin-top: 5px;
 }
 
-.logo {
-    margin-right: 30px; /* Add some space between the image and heading */
-    margin-left: 70px;
+.login-header .login-logo {
+    margin-right: 10px; /* Add some space between the image and heading */
+    margin-left: 60px;
+    
+    
 }
 
-.form-items {
+.login-form-items {
     margin-bottom: 30px;
 }
 
@@ -45,7 +55,7 @@ label {
     
     
 }
-.email,.password{
+.login-email,.login-password{
     text-align: left;
     font-size: large;
     
@@ -61,10 +71,10 @@ input {
     margin-bottom: 15px;
     
 }
-.button{
-    position: absolute;
-    top:34em;
-    right: 18em; /*position fixed for login button*/
+.login-button{
+    position:fixed;
+    top:32em;
+    right: 14em; /*position fixed for login button*/
     width:20%;
     background-color: rgb(0,101,144);
     color: white;
@@ -73,12 +83,12 @@ input {
    
 }
 
-.button:hover{
+.login-button:hover{
     filter: brightness(1.2);
     
 }
 
-.error{
+.login-error{
     color: red;
     font-style: italic;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif

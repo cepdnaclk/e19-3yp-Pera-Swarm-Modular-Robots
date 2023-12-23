@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+    
+  }
+
+.card{
+
+    background-color: aqua;
+    align-content: space-between;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: max-content;
+
+}
+.logo img{
+    size: 5px;
+
+}
+
+.user img{
+    size: 5px;
+    width: 30px;
+    height: 30px;
+
+}

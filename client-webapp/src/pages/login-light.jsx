@@ -27,15 +27,15 @@ const LoginForm = () => {
 
   return (
     <>
-      <div className="card">
-        <div className="header">
-          <img className="logo" src="../src/assets/logo.svg" alt="Logo" />
+      <div className="login-card">
+        <div className="login-header">
+          <img className="login-logo" src="../src/assets/logo.svg" alt="Logo" />
           <h1>Login </h1>
         </div>
 
         <form autoComplete="on" onSubmit={formik.handleSubmit}>
-          <div className="form-items">
-            <label htmlFor="email" className="email">
+          <div className="login-form-items">
+            <label htmlFor="email" className="login-email">
               Email
             </label>
             <br></br>
@@ -48,12 +48,12 @@ const LoginForm = () => {
               value={formik.values.email}
             />
             {formik.touched.email && formik.errors.email ? ( //display error messages
-              <div className="error">{formik.errors.email}</div>
+              <div className="login-error">{formik.errors.email}</div>
             ) : null}
           </div>
 
-          <div className="form-items">
-            <label htmlFor="password" className="password">
+          <div className="login-form-items">
+            <label htmlFor="password" className="login-password">
               Password
             </label>
             <br></br>
@@ -66,11 +66,11 @@ const LoginForm = () => {
               value={formik.values.password}
             />
             {formik.touched.password && formik.errors.password ? (
-              <div className="error">{formik.errors.password}</div>
+              <div className="login-error">{formik.errors.password}</div>
             ) : null}
           </div>
 
-          <input className="button" type="submit" value="Login" />
+          <input className="login-button" type="submit" value="Login" />
         </form>
       </div>
     </>
