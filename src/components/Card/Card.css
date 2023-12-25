@@ -30,7 +30,7 @@
     font-size: 20px;
     font-weight: bold;
     margin: 15px 0;
-    color: #efff15;
+    color: var(--primary-accent);
     font-family: Poppins ,sans-serif;
     
   }

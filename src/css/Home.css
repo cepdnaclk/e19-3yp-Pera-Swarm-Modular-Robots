@@ -1,34 +1,36 @@
-
-
-.content{
+/* .content{
     padding-top: 50px;
     padding-bottom: 50px;
-    background-color: rgb(38, 39, 39);
-    font-family: Popins;
+    background-color: var(--background);
+} */
+
+body{
+  background-color: var(--background);
+  margin: 0;
 }
 
-
-
-/* YourComponent.css (or create a new CSS file) */
+.content{
+  padding-top: 50px;
+  padding-bottom: 50px;
+  padding: 50px 0;
+  background: rgba(0, 31, 42, 0.5) url('../assets/starrybg.jpg') center/cover;
+}
 
 .features-set {
-    text-align: center; /* Center the content */
-    
+    text-align: center; 
     align-items: center;
     margin: 50px;
     margin-top: 0px;
-    background-color: rgb(69,69,69);
+    z-index: 1;
+    background-color: rgba(0, 31, 42, 0.5);
     padding:10px;
-
     border-radius: 5px;
   }
   
   
   .features-set h1 {
-    margin-bottom: 20px; /* Add some space below the title */
+    margin-bottom: 20px; 
     color: aliceblue;
-
-    
   }
   
   .features {
@@ -39,5 +41,56 @@
   
   .card {
     margin: 0 10px 20px; /* Add some space around each card */
+  }
+  .particle-effect-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 23.4%;
+    background-color: var(--primary-accent);
+    z-index: 0;
+    pointer-events: none;
+    animation: particleEffect 5s linear infinite;
+    overflow: hidden;
+  }
+  
+  @keyframes particleEffect {
+    0%, 100% {
+      opacity: 0;
+    }
+    5%, 95% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+  
+  .particle-effect-container:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(238, 221, 135, 0.8) 10%,
+      rgba(255, 255, 255, 0.2) 90%
+    );
+    animation: gradientFade 5.5s linear infinite;
+  }
+  
+  @keyframes gradientFade {
+    0%, 100% {
+      opacity: 0;
+    }
+    5%, 95% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 0.8;
+    }
   }
   

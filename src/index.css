@@ -3,3 +3,16 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+:root {
+  /* Global Colors */
+  --primary: #88CEFF;
+  --primary-accent: #00344D;
+  --container: #004C6D;
+  --container-accent: #C8E6FF;
+  --background: #001F2A;
+  --background-accent: #BFE9FF;
+
+  /* Global Font */
+  --main-font: 'popins', sans-serif;
+}

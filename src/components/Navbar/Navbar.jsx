@@ -47,40 +47,40 @@ const Navbar = () => {
     <div className="navbar-card">
       <nav className="navbar">
         <div className="navbar-title">
-          <img src={logo} /> Swarm Modular Robot
+          <img src={logo} /> Pera Swarm Modular Robots
         </div>
         <div className="navbar-links">
           <NavLink
             className="navbar-link"
             to="/"
-            exact
-            activeClassName="active-link"
+            exact="true"
+            activeclassname="active-link"
           >
             Home
           </NavLink>
           <NavLink
             className="navbar-link"
             to="/docs"
-            activeClassName="active-link"
+            activeclassname="active-link"
           >
             Docs
           </NavLink>
           <NavLink
             className="navbar-link"
             to="/design"
-            activeClassName="active-link"
+            activeclassname="active-link"
           >
             Design
           </NavLink>
           <NavLink
             className="navbar-link"
             to="/about"
-            activeClassName="active-link"
+            activeclassname="active-link"
           >
             About Us
           </NavLink>
         </div>
-        <button className="navbar-button">Download App</button>
+        <button className="navbar-button">Go to Web App</button>
       </nav>
       <Outlet />
     </div>

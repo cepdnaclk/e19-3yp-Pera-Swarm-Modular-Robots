@@ -9,6 +9,7 @@ import "aos/dist/aos.css";
 import "../css/About.css";
 import Card from "../components/Card/Card";
 
+
 const Home = () => {
   const spanStyle = {
     fontWeight: "bold",
@@ -16,11 +17,14 @@ const Home = () => {
   useEffect(() => {
     AOS.init({ duration: 1000, offset: 200, once: true });
   }, []);
+ 
   return (
     <div className="page">
+      <div className="particle-effect-container"></div>
+      
       {
         <Overview
-          heading="Modular robot developed for multipurpose uses"
+          heading="Swarm Capable Modular robots: for multipurpose uses"
           text="Overview of the project"
           showButton={true}
         />

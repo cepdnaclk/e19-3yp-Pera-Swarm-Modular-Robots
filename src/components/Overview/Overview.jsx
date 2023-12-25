@@ -16,10 +16,20 @@ const Overview = (props) => {
         Your browser does not support the video tag.
       </video>
 
-      <div className='overview-content'>
-        <div className='overview-header'>{heading}</div>
-        <div className='overview-text'>{text}</div>
+      {/* <div className='overview-content'>
         {showButton && <a href='https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots.git'><button className="repo-button">View Repository</button></a>}
+      </div>
+      <div className='overview-header'>{heading}</div>
+      <div className='overview-text'>{text}</div> */}
+      <div className='card-container'>
+        <div className='overview-card-content'>
+          {showButton && (
+            <a href='https://github.com/cepdnaclk/e19-3yp-Pera-Swarm-Modular-Robots.git'>
+              <button className="repo-button">View Repository</button>
+            </a>
+          )}
+          <div className='overview-header'>{heading}</div>
+        </div>
       </div>
     </div>
   );
