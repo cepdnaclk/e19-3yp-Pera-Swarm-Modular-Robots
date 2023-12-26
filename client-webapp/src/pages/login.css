@@ -1,17 +1,14 @@
-/* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  } */
-
-
+body{
+    background-color: var(--bg);
+}
 
 .login-card {
-    background-color: var(--light-container);
+    background-color: var(--container);
+    color: var(--f);
     width: 25em;
     height: 28em;
     position: absolute;
-    top: 50%;
+    top: 48%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 1em;
@@ -19,7 +16,6 @@
     padding-top: 1em;
     display: flex;
     flex-direction: column;
-    margin-top: 10px;
     
   }
   
@@ -34,11 +30,10 @@
 }
 
 .login-header .h1{
-    color:var(--light-primary);
+    color:var(--f);
     align-items: center;
     font-size: medium;
     font-weight: 200;
-    font-family: inter;font-family: 'Inter', sans-serif;
     margin-top: 25px;
 }
 
@@ -55,6 +50,7 @@
 }
 
 label {
+    color: var(--f);
     display: block; 
     margin-bottom:-15px ;
     margin-top: 5px;
@@ -81,19 +77,22 @@ input {
     top:32em;
     right: 13.5em; /*position fixed for login button*/
     width:30%;
-    background-color: var(--light-container-accent);
-    color: white;
+    background-color: var(--container-accent);
+    color: var(--f-accent);
+    font-weight: 500;
     cursor:pointer;
     
    
 }
 
 .login-button:hover{
-    filter: brightness(2.0);
+    filter: brightness(1.5);
     
 }
 
 .login-error{
+    margin-left: 15px;
+    font-size: 16px;
     color: red;
     font-style: italic;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
@@ -102,6 +101,23 @@ input {
 .divider {
     border: none;
     height: 2px;
-    background-color: var(--light-container-accent); /* Adjust the color based on your preferred color variable */
+    background-color: var(--container-accent); /* Adjust the color based on your preferred color variable */
     margin: 19px; /* Adjust the margin as needed */
   }
+
+  .toggle {
+    background-color: var(--container);
+    color: var(--f);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    position: absolute;
+    bottom: 4%;
+    left:46.5%;
+}
+
