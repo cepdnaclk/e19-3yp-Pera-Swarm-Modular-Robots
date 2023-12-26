@@ -16,7 +16,7 @@
     transform: translate(-50%, -50%);
     border-radius: 1em;
     padding: 3em;
-    padding-top: 0.1em;
+    padding-top: 1em;
     display: flex;
     flex-direction: column;
     margin-top: 10px;
