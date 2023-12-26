@@ -19,6 +19,7 @@
     padding-top: 0.1em;
     display: flex;
     flex-direction: column;
+    margin-top: 10px;
     
   }
   
@@ -38,7 +39,7 @@
     font-size: medium;
     font-weight: 200;
     font-family: inter;font-family: 'Inter', sans-serif;
-    margin-top: 35px;
+    margin-top: 25px;
 }
 
 .login-header .login-logo {
@@ -50,14 +51,15 @@
 }
 
 .login-form-items {
-    margin-bottom: 3px;
+    margin-bottom: 10px;
 }
 
 label {
     display: block; 
-    
-    
+    margin-bottom:-15px ;
+    margin-top: 5px;
 }
+
 .login-email,.login-password{
     text-align: left;
     font-size: large;
@@ -71,7 +73,7 @@ input {
     box-shadow: inset;
     border-radius: 5px;
     border: none;
-    margin-bottom: 38px;
+    margin-bottom: 25px;
     
 }
 .login-button{
@@ -99,7 +101,7 @@ input {
 
 .divider {
     border: none;
-    height: 3px;
+    height: 2px;
     background-color: var(--light-container-accent); /* Adjust the color based on your preferred color variable */
-    margin: 16px; /* Adjust the margin as needed */
+    margin: 19px; /* Adjust the margin as needed */
   }
