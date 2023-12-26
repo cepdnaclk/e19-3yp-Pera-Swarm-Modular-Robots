@@ -26,11 +26,12 @@ const LoginForm = () => {
   });
 
   return (
-    <>
-      <div className="login-card">
+    <div className="login-card">
         <div className="login-header">
           <img className="login-logo" src="../src/assets/logo.svg" alt="Logo" />
-          <h1>Login </h1>
+          <h1>Pera Swarm Experimentation Hub</h1>
+              <hr className="divider" />
+
         </div>
 
         <form autoComplete="on" onSubmit={formik.handleSubmit}>
@@ -43,6 +44,7 @@ const LoginForm = () => {
               type="text"
               id="email"
               name="email"
+              placeholder="username@email.com"
               onChange={formik.handleChange} //used for realtime updates
               onBlur={formik.handleBlur} //notify the end of editing/typing in a field.(clicked outside)
               value={formik.values.email}
@@ -61,6 +63,7 @@ const LoginForm = () => {
               type="password"
               id="password"
               name="password"
+              placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}
@@ -73,7 +76,6 @@ const LoginForm = () => {
           <input className="login-button" type="submit" value="Login" />
         </form>
       </div>
-    </>
   );
 };
 export default LoginForm;

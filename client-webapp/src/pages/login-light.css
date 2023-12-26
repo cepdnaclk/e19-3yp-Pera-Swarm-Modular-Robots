@@ -1,15 +1,15 @@
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
+  } */
 
 
 
 .login-card {
-    background-color: rgb(200, 230, 255);
-    width: 30em;
-    height: 30em;
+    background-color: var(--light-container);
+    width: 25em;
+    height: 28em;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -25,29 +25,32 @@
 
 .login-header {
     display:flex; 
-    margin-bottom: 2em;
-    margin-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
     
     
 }
 
 .login-header .h1{
-    color:rgb(0,101,144);
-    font-size: large;
+    color:var(--light-primary);
+    align-items: center;
+    font-size: medium;
     font-weight: 200;
-    font-family: Arial, Helvetica, sans-serif;
-    margin-top: 5px;
+    font-family: inter;font-family: 'Inter', sans-serif;
+    margin-top: 35px;
 }
 
 .login-header .login-logo {
-    margin-right: 10px; /* Add some space between the image and heading */
-    margin-left: 60px;
+    margin-right: 30px; /* Add some space between the image and heading */
+    margin-left: 10px;
+    margin-top: 20px;
     
     
 }
 
 .login-form-items {
-    margin-bottom: 30px;
+    margin-bottom: 3px;
 }
 
 label {
@@ -63,20 +66,20 @@ label {
 
 input {
     width: 100%; 
-    padding: 8px; 
+    padding: 10px; 
     box-sizing: border-box; 
     box-shadow: inset;
     border-radius: 5px;
     border: none;
-    margin-bottom: 15px;
+    margin-bottom: 38px;
     
 }
 .login-button{
     position:fixed;
     top:32em;
-    right: 14em; /*position fixed for login button*/
-    width:20%;
-    background-color: rgb(0,101,144);
+    right: 13.5em; /*position fixed for login button*/
+    width:30%;
+    background-color: var(--light-container-accent);
     color: white;
     cursor:pointer;
     
@@ -84,7 +87,7 @@ input {
 }
 
 .login-button:hover{
-    filter: brightness(1.2);
+    filter: brightness(2.0);
     
 }
 
@@ -93,3 +96,10 @@ input {
     font-style: italic;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
+
+.divider {
+    border: none;
+    height: 3px;
+    background-color: var(--light-container-accent); /* Adjust the color based on your preferred color variable */
+    margin: 16px; /* Adjust the margin as needed */
+  }
