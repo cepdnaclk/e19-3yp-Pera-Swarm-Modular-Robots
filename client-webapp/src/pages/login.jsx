@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./login-light.css";
+import "./login.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
