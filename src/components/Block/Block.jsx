@@ -2,6 +2,8 @@
 
 import React, { useRef, useEffect } from "react";
 import "./Block.css";
+import thumbImage from "../../assets/thumb.png";
+
 
 const Block = ({ title, content, imageUrl, vidUrl }) => {
   const blockRef = useRef();
@@ -28,11 +30,14 @@ const Block = ({ title, content, imageUrl, vidUrl }) => {
     <div className="block" ref={blockRef}>
       {imageUrl && <img src={imageUrl} alt={"Load failed"} />}
       {vidUrl && (
-        <video controls playsInline>
-          <source src={vidUrl} />
-          Your browser does not support the video tag.
-        </video>
-      )}
+      <div className="video-container">
+      <video controls playsInline poster={thumbImage}>
+      <source src={vidUrl} type="video/mp4" />
+      Your browser does not support the video tag.
+      </video>
+     </div>
+)}
+
 
       <div className="block-content">
         <h1>{title}</h1>

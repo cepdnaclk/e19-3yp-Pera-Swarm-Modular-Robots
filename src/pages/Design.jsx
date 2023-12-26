@@ -13,8 +13,7 @@ const Design = () => {
       />
       <div className="design-block">
         <h1>Fusion 360 Design</h1>
-      </div>
-      <div className="design-block">
+     
         <video className="video" autoPlay loop muted>
           <source src={robot_360} type="video/mp4" />
           Your browser does not support the video tag.
@@ -22,14 +21,13 @@ const Design = () => {
       </div>
       <div className="design-block">
         <h1>The Big Picture</h1>
-      </div>
-      <div className="design-block">
+      
         <img id="bp" src={bigpic} alt="" />
-      </div>
-      <div className="design-block">
+      
         <h1>User Interface of the WebApp</h1>
       </div>
-      <div className="design-block">
+
+      <div className="design-block slider">
         <ImageSlider />
       </div>
     </>

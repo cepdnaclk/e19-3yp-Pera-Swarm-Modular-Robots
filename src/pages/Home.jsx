@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Overview from "../components/Overview/Overview";
 import Block from "../components/Block/Block";
 import robot from "../assets/robot.jfif";
@@ -9,26 +9,73 @@ import "aos/dist/aos.css";
 import "../css/About.css";
 import Card from "../components/Card/Card";
 
-
 const Home = () => {
-  const spanStyle = {
-    fontWeight: "bold",
-  };
+  const [showContentIndicator, setShowContentIndicator] = useState(true);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
+
   useEffect(() => {
     AOS.init({ duration: 1000, offset: 200, once: true });
-  }, []);
- 
+
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const scrollThreshold = 200;
+      const scrollToTopThreshold = document.body.scrollHeight - window.innerHeight;
+
+      if (scrollY > scrollThreshold && showContentIndicator) {
+        setShowContentIndicator(false);
+      } else if (scrollY <= scrollThreshold && !showContentIndicator) {
+        setShowContentIndicator(true);
+      }
+
+      // Check if the user has reached the bottom to show/hide the "Scroll to Top" button
+      setShowScrollToTop(scrollY >= scrollToTopThreshold && !showContentIndicator);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [showContentIndicator]);
+
+  const handleArrowClick = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div className="page">
       <div className="particle-effect-container"></div>
-      
-      {
-        <Overview
-          heading="Swarm Capable Modular robots: for multipurpose uses"
-          text="Overview of the project"
-          showButton={true}
-        />
-      }
+
+      {/* Arrow Indicator */}
+      <div className={`scroll-indicator ${showContentIndicator ? "visible" : ""}`}>
+        SCROLL DOWN &nbsp; &#8595;
+      </div>
+
+      {/* "Scroll to Top" Button */}
+      {showScrollToTop && (
+        <div className="scroll-to-top" onClick={handleScrollToTop}>
+          &#8593; SCROLL TO TOP
+        </div>
+      )}
+
+      {/* Your Overview Component */}
+      <Overview
+        heading="Swarm Capable Modular robots: for multipurpose uses"
+        text="Overview of the project"
+        showButton={true}
+      />
+
+      {/* Blocks */}
       <div className="content">
         <Block
           vidUrl={homevid}
@@ -38,14 +85,14 @@ const Home = () => {
         <Block
           imageUrl={robot}
           title="Introduction to Swarm modular Robot"
-          content="
-          Introducing our Swarm Capable Modular Robot, a marvel of technological versatility poised to revolutionize industries far and wide. This cutting-edge robotic system boasts a modular design that effortlessly adapts to an extensive array of tasks across various sectors. The incorporation of Universal Ports serves as a dynamic interface, seamlessly connecting both hardware and software attachments for unparalleled flexibility. With intended attachments ranging from a Gripper arm to a Camera and Distant Sensor, this robot ensures adaptability for intricate tasks and precise environmental awareness. What sets it apart is the ease of attachment swapping, allowing swift transitions between functions and maximizing operational efficiency. Embodying a cost-effective solution, our Swarm Capable Modular Robot paves the way for accessible and affordable integration of advanced robotics into diverse applications. Welcome to a future where adaptability meets unparalleled efficiency."
+          content="Introducing our Swarm Capable Modular Robot, a marvel of technological versatility poised to revolutionize industries far and wide. This cutting-edge robotic system boasts a modular design that effortlessly adapts to an extensive array of tasks across various sectors. The incorporation of Universal Ports serves as a dynamic interface, seamlessly connecting both hardware and software attachments for unparalleled flexibility. With intended attachments ranging from a Gripper arm to a Camera and Distant Sensor, this robot ensures adaptability for intricate tasks and precise environmental awareness. What sets it apart is the ease of attachment swapping, allowing swift transitions between functions and maximizing operational efficiency. Embodying a cost-effective solution, our Swarm Capable Modular Robot paves the way for accessible and affordable integration of advanced robotics into diverse applications. Welcome to a future where adaptability meets unparalleled efficiency."
         />
         <Block
           title="Problems we are addressing"
           content="Limited scalability and Limited scope of tasks of ordinary modular robots"
         />
 
+        {/* Features Set */}
         <div className="features-set">
           <h1>We Offer...</h1>
           <div className="features">

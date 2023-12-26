@@ -9,7 +9,7 @@
 
 .title{
     color: azure;
-    background-color: rgb(38, 39, 39);
+    background: rgba(0, 31, 42, 0.5) url('../assets/starrybg.jpg') center/cover;
     display: flex;
     justify-content: center;
     align-items: center;

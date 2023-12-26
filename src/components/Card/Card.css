@@ -1,48 +1,42 @@
 /* Card.css */
 
 .card {
-    margin-bottom: 30px;
-    margin-left: 30px;
+  margin-bottom: 3vh;
+  margin-left: 3vw;
+}
 
-  }
-  
-  .icon-box {
-    background: rgba(255, 252, 252, 0.555);
-    
-    padding: 10px;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-    margin-left: 5ch;
-    margin-bottom: 5vh;
-    width: 40ch;
-    height: 20vh;
-    
-  }
-  
-  .icon {
-    font-size: 36px;
-    color: #43c3e6; /* Adjust the icon color as needed */
-  }
-  
-  .icon-box h4 {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 15px 0;
-    color: var(--primary-accent);
-    font-family: Poppins ,sans-serif;
-    
-  }
-  
-  .icon-box p {
-    font-size: 18px;
-    color: #ffffff;
-    font-family: Nunito;
-    
-  }
-  
-  .icon-box:hover {
-    transform: translateY(-5px);
-  }
-  
+.icon-box {
+  background: rgba(255, 252, 252, 0.555);
+  padding: 1.5vw; /* Adjust padding for smaller screens */
+  text-align: center;
+  border-radius: 2vw; /* Adjust border radius for smaller screens */
+  box-shadow: 0 0 2vw rgba(0, 0, 0, 0.1); /* Adjust box shadow for smaller screens */
+  transition: transform 0.3s ease-in-out;
+  margin-left: 2ch;
+  margin-bottom: 2vh;
+  width: 25vw; /* Adjust width for smaller screens */
+  height: 25vh; /* Adjust height for smaller screens */
+}
+
+.icon {
+  font-size: 3vw; /* Adjust font size for smaller screens */
+  color: #43c3e6; /* Adjust the icon color as needed */
+}
+
+.icon-box h4 {
+  font-size: 1.5vw; /* Adjust font size for smaller screens */
+  font-weight: bold;
+  margin: 1.5vh 0; /* Adjust margin for smaller screens */
+  color: var(--primary-accent);
+  font-family: Poppins, sans-serif;
+}
+
+.icon-box p {
+  font-size: 1.6vw; /* Adjust font size for smaller screens */
+  color: #ffffff;
+  font-family: Nunito;
+}
+
+.icon-box:hover {
+  transform: translateY(-0.5vh); /* Adjust transform for smaller screens */
+}

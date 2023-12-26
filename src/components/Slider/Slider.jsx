@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import app1 from "../../assets/app1.png";
 import app2 from "../../assets/app2.png";
 import app3 from "../../assets/app3.png";
@@ -24,19 +27,35 @@ const ImageSlider = () => {
     };
   }, [currentImageIndex, images.length]);
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
   return (
-    <div>
-      <img
-        src={images[currentImageIndex]}
-        alt={`Image ${currentImageIndex + 1}`}
-        style={{
-          Width: "700px",
-          Height: "300px",
-          border: "1px solid #ddd",
-          borderRadius: "4px",
-        }}
-      />
-    </div>
+    <Slider {...settings}>
+      {images.map((image, index) => (
+        <div key={index}>
+          <img
+            src={image}
+            alt={`Image ${index + 1}`}
+            style={{
+              margin: "0 auto", // Center horizontally using flexbox
+              width: "100%",    // Adjust width to the container
+              maxWidth: "700px", // Limit the maximum width
+              height: "auto",    // Maintain the aspect ratio
+              border: "1px solid #e0e0e0",  // Use a subtle border color
+              borderRadius: "12px",         // Soften the border radius
+              boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.3)",  // Adjust box shadow
+            }}
+          />
+
+        </div>
+      ))}
+    </Slider>
   );
 };
 
