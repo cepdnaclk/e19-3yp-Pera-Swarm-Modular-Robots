@@ -35,7 +35,7 @@ const LoginForm = () => {
 
   function toggleTheme() {
     const currentTheme = body.getAttribute("data-theme");
-
+  
     if (currentTheme === "light") {
       body.setAttribute("data-theme", "dark");
     } else {

@@ -21,3 +21,6 @@ const Header = (props) => {
 };
 
 export default Header;
+
+
+// TODO: import toggle.js and insert the toggle button to the header
