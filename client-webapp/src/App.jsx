@@ -1,13 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import LoginForm from './components/login-light';
+import { useState } from "react";
+import "./App.css";
+import LoginForm from "../src/pages/login";
+import Header from "./components/header";
 
 function App() {
- return(
-    <div><LoginForm/></div>
- )
+  return (
+    //<div><LoginForm/></div>
+    <div>
+      <LoginForm />
+    </div>
+  );
 }
 
-export default App
+export default App;
