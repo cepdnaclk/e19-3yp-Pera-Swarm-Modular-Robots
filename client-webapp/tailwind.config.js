@@ -20,6 +20,7 @@ export default {
       'bg-accent': '#001F2A',
       'f': 'black',
       'f-accent': 'white',
+      'transparent': 'transparent',
 
       'dark-primary': '#88CEFF',
       'dark-primary-accent': '#00344D',
