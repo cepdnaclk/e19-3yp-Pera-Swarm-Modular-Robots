@@ -2502,7 +2502,7 @@ html[data-useragent*='MSIE 10.0'] .home-scrolldown,
 }
 
 #aboutUs .row {
-  max-width: 1000px;
+  max-width: auto;
   margin: 0 auto; /* Center the row */
 }
 
@@ -2558,6 +2558,9 @@ html[data-useragent*='MSIE 10.0'] .home-scrolldown,
 @media only screen and (max-width: 768px) {
   .col-one-fifth {
     width: 48%; /* Make each item take up 48% of the width on smaller screens */
+  }
+  .team-members{
+    flex-wrap: wrap;
   }
 }
 
