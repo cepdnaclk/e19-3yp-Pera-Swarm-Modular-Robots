@@ -21,7 +21,31 @@ require('./src/db/conn');
 // Public routes
 app.use('/user', require('./src/routes/users')) // authorization
 app.use('/public', express.static(path.join(__dirname, 'public'))) // static content
-app.use('/files', express.static(path.join(__dirname, 'files'))) // experiment source code
+// serve experiment source files
+const zip = require('express-zip');
+app.get('/files', (req, res) => {
+  const fs = require('fs');
+  const files = 
+    fs.readdirSync(path.join(__dirname, 'files'))
+    .map((file)=> ({
+        path: path.join(__dirname, 'files', file),
+        name: file  
+      })
+    );
+  const archiveName = 'files.zip';
+
+  res.set('Content-Type', 'application/zip');
+  res.set('Content-Disposition', `attachment; filename=${archiveName}`);
+
+  res.zip(files, archiveName, (err) => {
+    if (err) {
+      console.log('Error sending files:', err);
+    } else {
+      console.log('Files sent successfully');
+    }
+  });
+});
+
 
 // jwt authentication
 const { authenticateToken } = require("./src/middleware/auth");

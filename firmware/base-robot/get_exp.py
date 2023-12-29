@@ -1,9 +1,10 @@
 import configparser
 import requests
+import zipfile
+import io
 import os
 import shutil
 from logger import log_error, log_success
-from urllib.request import urlopen
 
 def clear_dir(target_dir):
     try:
@@ -24,15 +25,6 @@ def clear_dir(target_dir):
 
 def download_code(url, target_dir):
     try:
-        folder_url = urlopen(url)
-        str = folder_url.read().decode('utf-8')
-        pattern = re.compile('*.*')
-        files = pattern.findall(str)
-        for file in files:
-            print(file)
-            #urllib.urlretrieve(dirpath + file, localfilelocation)
-
-        '''
         response = requests.get(url)
     
         if response.status_code == 200:
@@ -40,23 +32,14 @@ def download_code(url, target_dir):
             os.makedirs(target_dir, exist_ok=True)
             # clear content of the existing local directory
             clear_dir(target_dir)
-
-            # iterate through the content and download files
-            for content in response.iter_content(chunk_size=128):
-                # extract filename from the URL
-                filename = url.split("/")[-1]
-
-                # construct the local file path
-                local_file_path = os.path.join(local_directory, filename)
-
-                # save content to the local file
-                with open(local_file_path, "wb") as local_file:
-                    local_file.write(content)
+            
+            with zipfile.ZipFile(io.BytesIO(response.content)) as zip_file:
+               # extract all contents to the target directory
+               zip_file.extractall(target_dir)
 
             log_success(f"Downloaded files to {target_dir}")
         else:
             log_error(f"Failed to download files. Status code: {response.status_code}")
-        '''
     except Exception as e:
         log_error(f"Error while downloading files: {e}")
     
@@ -67,6 +50,6 @@ if __name__ == "__main__":
     port = int(config.get('SERVER', 'port'))
     url = f"http://{hostname}:{port}/files"
     print(url)
-    target_dir = "/exp"
+    target_dir = f"{os.getcwd()}/exp"
     download_code(url, target_dir)
 
