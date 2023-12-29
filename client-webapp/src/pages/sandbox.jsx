@@ -8,6 +8,7 @@ const Sandbox = () => {
   const [gridCells, setGridCells] = useState(
     Array.from({ length: 81 }, () => null)
   );
+  const [hoveredCell, setHoveredCell] = useState(null);
 
   const handleDragStart = (e, index) => {
     e.dataTransfer.setData("text/plain", index.toString());
@@ -21,7 +22,6 @@ const Sandbox = () => {
     e.preventDefault();
     const imageUrl = e.dataTransfer.getData("text/plain");
 
-    // Update the state to add the image URL to the target cell
     setGridCells((prevCells) => {
       const newCells = [...prevCells];
       newCells[targetIndex] = imageUrl;
@@ -29,12 +29,28 @@ const Sandbox = () => {
     });
   };
 
-  const GridCell = ({ cellContent, index, onDragOver, onDrop }) => (
+  const clearCell = (index) => {
+    setGridCells((prevCells) => {
+      const newCells = [...prevCells];
+      newCells[index] = null;
+      return newCells;
+    });
+  };
+
+  const GridCell = ({
+    cellContent,
+    index,
+    onDragOver,
+    onDrop,
+    handleDragStart,
+  }) => (
     <div
       key={index}
-      className="border border-gray-400"
+      className="border border-gray-400 relative"
       onDragOver={(e) => onDragOver(e)}
       onDrop={(e) => onDrop(e, index)}
+      onMouseEnter={() => setHoveredCell(index)}
+      onMouseLeave={() => setHoveredCell(null)}
     >
       {cellContent && (
         <img
@@ -43,18 +59,27 @@ const Sandbox = () => {
           alt={`Cell ${index}`}
         />
       )}
+      {/* Show the clear button only when the cell is hovered and has content */}
+      {hoveredCell === index && cellContent && (
+        <button
+          className="absolute top-6 right-[18px] bg-error opacity-70 p-1 rounded-md text-f-accent"
+          onClick={() => clearCell(index)}
+        >
+          Empty Cell
+        </button>
+      )}
     </div>
   );
 
   return (
     <>
-      <div className="bg-gray-50 flex flex-col font-inter items-end justify-end mx-auto p-[18px] w-full">
+      <div className="bg-bg flex flex-col font-inter items-end justify-end mx-auto p-[18px] w-full">
         <div className="flex flex-col gap-6 justify-start mt-4 md:px-5 w-[94%] md:w-full">
           <div className="flex md:flex-row flex-row gap-[41px] items-center justify-start mr-[92px] w-[93%] md:w-full">
             <div className="border border-f border-solid flex flex-col gap-5 h-[1100px]  items-start justify-start sm:px-5 rounded-[12px] w-[250px]">
               {/* search bar */}
               <div className="relative w-full mt-5 mb-3">
-                <div className="border-2 border-f border-solid flex items-center p-2.5 rounded-[12px] w-full h-[38px]">
+                <div className="border-2 border-f border-solid flex items-center p-1 rounded-[12px] w-full h-[38px]">
                   <Img
                     className="h-[20px] md:h-auto my-0.5 mr-auto object-cover w-[20px]"
                     src={search}
