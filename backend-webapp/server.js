@@ -1,11 +1,11 @@
 // Load environment variables
 require('dotenv').config({ path: `./.env.${process.env.NODE_ENV}` })
 
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const user =require('./src/schemas/user')
+const user = require('./src/schemas/user')
+const path = require('path')
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -20,7 +20,8 @@ require('./src/db/conn');
 
 // Public routes
 app.use('/user', require('./src/routes/users')) // authorization
-app.use('/public', express.static('public')) // static content
+app.use('/public', express.static(path.join(__dirname, 'public'))) // static content
+app.use('/files', express.static(path.join(__dirname, 'files'))) // experiment source code
 
 // jwt authentication
 const { authenticateToken } = require("./src/middleware/auth");
