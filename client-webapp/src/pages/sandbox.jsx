@@ -62,10 +62,10 @@ const Sandbox = () => {
       {/* Show the clear button only when the cell is hovered and has content */}
       {hoveredCell === index && cellContent && (
         <button
-          className="absolute top-6 right-[18px] bg-error opacity-70 p-1 rounded-md text-f-accent"
+          className="absolute top-6 right-[18px] bg-error opacity-60 hover:opacity-80 p-1 rounded-md text-f-accent"
           onClick={() => clearCell(index)}
         >
-          Empty Cell
+          Remove
         </button>
       )}
     </div>
