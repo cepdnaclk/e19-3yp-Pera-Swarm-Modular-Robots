@@ -39,13 +39,13 @@ const Dropdown = ({ items }) => {
       </div>
 
       {isOpen && (
-        <div className="ml-3 mt-2 w-[1075px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+        <div className="ml-3 mt-2 w-[1075px] rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
           <div className="py-1">
             {items.map((item) => (
               <button
                 key={item.value}
                 onClick={() => handleSelect(item)}
-                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  hover:bg-container"
               >
                 {item.label}
               </button>
