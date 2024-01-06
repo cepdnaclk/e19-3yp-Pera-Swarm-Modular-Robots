@@ -7,6 +7,9 @@ import camera from "../assets/camera.png";
 import hand from "../assets/hand.png";
 import wheel from "../assets/settings.png";
 
+///////////
+
+//////////
 // dropdown menu option
 const options = [
   { value: "ModularRobot1", label: "Modular Robot 1" },
@@ -15,27 +18,108 @@ const options = [
 ];
 
 const RobotConfig = () => {
-  const [attachments, setAttachments] = useState([
-    { id: 1, name: "Top Front", imageSrc: "" },
-    { id: 2, name: "Top Right", imageSrc: "" },
-    { id: 3, name: "Top Left", imageSrc: "" },
-    { id: 4, name: "Top Back", imageSrc: "" },
+  const [positions, setPositions] = useState([
+    { id: 1, name: "Top Front", imageSrc: "", imgId: null },
+    { id: 2, name: "Top Right", imageSrc: "", imgId: null },
+    { id: 3, name: "Top Left", imageSrc: "", imgId: null },
+    { id: 4, name: "Top Back", imageSrc: "", imgId: null },
   ]);
-  const handleImageDrop = (id, droppedImage) => {
-    const updatedAttachments = attachments.map((attachment) =>
-      attachment.id === id
-        ? { ...attachment, imageSrc: URL.createObjectURL(droppedImage) }
-        : attachment
-    );
 
-    setAttachments(updatedAttachments);
+  //images of attchments
+  const components = [
+    {
+      imageSrc: camera,
+      id: 1,
+      altText: "camera",
+      label: "Camera",
+      size: "txtInterRegular24",
+    },
+    {
+      imageSrc: hand,
+      id: "hand",
+      altText: "hand",
+      label: "Gripper Arm",
+      size: "txtInterRegular24",
+    },
+    {
+      imageSrc: wheel,
+      id: "wheel",
+      altText: "wheel",
+      label: "Wheel",
+      size: "txtInterRegular24",
+    },
+  ];
+
+  //store image and position id
+  // const [imageData, setImageData] = useState([
+  //   { id: "camera", positionId: null },
+  //   { id: "hand", positionId: null },
+  //   { id: "wheel", positionId: null },
+  // ]);
+
+  const printImageData = () => {
+    components.forEach((component) => {
+      console.log(
+        `component ID: ${component.id}, component name: ${component.label}, component img: ${component.imageSrc}`
+      );
+    });
+    positions.forEach((position) => {
+      console.log(
+        `position ID: ${position.id}, Position name: ${position.name}, Position img: ${position.imgId}`
+      );
+
+      // Add your logic to send data to the backend here
+    });
   };
-  const handleRemoveImage = (id) => {
-    const updatedAttachments = attachments.map((attachment) =>
-      attachment.id === id ? { ...attachment, imageSrc: "" } : attachment
+
+  const displayComponents = () => {
+    return components.map((component) => (
+      <div
+        key={component.id}
+        className="bg-container flex flex-col w-[190px] h-[175px] items-center justify-start p-[3px] rounded-[12px] mb-6"
+      >
+        <div className="bg-trasnsparent flex flex-col w-[150px] h-[130px] items-center justify-start p-[3px] rounded-[12px]">
+          <img
+            className="object-cover w-auto h-full"
+            id={component.id}
+            src={component.imageSrc}
+            alt={component.altText}
+          />
+        </div>
+
+        <Text
+          className={`mb-1 text-2xl md:text-[18px] sm:text-xl ${
+            component.textColor || ""
+          }`}
+          size={component.size}
+        >
+          {component.label}
+        </Text>
+      </div>
+    ));
+  };
+
+  const handleImageDrop = (targetPositionId, droppedImage) => {
+    console.log("Dropped Image:", droppedImage);
+    const updatedPositions = positions.map((position) =>
+      position.id === targetPositionId
+        ? {
+            ...position,
+            imageSrc: URL.createObjectURL(droppedImage),
+            //  id property
+          }
+        : position
     );
 
-    setAttachments(updatedAttachments);
+    setPositions(updatedPositions);
+  };
+
+  const handleRemoveImage = (id) => {
+    const updatedPositions = positions.map((position) =>
+      position.id === id ? { ...position, imageSrc: "" } : position
+    );
+
+    setPositions(updatedPositions);
   };
 
   return (
@@ -60,49 +144,7 @@ const RobotConfig = () => {
                 </div>
               </div>
               <div className="bg-container flex flex-col w-[190px] h-[175px] items-center justify-start p-[3px] rounded-[12px] ">
-                <div className="bg-trasnsparent flex flex-col w-[150px] h-[130px] items-center justify-start p-[3px] rounded-[12px] ">
-                  <Img
-                    className=" object-cover w-auto h-full"
-                    src={camera}
-                    alt="camera"
-                  />
-                </div>
-                <Text
-                  className="mb-1 text-2xl md:text-[18px]  sm:text-xl"
-                  size="txtInterRegular24"
-                >
-                  Camera
-                </Text>
-              </div>
-              <div className="bg-container flex flex-col w-[190px] h-[175px] items-center justify-start p-[3px] rounded-[12px] ">
-                <div className="bg-trasnsparent flex flex-col w-[150px] h-[130px] items-center justify-start p-[3px] rounded-[12px] ">
-                  <Img
-                    className=" object-cover w-auto h-full"
-                    src={hand}
-                    alt="hand"
-                  />
-                </div>
-                <Text
-                  className="mb-1 text-2xl md:text-[18px] text-gray-900 sm:text-xl"
-                  size="txtInterRegular24"
-                >
-                  Gripper Arm
-                </Text>
-              </div>
-              <div className="bg-container flex flex-col w-[190px] h-[175px] items-center justify-start p-[3px] rounded-[12px] ">
-                <div className="bg-trasnsparent flex flex-col w-[150px] h-[130px] items-center justify-start p-[3px] rounded-[12px] ">
-                  <Img
-                    className=" object-cover w-auto h-full"
-                    src={wheel}
-                    alt="wheel"
-                  />
-                </div>
-                <Text
-                  className="mb-1 text-2xl md:text-[18px] text-gray-900 sm:text-xl"
-                  size="txtInterRegular24"
-                >
-                  Wheel
-                </Text>
+                {displayComponents()}
               </div>
             </div>
             <div className="border border-f grid w-[1100px] h-[590px]  rounded-[12px] overflow-hidden">
@@ -111,17 +153,18 @@ const RobotConfig = () => {
                 <div className="w-full mb-5">
                   <Dropdown items={options} />
                 </div>
-                {/* iterate through list attachments and create cards */}
+                {/* iterate through list positions and create cards */}
                 <div className="flex flex-row">
-                  {attachments.map((attachment) => (
+                  {positions.map((position) => (
                     <ImgCard
-                      key={attachment.id}
-                      name={attachment.name}
-                      imageSrc={attachment.imageSrc}
+                      key={position.id}
+                      name={position.name}
+                      imageSrc={position.imageSrc}
+                      imgId={position.imgId}
                       onImageDrop={(droppedImage) =>
-                        handleImageDrop(attachment.id, droppedImage)
+                        handleImageDrop(position.id, droppedImage)
                       }
-                      onRemoveImage={() => handleRemoveImage(attachment.id)}
+                      onRemoveImage={() => handleRemoveImage(position.id)}
                     />
                   ))}
                 </div>
@@ -135,6 +178,7 @@ const RobotConfig = () => {
             <Button
               className="common-pointer cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-bg bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1"
               //   onClick={() => navigate("/configurerobot")}
+              onClick={printImageData}
             >
               Next
             </Button>
