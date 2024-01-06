@@ -1,6 +1,9 @@
 const expressWinston = require('express-winston');
-const {createLogger, format, transports} = require('winston');
+const {createLogger, format, transports, level} = require('winston');
 const fs = require('fs');
+require('winston-mongodb');
+
+
 
 const customFormat = format.printf(({ level, message, timestamp, userId }) => {
   return JSON.stringify({
@@ -12,29 +15,27 @@ const customFormat = format.printf(({ level, message, timestamp, userId }) => {
   });
 });
 
+
+
 const logger = createLogger({
 
   transports: [
-    new transports.File({
-      filename: 'logs/data.log',
+    new transports.MongoDB({
+      db: process.env.MONGODB_URL,
       level: 'info',
-     
-      
-    }),
-    new transports.File({
-      filename: 'logs/data-error.log',
-      level: 'error',
-      
-    })
-  ],
-  format: format.combine(
-        format.errors({ stack: true }),
-        format.splat(),
+      options: { useUnifiedTopology: true }, // MongoDB options 
+      collection: 'logs', // Collection name where logs will be stored
+      format: format.combine(
+        format.timestamp({format: 'MMM-DD-YYYY HH:mm:ss'}),
         format.json(),
-        format.prettyPrint(),
-        customFormat // Using the custom format here
-  ),
-}) 
+        format.metadata(),
+                 
+  )
+   
+ }),
+]
+  
+}); 
 
 const requestLogger = createLogger({
 
@@ -62,7 +63,6 @@ function createLog(userId, message) {
   logger.log({
     level: 'info',
     message: message,
-    timestamp: new Date().toISOString(),
     userId: userId
   });
 }
@@ -89,7 +89,7 @@ function viewLogEntries() {
 }
 
 // Call the function to view log entries
-viewLogEntries();
+//viewLogEntries();
 
 module.exports = {createLog,
                   requestLogger};
