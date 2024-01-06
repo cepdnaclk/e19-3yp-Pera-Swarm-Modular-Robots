@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button, Img, Text } from "../components";
 import search from "../assets/search.png";
 import modular_bot from "../assets/robot.png";
@@ -136,12 +137,11 @@ const Sandbox = () => {
             <Button className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-bg bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
               Cancel
             </Button>
-            <Button
-              className="common-pointer cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-bg bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1"
-              //   onClick={() => navigate("/configurerobot")}
-            >
-              Next
-            </Button>
+            <Link to="/robotConfig">
+              <Button className="common-pointer cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-bg bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
+                Next
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
