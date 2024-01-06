@@ -1,4 +1,5 @@
 import smbus
+import time
 
 class PCA9548A:
     address = 0x70 # address of PCA9548A
@@ -32,5 +33,19 @@ if __name__ == "__main__":
     PCA9548A_module = PCA9548A()
     PCA9548A_module.scan()
 
+    DEV_ADDR = 0x04
+    reads = 0
+    errs = 0
 
-        
+    while True:
+        reads += 1
+        try:
+            PCA9548A_module.select_channel(2)
+            a_val = PCA9548A_module.bus.read_word_data(DEV_ADDR, 0)
+            print("Read value [%s]; no. of reads [%s]; no. of errors [%s]" % (a_val, reads, errs))
+        except Exception as ex:
+            errs += 1
+            print("Exception [%s]" % (ex))
+
+        time.sleep(0.01)
+
