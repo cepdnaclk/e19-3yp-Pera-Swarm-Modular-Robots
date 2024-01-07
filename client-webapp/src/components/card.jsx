@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ImgCard = ({ imageSrc, name, imgId, onImageDrop, onRemoveImage }) => {
+const ImgCard = ({ imageSrc, name, onImageDrop, onRemoveImage }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -58,7 +58,6 @@ const ImgCard = ({ imageSrc, name, imgId, onImageDrop, onRemoveImage }) => {
         {imageSrc && (
           <img
             className="object-cover w-full h-auto"
-            id={imgId}
             src={imageSrc}
             alt={name}
           />

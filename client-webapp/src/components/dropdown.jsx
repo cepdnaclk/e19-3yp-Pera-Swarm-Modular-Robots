@@ -11,6 +11,14 @@ const Dropdown = ({ items }) => {
   const handleSelect = (item) => {
     setSelectedItem(item);
     setIsOpen(false);
+
+    // Print the id of the selected item
+    //console.log("Selected item id:", item.id);
+    sendSelected(item);
+  };
+
+  const sendSelected = (item) => {
+    console.log("Robot number", item.id);
   };
 
   return (

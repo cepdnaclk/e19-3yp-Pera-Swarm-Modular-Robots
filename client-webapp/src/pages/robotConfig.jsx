@@ -1,191 +1,240 @@
 import React, { useState } from "react";
-import { Button, Img, Text } from "../components";
+import { Button, Text } from "../components";
+import { DndProvider, useDrag, useDrop } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import Dropdown from "../components/dropdown";
-import ImgCard from "../components/card";
 import search from "../assets/search.png";
 import camera from "../assets/camera.png";
 import hand from "../assets/hand.png";
 import wheel from "../assets/settings.png";
 
-///////////
-
-//////////
-// dropdown menu option
 const options = [
-  { value: "ModularRobot1", label: "Modular Robot 1" },
-  { value: "ModularRobot2", label: "Modular Robot 2" },
-  { value: "ModularRobot3", label: "Modular Robot 3" },
+  { id: 1, value: "ModularRobot1", label: "Modular Robot 1" },
+  { id: 2, value: "ModularRobot2", label: "Modular Robot 2" },
+  { id: 3, value: "ModularRobot3", label: "Modular Robot 3" },
 ];
 
-const RobotConfig = () => {
-  const [positions, setPositions] = useState([
-    { id: 1, name: "Top Front", imageSrc: "", imgId: null },
-    { id: 2, name: "Top Right", imageSrc: "", imgId: null },
-    { id: 3, name: "Top Left", imageSrc: "", imgId: null },
-    { id: 4, name: "Top Back", imageSrc: "", imgId: null },
-  ]);
+const ItemTypes = {
+  IMAGE: "image",
+  CONTAINER: "container",
+};
 
-  //images of attchments
-  const components = [
-    {
-      imageSrc: camera,
-      id: 1,
-      altText: "camera",
-      label: "Camera",
-      size: "txtInterRegular24",
-    },
-    {
-      imageSrc: hand,
-      id: "hand",
-      altText: "hand",
-      label: "Gripper Arm",
-      size: "txtInterRegular24",
-    },
-    {
-      imageSrc: wheel,
-      id: "wheel",
-      altText: "wheel",
-      label: "Wheel",
-      size: "txtInterRegular24",
-    },
-  ];
+const imagesList = [
+  { id: "wheel", value: wheel, label: "Wheel", size: "txtInterRegular24" },
+  { id: "arm", value: hand, label: "Gripper Arm", size: "txtInterRegular24" },
+  { id: "camera", value: camera, label: "Camera", size: "txtInterRegular24" },
+];
 
-  //store image and position id
-  // const [imageData, setImageData] = useState([
-  //   { id: "camera", positionId: null },
-  //   { id: "hand", positionId: null },
-  //   { id: "wheel", positionId: null },
-  // ]);
+const ContainersList = [
+  { id: "TF", name: "Top Front" },
+  { id: "TR", name: "Top Right" },
+  { id: "TL", name: "Top Left" },
+  { id: "TB", name: "Top Back" },
+  { id: "BF", name: "Bottom Front" },
+  { id: "BR", name: "Bottom Right" },
+  { id: "BL", name: "Bottom Left" },
+  { id: "BB", name: "Bottom Back" },
+];
 
-  const printImageData = () => {
-    components.forEach((component) => {
-      console.log(
-        `component ID: ${component.id}, component name: ${component.label}, component img: ${component.imageSrc}`
+const Image = ({ id, src, onDrop }) => {
+  const [, drag] = useDrag({
+    type: ItemTypes.IMAGE,
+    item: { id },
+  });
+
+  return (
+    <img
+      ref={drag}
+      src={src}
+      alt={`Image ${id}`}
+      className="w-auto h-full m-2 cursor-pointer"
+    />
+  );
+};
+
+const Container = ({
+  id,
+  name,
+  onDrop,
+  children,
+  droppedImages,
+  setDroppedItems,
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const [, drop] = useDrop({
+    accept: ItemTypes.IMAGE,
+    drop: (item) => onDrop(item.id, id),
+  });
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const handleRemoveButtonClick = () => {
+    // Identify the container from which the image should be removed
+    setDroppedItems((prevDroppedItems) => {
+      const updatedDroppedItems = prevDroppedItems.filter(
+        (image) => image.containerId !== id
       );
+      return updatedDroppedItems;
     });
-    positions.forEach((position) => {
-      console.log(
-        `position ID: ${position.id}, Position name: ${position.name}, Position img: ${position.imgId}`
-      );
-
-      // Add your logic to send data to the backend here
-    });
-  };
-
-  const displayComponents = () => {
-    return components.map((component) => (
-      <div
-        key={component.id}
-        className="bg-container flex flex-col w-[190px] h-[175px] items-center justify-start p-[3px] rounded-[12px] mb-6"
-      >
-        <div className="bg-trasnsparent flex flex-col w-[150px] h-[130px] items-center justify-start p-[3px] rounded-[12px]">
-          <img
-            className="object-cover w-auto h-full"
-            id={component.id}
-            src={component.imageSrc}
-            alt={component.altText}
-          />
-        </div>
-
-        <Text
-          className={`mb-1 text-2xl md:text-[18px] sm:text-xl ${
-            component.textColor || ""
-          }`}
-          size={component.size}
-        >
-          {component.label}
-        </Text>
-      </div>
-    ));
-  };
-
-  const handleImageDrop = (targetPositionId, droppedImage) => {
-    console.log("Dropped Image:", droppedImage);
-    const updatedPositions = positions.map((position) =>
-      position.id === targetPositionId
-        ? {
-            ...position,
-            imageSrc: URL.createObjectURL(droppedImage),
-            //  id property
-          }
-        : position
-    );
-
-    setPositions(updatedPositions);
-  };
-
-  const handleRemoveImage = (id) => {
-    const updatedPositions = positions.map((position) =>
-      position.id === id ? { ...position, imageSrc: "" } : position
-    );
-
-    setPositions(updatedPositions);
   };
 
   return (
-    <>
-      <div className=" bg-bg flex flex-col font-inter items-end justify-end mx-auto p-[18px] h-screen w-full">
-        <div className="flex flex-col gap-6 justify-start md:px-5 w-[94%] md:w-full">
-          <div className="flex md:flex-row flex-row gap-[41px] items-center justify-start mr-[92px] w-[93%] md:w-full">
-            <div className="border border-f border-solid flex flex-col gap-5 h-[590px] overflow-y-scroll items-start justify-start sm:px-5 rounded-[12px] w-[250px]">
-              {/* search bar */}
-              <div className="relative w-full mt-5 mb-3">
-                <div className="border-2 border-f border-solid flex items-center p-2.5 rounded-[12px] w-full h-[38px]">
-                  <Img
-                    className="h-[20px] md:h-auto my-0.5 mr-auto object-cover w-[20px]"
-                    src={search}
-                    alt="searchIcon"
-                  />
-                  <input
-                    type="text"
-                    className="w-full pl-4 py-1 text-base text-f placeholder-gray-900_05 focus:outline-none"
-                    placeholder="Search Components"
-                  />
+    <div
+      ref={drop}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="h-[300px] w-[235px] rounded-xl m-5 overflow-hidden shadow-lg border-4 bg-container border-primary relative"
+    >
+      <div className="h-[220px] w-[210px] p-2 flex items-center justify-center relative">
+        {droppedImages.map((image) => (
+          <img
+            className="object-fit w-full h-auto"
+            key={image.id}
+            src={image.value}
+            alt={`Dropped Image ${image.id}`}
+          />
+        ))}
+
+        {children}
+      </div>
+      {isHovered && droppedImages.length > 0 && (
+        <button
+          onClick={handleRemoveButtonClick}
+          className="absolute top-[10px] right-3 w-6 h-6 bg-f rounded-full text-bg cursor-pointer"
+        >
+          X
+        </button>
+      )}
+      <div className="w-full flex items-center justify-center py-2 bg-primary mt-[35px]">
+        <div className="font-bold text-l mb-1 text-bg">{name}</div>
+      </div>
+    </div>
+  );
+};
+
+const RobotConfig = () => {
+  const [droppedItems, setDroppedItems] = useState([]);
+
+  const handleDrop = (imageId, containerId) => {
+    console.log(
+      `Image ID: ${imageId} dropped into Container ID: ${containerId}`
+    );
+
+    const existingItemIndex = droppedItems.findIndex(
+      (item) => item.containerId === containerId
+    );
+
+    if (existingItemIndex !== -1) {
+      // Replace existing image in the container
+      droppedItems[existingItemIndex] = {
+        imageId,
+        containerId,
+        value: imagesList.find((image) => image.id === imageId).value,
+      };
+      setDroppedItems([...droppedItems]);
+    } else {
+      // Add new image to the container
+      const newDroppedItem = {
+        imageId,
+        containerId,
+        value: imagesList.find((image) => image.id === imageId).value,
+      };
+      setDroppedItems([...droppedItems, newDroppedItem]);
+    }
+  };
+
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <>
+        <div className=" bg-bg flex flex-col font-inter items-end justify-end mx-auto p-[18px] h-screen w-full">
+          <div className="flex flex-col gap-6 justify-start md:px-5 w-[94%] md:w-full">
+            <div className="flex md:flex-row flex-row gap-[41px] items-center justify-start mr-[92px] w-[93%] md:w-full">
+              <div className="border border-f border-solid flex flex-col gap-5 h-[590px]  items-start justify-start sm:px-5 rounded-[12px] w-[250px]">
+                {/* search bar */}
+                <div className="relative w-full mt-5 mb-3">
+                  <div className="border-2 border-f border-solid flex items-center p-2.5 rounded-[12px] w-full h-[38px]">
+                    <img
+                      className="h-[20px] md:h-auto my-0.5 mr-auto object-cover w-[20px]"
+                      src={search}
+                      alt="searchIcon"
+                    />
+                    <input
+                      type="text"
+                      className="w-full pl-4 py-1 text-base text-f placeholder-gray-900_05 focus:outline-none"
+                      placeholder="Search Components"
+                    />
+                  </div>
+                </div>
+                <div className=" overflow-y-scroll">
+                  <div className="bg-bg flex flex-col mr-5 rounded-[12px] ">
+                    {imagesList.map((image) => (
+                      <div className="bg-container flex flex-col w-[190px] h-[175px] items-center justify-start p-[3px] rounded-[12px] mb-6">
+                        <div className="bg-transparent flex flex-col w-[150px] h-[130px] items-center justify-center p-[4px] rounded-[12px]">
+                          <Image
+                            className="object-cover w-auto h-full"
+                            key={image.id}
+                            id={image.id}
+                            src={image.value}
+                            onDrop={handleDrop}
+                          />
+                        </div>
+                        <Text
+                          className={`mt-2 mb-1 text-2xl md:text-[18px] sm:text-xl `}
+                          size={image.size}
+                        >
+                          {image.label}
+                        </Text>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-              <div className="bg-container flex flex-col w-[190px] h-[175px] items-center justify-start p-[3px] rounded-[12px] ">
-                {displayComponents()}
-              </div>
-            </div>
-            <div className="border border-f grid w-[1100px] h-[590px]  rounded-[12px] overflow-hidden">
-              <div className="flex flex-col">
+              <div className="border border-f grid w-[1120px] h-[590px]  flex-col rounded-[12px]  ">
                 {/* dropdownn and the cards */}
-                <div className="w-full mb-5">
+                <div className="w-full ml-2 mb-5">
                   <Dropdown items={options} />
                 </div>
                 {/* iterate through list positions and create cards */}
-                <div className="flex flex-row">
-                  {positions.map((position) => (
-                    <ImgCard
-                      key={position.id}
-                      name={position.name}
-                      imageSrc={position.imageSrc}
-                      imgId={position.imgId}
-                      onImageDrop={(droppedImage) =>
-                        handleImageDrop(position.id, droppedImage)
-                      }
-                      onRemoveImage={() => handleRemoveImage(position.id)}
-                    />
-                  ))}
+                <div className="overflow-y-scroll mr-[428px]">
+                  <div className="flex flex-wrap w-[1120px] ">
+                    {ContainersList.map((container) => (
+                      <Container
+                        key={container.id}
+                        id={container.id}
+                        name={container.name}
+                        onDrop={handleDrop}
+                        droppedImages={droppedItems.filter(
+                          (item) => item.containerId === container.id
+                        )}
+                        setDroppedItems={setDroppedItems}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-row gap-3.5  ml-[1120px] w-[21%] md:w-full ">
-            <Button className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-bg bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
-              Cancel
-            </Button>
-            <Button
-              className="common-pointer cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-bg bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1"
-              //   onClick={() => navigate("/configurerobot")}
-              onClick={printImageData}
-            >
-              Next
-            </Button>
+            <div className="flex flex-row gap-3.5  ml-[1120px] w-[21%] md:w-full ">
+              <Button className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-bg bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
+                Cancel
+              </Button>
+              <Button
+                className="common-pointer cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-bg bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1"
+                //   onClick={() => navigate("/configurerobot")}
+              >
+                Next
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-    </>
+      </>
+    </DndProvider>
   );
 };
 
