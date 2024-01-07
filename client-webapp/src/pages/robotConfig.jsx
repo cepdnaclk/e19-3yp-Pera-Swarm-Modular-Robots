@@ -7,6 +7,7 @@ import search from "../assets/search.png";
 import camera from "../assets/camera.png";
 import hand from "../assets/hand.png";
 import wheel from "../assets/settings.png";
+import axios from "axios";
 
 const options = [
   { id: 1, value: "ModularRobot1", label: "Modular Robot 1" },
@@ -121,6 +122,7 @@ const Container = ({
 
 const RobotConfig = () => {
   const [droppedItems, setDroppedItems] = useState([]);
+  const [selectedOptionId, setSelectedOptionId] = useState(null);
 
   const handleDrop = (imageId, containerId) => {
     console.log(
@@ -148,6 +150,42 @@ const RobotConfig = () => {
       };
       setDroppedItems([...droppedItems, newDroppedItem]);
     }
+  };
+
+  //Select the dropdown id
+  const handleOptionSelect = (optionId) => {
+    setSelectedOptionId(optionId);
+    console.log("Selected robot:", optionId);
+  };
+
+  const sendDatatoBackend = () => {
+    // Create an array of container and image pairs
+    const containerImagePairs = droppedItems.map((item) => ({
+      containerId: item.containerId,
+      imageId: item.imageId,
+    }));
+    console.log(
+      "Sending to backend:",
+      "Robot selected",
+      selectedOptionId,
+      "Conainer,img pairs",
+      containerImagePairs
+    );
+    // Send the data to the backend
+    axios
+      .post(
+        "backend-api-endpoint",
+        { optionId: selectedOptionId },
+        { containerImagePairs }
+      )
+      .then((response) => {
+        console.log("Backend response:", response.data);
+        // Handle the response from the backend as needed
+      })
+      .catch((error) => {
+        console.error("Error sending data to backend:", error);
+        // Handle errors
+      });
   };
 
   return (
@@ -199,7 +237,7 @@ const RobotConfig = () => {
               <div className="border border-f grid w-[1120px] h-[590px]  flex-col rounded-[12px]  ">
                 {/* dropdownn and the cards */}
                 <div className="w-full ml-2 mb-5">
-                  <Dropdown items={options} />
+                  <Dropdown items={options} onSelect={handleOptionSelect} />
                 </div>
                 {/* iterate through list positions and create cards */}
                 <div className="overflow-y-scroll mr-[428px]">
@@ -220,13 +258,14 @@ const RobotConfig = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-row gap-3.5  ml-[1120px] w-[21%] md:w-full ">
+            <div className="flex flex-row gap-4  ml-[1120px] w-[21%] md:w-full ">
               <Button className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-bg bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
                 Cancel
               </Button>
+
               <Button
-                className="common-pointer cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-bg bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1"
-                //   onClick={() => navigate("/configurerobot")}
+                onClick={sendDatatoBackend}
+                className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-bg bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1"
               >
                 Next
               </Button>
