@@ -108,13 +108,13 @@ const Container = ({
       {isHovered && droppedImages.length > 0 && (
         <button
           onClick={handleRemoveButtonClick}
-          className="absolute top-[10px] right-3 w-6 h-6 bg-f rounded-full text-bg cursor-pointer"
+          className="absolute top-[10px] right-3 w-6 h-6 bg-f rounded-full text-primary-accent cursor-pointer"
         >
           X
         </button>
       )}
       <div className="w-full flex items-center justify-center py-2 bg-primary mt-[35px]">
-        <div className="font-bold text-l mb-1 text-bg">{name}</div>
+        <div className="font-bold text-l mb-1 text-primary-accent">{name}</div>
       </div>
     </div>
   );
@@ -259,13 +259,13 @@ const RobotConfig = () => {
               </div>
             </div>
             <div className="flex flex-row gap-4  ml-[1120px] w-[21%] md:w-full ">
-              <Button className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-bg bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
+              <Button className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-primary-accent bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
                 Cancel
               </Button>
 
               <Button
                 onClick={sendDatatoBackend}
-                className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-bg bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1"
+                className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-primary-accent bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1"
               >
                 Next
               </Button>
