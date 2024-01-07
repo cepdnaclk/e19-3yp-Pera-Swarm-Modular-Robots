@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const User = require('../schemas/user.js');
 const jwt = require("jsonwebtoken");
 const {
     generateAccessToken,
@@ -8,33 +8,39 @@ const {
 } = require("../middleware/auth");
 
 
-router.post("/login", (req, res, next)=>{
-    console.log("Logged In");
+router.post("/login", async (req, res, next) => {
+    const { email, password } = req.body;
 
+    // Authenticate user
+    const user = await User.findOne({ email });
+    if (!user || !user.comparePassword(password)) {
+        return res.status(401).json({ error: 'Invalid email or password' });
+    }
 
-    //TODO::
-    // for successful login, proceed with further actions
-    // 1. Generate access token and refresh token
-    // 2. Save user id/name with refresh token on database as currently logged users
-    // 3. send userdata, refresh token and access token as a response
+    // Generate tokens
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
 
-    //const accessToken = generateAccessToken(userId);
-    //const refreshToken = generateRefreshToken(userId);
+    // Save refresh token in the database
+    // user.refreshToken = refreshToken;
+    // await user.save();
 
-
-
-    //res.json({
-    //    accessToken: accessToken,
-    //    refreshToken: refreshToken,
-    //    // others
-    //});
-
+    // Send response
+    res.json({
+        accessToken,
+        refreshToken,
+        user: {
+            _id: user._id,
+            email: user.email,
+            // Add other user data as needed
+        },
+    });
 });
 
 router.post("/token", (req, res, next)=>{
     //TODO::
     try {
-        const refreshToken = req.cookies.jwt;
+        const refreshToken = req.body.refreshToken;
 
         if (refreshToken == null)
             return res.sendStatus(401).json({ error: "Unauthorized" });
