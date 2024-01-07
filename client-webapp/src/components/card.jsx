@@ -25,6 +25,7 @@ const ImgCard = ({ imageSrc, name, onImageDrop, onRemoveImage }) => {
     const files = e.dataTransfer.files;
     if (files.length > 0) {
       const droppedImage = files[0];
+
       onImageDrop(droppedImage);
     }
   };
@@ -44,7 +45,7 @@ const ImgCard = ({ imageSrc, name, onImageDrop, onRemoveImage }) => {
   return (
     <div
       className={`h-[344px] w-[235px] rounded-xl m-5 overflow-hidden shadow-lg ${
-        isDragging ? "border-4 border-dashed border-blue-500" : ""
+        isDragging ? "border-4 border-dashed border-primary" : ""
       }`}
       onDragEnter={handleDragEnter}
       onDragOver={handleDragOver}

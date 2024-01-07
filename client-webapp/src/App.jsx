@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginForm from "../src/pages/login";
-
-import Sandbox from "../src/pages/sandbox";
 import RobotConfig from "../src/pages/robotConfig";
+import Sandbox from "../src/pages/sandbox";
 import AdminDashboard from "../src/pages/adminDashboard";
 
 function App() {
