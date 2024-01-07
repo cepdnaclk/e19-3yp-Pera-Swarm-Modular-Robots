@@ -18,6 +18,10 @@ require('./src/db/conn');
 
 // Public routes
 app.use('/user', require('./src/routes/users')) // authorization
+app.get('/healthcheck', (req, res) => {
+    res.send('Server is up and running');
+});
+
 
 // TODO: Authentication Middleware
 
