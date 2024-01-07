@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
 
-const Dropdown = ({ items }) => {
+const Dropdown = ({ items, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -11,15 +12,16 @@ const Dropdown = ({ items }) => {
   const handleSelect = (item) => {
     setSelectedItem(item);
     setIsOpen(false);
-
+    onSelect && onSelect(item.id);
     // Print the id of the selected item
     //console.log("Selected item id:", item.id);
-    sendSelected(item);
+    //sendSelected(item);
   };
 
-  const sendSelected = (item) => {
-    console.log("Robot number", item.id);
-  };
+  // const sendSelected = (item) => {
+  //   console.log("Robot number", item.id);
+  // };
+  //sending data to backend
 
   return (
     <div className="relative inline-block text-left w-screen">
