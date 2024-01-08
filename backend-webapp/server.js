@@ -7,8 +7,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const user =require('./src/schemas/user')
 const {requestLogger,createLog}= require('./src/middleware/logger'); //import logger
-const {getUserLogs} = require('./src/routes/viewLogs'); //import logger
-
 
 const expressWinston = require('express-winston');
 
