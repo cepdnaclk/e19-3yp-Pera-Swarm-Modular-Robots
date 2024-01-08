@@ -9,7 +9,7 @@ User.deleteMany({})
     const user = new User({
       // populate the fields according to your schema
       name: 'swarmbot',
-      type: 'admin',
+      type: 'experimenter',
       email: 'testuser@example.com',
       password: 'mail123',
       // add more fields as needed
