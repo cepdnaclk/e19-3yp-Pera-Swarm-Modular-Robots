@@ -5,6 +5,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
     "./src/**/**/*.{js,ts,jsx,tsx,html,mdx}",
+
   ],
   darkMode: 'class', // Enable dark mode variant
   
@@ -44,3 +45,5 @@ export default {
   },
   plugins: [],
 }
+
+

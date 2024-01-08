@@ -17,10 +17,13 @@ const LoginForm = () => {
     },
   });
 
+  // Move the body variable outside the toggleTheme function
   const body = document.body;
   const [isDarkTheme, setIsDarkTheme] = useState(body.getAttribute("data-theme") === "dark");
 
   useEffect(() => {
+
+    // Check the initial theme when the component mounts
     setIsDarkTheme(body.getAttribute("data-theme") === "dark");
   }, []);
 
@@ -37,13 +40,17 @@ const LoginForm = () => {
   }
 
   const getErrorForField = (fieldName) => {
+
+    // Check if the field has been touched and has an error
     if (formik.touched[fieldName] && formik.errors[fieldName]) {
-      return formik.errors[fieldName] === "Required" ? "* Required" : formik.errors[fieldName];
+      // If the field has a specific error message, show it; otherwise, show the default "*Required"
+      return formik.errors[fieldName] === "Required" ? "*Required" : formik.errors[fieldName];
     }
     return null;
   };
 
   return (
+
     <body className='bg-bgd dark:bg-dark-bgd'>
       <div>
         <div className={`bg-container text-f p-8 pb-10 mb-5 rounded-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ${isDarkTheme ? 'dark:bg-dark-container dark:text-dark-f' : ''}`}>
@@ -111,6 +118,7 @@ const LoginForm = () => {
         </div>
       </div>
     </body>
+
   );
 };
 
