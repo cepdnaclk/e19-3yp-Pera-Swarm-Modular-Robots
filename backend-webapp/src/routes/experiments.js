@@ -42,12 +42,13 @@ exports.updateExperiment = async (req, res) => {
         if (!experiment) {
             return res.status(404).json({ message: 'Experiment not found' });
         }
-
+       
         // Update fields based on your requirements
-        experiment.name = req.body.name;
-        experiment.id = req.body.id;
-        experiment.log = req.body.log;
-        experiment.videoFile = req.body.videoFile;
+        if (req.body.name) experiment.name = req.body.name;
+        if (req.body.id) experiment.id = req.body.id;
+        if (req.body.log) experiment.log = req.body.log;
+        if (req.body.videoFile) experiment.videoFile = req.body.videoFile;
+        if (req.body.status) experiment.status = req.body.status;
 
         await experiment.save();
         res.json(experiment);
