@@ -4,3 +4,14 @@
 
 /.vs
 
+
+# Python
+__pycache__/
+.venv
+
+# C files
+**.hex
+**.elf
+**.o
+
+

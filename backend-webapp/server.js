@@ -1,11 +1,13 @@
 // Load environment variables
 require('dotenv').config({ path: `./.env.${process.env.NODE_ENV}` })
+
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const user =require('./src/schemas/user')
 const {requestLogger,createLog}= require('./src/middleware/logger'); //import logger
-
+const path = require('path')
 const expressWinston = require('express-winston');
 
 
@@ -41,7 +43,36 @@ expressWinston.requestWhitelist.push('body'); //log body of request
 expressWinston.responseWhitelist.push('body');
 
 // Public routes
-app.use('/', require('./src/routes/users')) // authorization
+
+app.use('/user', require('./src/routes/users')) // authorization
+app.use('/public', express.static(path.join(__dirname, 'public'))) // static content
+// serve experiment source files
+const zip = require('express-zip');
+app.get('/files', (req, res) => {
+  const fs = require('fs');
+  const files = 
+    fs.readdirSync(path.join(__dirname, 'files'))
+    .map((file)=> ({
+        path: path.join(__dirname, 'files', file),
+        name: file  
+      })
+    );
+  const archiveName = 'files.zip';
+
+  res.set('Content-Type', 'application/zip');
+  res.set('Content-Disposition', `attachment; filename=${archiveName}`);
+
+  res.zip(files, archiveName, (err) => {
+    if (err) {
+      console.log('Error sending files:', err);
+    } else {
+      console.log('Files sent successfully');
+    }
+  });
+});
+
+
+
 
 // jwt authentication
 const { authenticateToken } = require("./src/middleware/auth");
