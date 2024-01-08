@@ -44,7 +44,7 @@ const LoginForm = () => {
   };
 
   return (
-    <body className={isDarkTheme ? 'dark bg-dark-bgd' : 'bg-bgd'} >
+    <body className='bg-bgd dark:bg-dark-bgd'>
       <div>
         <div className={`bg-container text-f p-8 pb-10 mb-5 rounded-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ${isDarkTheme ? 'dark:bg-dark-container dark:text-dark-f' : ''}`}>
           <div className="flex items-center mb-5">

@@ -59,7 +59,7 @@ const Sandbox = () => {
       )}
       {hoveredCell === index && cellContent && (
         <button
-          className="absolute top-6 right-[18px] bg-error opacity-60 hover:opacity-80 p-1 rounded-md text-f-accent"
+          className="absolute top-6 right-[18px] bg-error dark:bg-dark-error opacity-60 hover:opacity-80 p-1 rounded-md text-f-accent"
           onClick={() => clearCell(index)}
         >
           Remove
@@ -82,7 +82,7 @@ const Sandbox = () => {
                 />
                 <input
                   type="text"
-                  className="w-full pl-4 py-1 text-base text-f placeholder-gray-900_05 focus:outline-none"
+                  className="w-full pl-4 py-1 text-base text-f-accent dark:text-dark-f placeholder-gray-900_05 focus:outline-none"
                   placeholder="Search Components"
                 />
               </div>
@@ -94,7 +94,7 @@ const Sandbox = () => {
                 alt="modular_bot"
               />
               <Text
-                className="mb-1 text-2xl md:text-[22px] text-gray-900 sm:text-xl"
+                className="mb-1 text-2xl md:text-[22px] text-f sm:text-xl"
                 size="txtInterRegular24"
               >
                 Modular Robot
@@ -107,7 +107,7 @@ const Sandbox = () => {
                 alt="obstaclebot"
               />
               <Text
-                className="text-2xl md:text-[22px] text-gray-900 sm:text-xl"
+                className="text-2xl md:text-[22px] text-f sm:text-xl"
                 size="txtInterRegular24"
               >
                 Obstacle Bot
