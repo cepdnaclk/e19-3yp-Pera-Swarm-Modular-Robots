@@ -6,6 +6,7 @@ const adminController = require('../routes/admins');
 const experimenterController = require('../routes/experimenters');
 const robotController = require("../routes/robots");
 const experimentController = require("../routes/experiments");
+const logController = require("../routes/viewLogs");
 
 
 
@@ -38,6 +39,9 @@ router.get('/api/experiment/:id', experimentController.getExperimentById);
 router.put('/api/experiment/:id', experimentController.updateExperiment);
 router.delete('/api/experiment/:id', experimentController.deleteExperiment);
 
+// Logs Endpoints
+router.get('/api/logs', logController.getAllLogs);
+router.get('/api/logs/:id', logController.getLogById);
 
 router.get('/', (req, res) => {
     res.send('Hello, PeraSwarm!');

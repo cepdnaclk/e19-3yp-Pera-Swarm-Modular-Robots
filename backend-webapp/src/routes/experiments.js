@@ -69,3 +69,23 @@ exports.deleteExperiment = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
+
+// Get all experiments by ExperimenterID (UserID)
+exports.getExperimentByUserId = async (req, res) => {
+  const userId = req.params.userId; // Assuming userId is provided as a parameter in the request
+
+  try {
+    // Find all experiments with the given user_id (ExperimenterID)
+    const experiments = await Experiment.find({ user_id: userId });
+
+    if (experiments.length === 0) {
+      return res.status(404).json({ message: 'No experiments found for the given user ID' });
+    }
+
+    res.status(200).json(experiments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
