@@ -6,11 +6,11 @@ import { useLocation } from "react-router-dom";
 import axios from "../api/axios";
 
 const CodeUpload = () => {
-  const userId = "659c3128f8e19ef45832ea4a";
+  //const userId = "659c3128f8e19ef45832ea4a";
   const userJson = localStorage.getItem("user");
   const user = JSON.parse(userJson);
-  // const userId = user.id;
-  // console.log(userId);
+  const userId = user.id;
+  console.log(userId);
 
   const [robotStatus, setRobotStatus] = useState("Unknown");
   const [attachmentsStatus, setAttachmentsStatus] = useState({
@@ -29,7 +29,7 @@ const CodeUpload = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:3001/api/status");
+      const response = await fetch("/api/status");
       const data = await response.json();
 
       // Update state of the robots and attachments based on the received data
@@ -67,9 +67,10 @@ const CodeUpload = () => {
 
     const apiUrl = `api/experiment/${userId}/code`;
     console.log("Code:", code);
-    console.log("Api Url:", apiUrl);
+    //console.log("Api Url:", apiUrl);
 
-    const value = JSON.stringify({ code: code, requiement: null });
+    const encodedCode = JSON.stringify(code);
+    const value = { code: encodedCode, requirement: "" };
     try {
       const response = await axios.post(apiUrl, value);
 
