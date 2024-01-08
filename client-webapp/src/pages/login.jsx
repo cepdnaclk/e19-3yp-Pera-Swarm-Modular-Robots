@@ -88,7 +88,7 @@ const LoginForm = () => {
 
         <form autoComplete="on" onSubmit={formik.handleSubmit}>
           <div className="mb-5">
-            <label htmlFor="email" className="text-f block mb-1">
+            <label htmlFor="email" className={`text-f block mb-1 ${isDarkTheme ? 'dark:text-dark-f' : ''}`}>
               Email
               {getErrorForField("email") && (
                 <span className="text-error ml-2">{getErrorForField("email")}</span>
@@ -102,12 +102,12 @@ const LoginForm = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
-              className={`w-full px-4 py-2 box-border bg-transparent border border-container-accent rounded-md mb-5 ${isDarkTheme ? 'dark:border-dark-container-accent dark:text-dark-f-accent' : ''}`}
+              className={`w-full px-4 py-2 box-border bg-transparent border border-container-accent rounded-md mb-5 ${isDarkTheme ? 'dark:border-dark-container-accent dark:text-dark-f' : ''}`}
             />
           </div>
 
           <div className="mb-5">
-            <label htmlFor="password" className="text-f block mb-1">
+          <label htmlFor="password" className={`text-f block mb-1 ${isDarkTheme ? 'dark:text-dark-f' : ''}`}>
               Password
               {getErrorForField("password") && (
                 <span className="text-error ml-2">{getErrorForField("password")}</span>
@@ -121,7 +121,7 @@ const LoginForm = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}
-              className={`w-full px-4 py-2 box-border bg-transparent border border-container-accent rounded-md mb-5 ${isDarkTheme ? 'dark:border-dark-container-accent dark:text-dark-f-accent' : ''}`}
+              className={`w-full px-4 py-2 box-border bg-transparent text-f border border-container-accent rounded-md mb-5 ${isDarkTheme ? 'dark:border-dark-container-accent dark:text-dark-f' : ''}`}
             />
           </div>
 
@@ -133,6 +133,7 @@ const LoginForm = () => {
             />
             <button
               className={`toggle flex items-center justify-center p-2 bg-container-accent text-f-accent font-semibold rounded-xl cursor-pointer transform transition-transform ${isDarkTheme ? 'rotate-180 dark:bg-dark-container-accent dark:text-dark-f-accent' : ''}`}
+              type="button"
               onClick={toggleTheme}
             >
               {isDarkTheme ? "☀️ | 🌙" : "☀️ | 🌙"}
