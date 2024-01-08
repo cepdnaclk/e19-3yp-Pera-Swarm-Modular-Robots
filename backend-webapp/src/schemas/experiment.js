@@ -19,7 +19,7 @@ const experimentSchema = new mongoose.Schema({
     required: true,
   },
   attatchments:{
-    type: [string], // default order = [TF,TR,TL,TB,BF,BR,BL,BB]
+    type: [String], // default order = [TF,TR,TL,TB,BF,BR,BL,BB]
     default: ['','','','','','','','']
   },
   user_id: {
