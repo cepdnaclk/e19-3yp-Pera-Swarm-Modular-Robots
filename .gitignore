@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+
+
+# Python
+__pycache__/
+.venv
+
+# C files
+**.hex
+**.elf
+**.o
+
+
