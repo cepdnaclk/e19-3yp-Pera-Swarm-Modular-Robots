@@ -25,6 +25,7 @@ const LoginForm = () => {
         localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('user', JSON.stringify(user));
 
+
         // Redirect to the dashboard
         navigate('/adminDashboard');
 
@@ -88,7 +89,7 @@ const LoginForm = () => {
 
         <form autoComplete="on" onSubmit={formik.handleSubmit}>
           <div className="mb-5">
-            <label htmlFor="email" className="text-f block mb-1">
+            <label htmlFor="email" className={`text-f block mb-1 ${isDarkTheme ? 'dark:text-dark-f' : ''}`}>
               Email
               {getErrorForField("email") && (
                 <span className="text-error ml-2">{getErrorForField("email")}</span>
@@ -102,12 +103,12 @@ const LoginForm = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
-              className={`w-full px-4 py-2 box-border bg-transparent border border-container-accent rounded-md mb-5 ${isDarkTheme ? 'dark:border-dark-container-accent dark:text-dark-f-accent' : ''}`}
+              className={`w-full px-4 py-2 box-border bg-transparent border border-container-accent rounded-md mb-5 ${isDarkTheme ? 'dark:border-dark-container-accent dark:text-dark-f' : ''}`}
             />
           </div>
 
           <div className="mb-5">
-            <label htmlFor="password" className="text-f block mb-1">
+          <label htmlFor="password" className={`text-f block mb-1 ${isDarkTheme ? 'dark:text-dark-f' : ''}`}>
               Password
               {getErrorForField("password") && (
                 <span className="text-error ml-2">{getErrorForField("password")}</span>
@@ -121,18 +122,19 @@ const LoginForm = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}
-              className={`w-full px-4 py-2 box-border bg-transparent border border-container-accent rounded-md mb-5 ${isDarkTheme ? 'dark:border-dark-container-accent dark:text-dark-f-accent' : ''}`}
+              className={`w-full px-4 py-2 box-border bg-transparent text-f border border-container-accent rounded-md mb-5 ${isDarkTheme ? 'dark:border-dark-container-accent dark:text-dark-f' : ''}`}
             />
           </div>
 
           <div className="flex justify-between">
             <input
-              className={`w-1/2 p-2 rounded-md bg-container-accent text-f-accent font-semibold cursor-pointer ${isDarkTheme ? 'dark:bg-dark-container-accent dark:text-dark-f-accent' : ''}`}
+              className={`w-1/2 p-2 rounded-md bg-container-accent hover:bg-primary text-f-accent font-semibold cursor-pointer ${isDarkTheme ? 'dark:bg-dark-container-accent dark:text-dark-f-accent dark:hover:bg-dark-primary' : ''}`}
               type="submit"
               value="Login"
             />
             <button
-              className={`toggle flex items-center justify-center p-2 bg-container-accent text-f-accent font-semibold rounded-xl cursor-pointer transform transition-transform ${isDarkTheme ? 'rotate-180 dark:bg-dark-container-accent dark:text-dark-f-accent' : ''}`}
+              className={`toggle flex items-center justify-center p-2 bg-container-accent hover:bg-primary text-f-accent font-semibold rounded-xl cursor-pointer transform transition-transform ${isDarkTheme ? 'rotate-180 dark:bg-dark-container-accent dark:text-dark-f-accent dark:hover:bg-dark-primary' : ''}`}
+              type="button"
               onClick={toggleTheme}
             >
               {isDarkTheme ? "☀️ | 🌙" : "☀️ | 🌙"}
