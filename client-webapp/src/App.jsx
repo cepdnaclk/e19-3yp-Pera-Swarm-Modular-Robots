@@ -4,6 +4,8 @@ import LoginForm from "../src/pages/login";
 import RobotConfig from "../src/pages/robotConfig";
 import Sandbox from "../src/pages/sandbox";
 import AdminDashboard from "../src/pages/adminDashboard";
+import CodeUpload from "../src/pages/codeUpload";
+
 
 function App() {
   return (
@@ -14,6 +16,7 @@ function App() {
           <Route path="/sandbox" element={<Sandbox />} />
           <Route path="/robotConfig" element={<RobotConfig />} />
           <Route path="/adminDashboard" element={<AdminDashboard />} />
+          <Route path="/codeUpload" element={<CodeUpload />} />
         </Routes>
       </Router>
     </div>
