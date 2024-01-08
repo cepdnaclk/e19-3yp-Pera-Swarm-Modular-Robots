@@ -34,6 +34,11 @@ const experimentSchema = new mongoose.Schema({
       message: 'User must have type "experimenter"',
     },
   },
+  status: {
+    type: String,
+    enum: ['pending', 'running', 'completed'],
+    default: 'pending',
+  },
 });
 
 module.exports = mongoose.model('Experiment', experimentSchema);

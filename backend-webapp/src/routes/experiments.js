@@ -1,4 +1,5 @@
 const Experiment = require('../schemas/experiment');
+const User = require('../schemas/user');
 
 // Create a new experiment
 exports.createExperiment = async (req, res) => {
@@ -57,13 +58,14 @@ exports.updateExperiment = async (req, res) => {
 
 // Delete an experiment by ID
 exports.deleteExperiment = async (req, res) => {
+    const id = req.params.id;
     try {
-        const experiment = await Experiment.findById(req.params.id);
+        const experiment = await Experiment.findByIdAndDelete(id);
         if (!experiment) {
             return res.status(404).json({ message: 'Experiment not found' });
-        }
+          }
 
-        await experiment.remove();
+        
         res.json({ message: 'Experiment deleted' });
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -73,16 +75,15 @@ exports.deleteExperiment = async (req, res) => {
 
 // Get all experiments by ExperimenterID (UserID)
 exports.getExperimentByUserId = async (req, res) => {
-  const userId = req.params.userId; // Assuming userId is provided as a parameter in the request
+  const userId = req.params.id; // Assuming userId is provided as a parameter in the request
 
   try {
     // Find all experiments with the given user_id (ExperimenterID)
     const experiments = await Experiment.find({ user_id: userId });
 
-    if (experiments.length === 0) {
-      return res.status(404).json({ message: 'No experiments found for the given user ID' });
-    }
-
+    // if (experiments.length === 0) {
+    //   return res.status(404).json({ message: 'No experiments found for the given user ID' });
+    // }
     res.status(200).json(experiments);
   } catch (error) {
     console.error(error);
