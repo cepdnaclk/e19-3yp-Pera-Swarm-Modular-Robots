@@ -5,7 +5,7 @@ require('dotenv').config({ path: `./.env.${process.env.NODE_ENV}` })
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const user =require('./src/schemas/user')
+
 const {requestLogger,createLog}= require('./src/middleware/logger'); //import logger
 const path = require('path')
 const expressWinston = require('express-winston');
@@ -44,8 +44,12 @@ expressWinston.responseWhitelist.push('body');
 
 // Public routes
 
-app.use('/user', require('./src/routes/users')) // authorization
+app.use('/', require('./src/routes/users')) // authorization
 app.use('/public', express.static(path.join(__dirname, 'public'))) // static content
+
+
+
+
 // serve experiment source files
 const zip = require('express-zip');
 app.get('/files', (req, res) => {
@@ -88,10 +92,10 @@ app.use('', require('./src/routes'));
 
 // TODO: Error Handling Middleware
 
-const userID = "1111";
+// const userID = "1111";
 // Start server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-    createLog(userID,`Server is running on port ${port}`);   
+   // createLog(userID,`Server is running on port ${port}`);   
 });
 

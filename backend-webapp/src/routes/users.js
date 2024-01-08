@@ -30,7 +30,9 @@ router.post("/login", async (req, res, next) => {
         accessToken,
         refreshToken,
         user: {
-            _id: user._id,
+            id: user._id,
+            role: user.type,
+            name: user.name,
             email: user.email,
             // Add other user data as needed
         },
