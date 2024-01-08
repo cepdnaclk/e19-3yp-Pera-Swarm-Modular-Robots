@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from '../api/axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
+
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: { email: "", password: ""},
     validationSchema: Yup.object({
@@ -20,6 +24,9 @@ const LoginForm = () => {
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('user', JSON.stringify(user));
+
+        // Redirect to the dashboard
+        navigate('/adminDashboard');
 
       } catch (error) {
         // If the request failed, display the error message
