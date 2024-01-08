@@ -1,7 +1,5 @@
 // Load environment variables
 require('dotenv').config({ path: `./.env.${process.env.NODE_ENV}` })
-
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -15,6 +13,9 @@ const expressWinston = require('express-winston');
 
 //user.create({name:"swarmbot",type:"admin",email:"mail@mail.com",password:"mail123"})
 
+// Initialize connection to Mongodb
+require('./src/db/conn');
+
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -23,8 +24,13 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Initialize connection to Mongodb
-require('./src/db/conn');
+
+
+
+
+// test data
+require('./src/db/testData');
+
 
 //middleware for logging errors and warnings in requests
 app.use(expressWinston.logger({
@@ -35,7 +41,7 @@ expressWinston.requestWhitelist.push('body'); //log body of request
 expressWinston.responseWhitelist.push('body');
 
 // Public routes
-app.use('/user', require('./src/routes/users')) // authorization
+app.use('/', require('./src/routes/users')) // authorization
 
 // jwt authentication
 const { authenticateToken } = require("./src/middleware/auth");
@@ -44,6 +50,10 @@ const { get } = require('mongoose');
 
 // Private routes
 app.use('', require('./src/routes'));
+
+
+
+
 
 // TODO: Error Handling Middleware
 
