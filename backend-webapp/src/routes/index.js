@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-// Import admin controller
+
 const adminController = require('../routes/admins');
 const experimenterController = require('../routes/experimenters');
 const robotController = require("../routes/robots");
 const experimentController = require("../routes/experiments");
 const logController = require("../routes/viewLogs");
+const codeFilesController = require("./codeFiles");
 
 
 
@@ -38,6 +39,8 @@ router.get('/api/experiments', experimentController.getAllExperiments);
 router.get('/api/experiment/:id', experimentController.getExperimentByUserId);
 router.put('/api/experiment/:id', experimentController.updateExperiment);
 router.delete('/api/experiment/:id', experimentController.deleteExperiment);
+
+router.post('/api/experiment/:id/code', codeFilesController.saveCodeFiles);
 
 // Logs Endpoints
 router.get('/api/logs', logController.getAllLogs);

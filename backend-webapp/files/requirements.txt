@@ -1,1 +1,1 @@
-numpy==1.26.2
+Any additional requirements can be included here.

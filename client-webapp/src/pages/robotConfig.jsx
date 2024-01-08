@@ -48,7 +48,7 @@ const Image = ({ id, src, onDrop }) => {
       ref={drag}
       src={src}
       alt={`Image ${id}`}
-      className="w-auto h-full m-2 cursor-pointer"
+      className="w-auto h-full m-2 cursor-pointer pt-2"
     />
   );
 };
