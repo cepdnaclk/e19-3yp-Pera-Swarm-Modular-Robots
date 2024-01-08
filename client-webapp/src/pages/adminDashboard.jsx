@@ -11,10 +11,10 @@ import { useEffect, useState } from "react";
 
 const AdminDashboard = () => {
   const [experiments, setExperiments] = useState([]);
-  const userId = "659c3128f8e19ef45832ea4a";
+  //const userId = "659c3128f8e19ef45832ea4a";
   const userJson = localStorage.getItem("user");
   const user = JSON.parse(userJson);
-  console.log(user);
+  const userId = user.id;
 
   useEffect(()=>{
       const fetchExperiments = async ()=>{
