@@ -31,8 +31,8 @@ export default class CodeUpload extends Component {
             </div>
           </div>
           <div className="mt-auto gaps-3">
-            <button className="bg-primary text-white px-4 py-2 rounded mb-2 mt-3 ml-1 mr-7">Submit</button>
-            <button className="bg-primary text-white px-4 py-2 rounded mb-2 mt-3 ml-6">Cancel</button>
+            <button className="bg-primary text-f-accent px-4 py-2 rounded mb-2 mt-3 ml-1 mr-7">Submit</button>
+            <button className="bg-primary text-f-accent px-4 py-2 rounded mb-2 mt-3 ml-6">Cancel</button>
           </div>
         </div>
         <div className="flex-1 p-4 overflow-y-auto">
