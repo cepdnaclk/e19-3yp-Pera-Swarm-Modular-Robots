@@ -25,6 +25,7 @@ const LoginForm = () => {
         localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('user', JSON.stringify(user));
 
+
         // Redirect to the dashboard
         navigate('/adminDashboard');
 
@@ -127,12 +128,12 @@ const LoginForm = () => {
 
           <div className="flex justify-between">
             <input
-              className={`w-1/2 p-2 rounded-md bg-container-accent text-f-accent font-semibold cursor-pointer ${isDarkTheme ? 'dark:bg-dark-container-accent dark:text-dark-f-accent' : ''}`}
+              className={`w-1/2 p-2 rounded-md bg-container-accent hover:bg-primary text-f-accent font-semibold cursor-pointer ${isDarkTheme ? 'dark:bg-dark-container-accent dark:text-dark-f-accent dark:hover:bg-dark-primary' : ''}`}
               type="submit"
               value="Login"
             />
             <button
-              className={`toggle flex items-center justify-center p-2 bg-container-accent text-f-accent font-semibold rounded-xl cursor-pointer transform transition-transform ${isDarkTheme ? 'rotate-180 dark:bg-dark-container-accent dark:text-dark-f-accent' : ''}`}
+              className={`toggle flex items-center justify-center p-2 bg-container-accent hover:bg-primary text-f-accent font-semibold rounded-xl cursor-pointer transform transition-transform ${isDarkTheme ? 'rotate-180 dark:bg-dark-container-accent dark:text-dark-f-accent dark:hover:bg-dark-primary' : ''}`}
               type="button"
               onClick={toggleTheme}
             >
