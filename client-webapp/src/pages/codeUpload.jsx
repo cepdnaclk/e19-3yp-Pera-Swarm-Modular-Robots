@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { solarizedlight } from "react-syntax-highlighter/dist/esm/styles/prism";
-import Modal from "react-modal";
+//import Modal from "react-modal";
 import { useLocation } from "react-router-dom";
 import axios from "../api/axios";
 
