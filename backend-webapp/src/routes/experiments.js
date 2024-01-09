@@ -3,6 +3,7 @@ const User = require('../schemas/user');
 
 // Create a new experiment
 exports.createExperiment = async (req, res) => {
+    console.log(req.body);
     try {
         const experiment = new Experiment(req.body);
         await experiment.save();

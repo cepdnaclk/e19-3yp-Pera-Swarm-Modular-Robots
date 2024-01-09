@@ -4,7 +4,7 @@ const User = require('./user'); // Import the User model
 const experimentSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: false,
   },
   id: {
     type: Number,
@@ -29,7 +29,7 @@ const experimentSchema = new mongoose.Schema({
     validate: {
       validator: async function (value) {
         const user = await User.findById(value);
-        return user && user.type === 'experimenter';
+        return ;
       },
       message: 'User must have type "experimenter"',
     },

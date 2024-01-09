@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Button, Text } from "../components";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { useNavigate } from 'react-router-dom';
 import Dropdown from "../components/dropdown";
 import search from "../assets/search.png";
 import camera from "../assets/camera.png";
 import hand from "../assets/hand.png";
 import wheel from "../assets/settings.png";
-import axios from "axios";
+import axios from "../api/axios";
 import Header from '../components/header';
 
 const options = [
@@ -131,6 +132,9 @@ const RobotConfig = () => {
   const [droppedItems, setDroppedItems] = useState([]);
   const [selectedOptionId, setSelectedOptionId] = useState(null);
 
+
+  const navigate = useNavigate();
+
   const handleDrop = (imageId, containerId) => {
     console.log(
       `Image ID: ${imageId} dropped into Container ID: ${containerId}`
@@ -171,13 +175,14 @@ const RobotConfig = () => {
       [item.containerId]: item.imageId
     }));
 
-    const requestJSON = {userId:user.id, robotId: selectedOptionId, attachments };
+    const requestJSON = {user_id :user.id, robot_id: selectedOptionId, attachments };
 
     axios
       .post("/api/experiment", requestJSON)
       .then((response) => {
         console.log("Backend response:", response.data);
         // Handle the response from the backend as needed
+        useNavigate('/userDashboard')
       })
       .catch((error) => {
         console.error("Error sending data to backend:", error);
