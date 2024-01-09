@@ -38,7 +38,7 @@ const experimentSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ['pending', 'running', 'completed','ready'],
-    default: 'ready',
+    default: 'pending',
   },
 });
 
