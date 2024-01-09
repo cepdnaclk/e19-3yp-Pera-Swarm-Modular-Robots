@@ -9,6 +9,8 @@ const expressWinston = require('express-winston');
 
 const {requestLogger,createLog}= require('./src/middleware/logger');//import logger
 
+// require('./src/aws/config');
+
 // Initialize connection to Mongodb
 require('./src/db/conn');
 
@@ -72,7 +74,7 @@ app.get('/files', (req, res) => {
 
 });
 
-
+});
 
 
 
@@ -98,4 +100,3 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
    // createLog(userID,`Server is running on port ${port}`);   
 });
-
