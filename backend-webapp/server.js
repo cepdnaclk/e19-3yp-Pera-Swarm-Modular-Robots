@@ -1,6 +1,6 @@
 // Load environment variables
 require('dotenv').config({ path: `./.env.${process.env.NODE_ENV}` })
-
+    // "prod": "cross-env NODE_ENV=production node ./server.js"
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -8,6 +8,8 @@ const path = require('path')
 const expressWinston = require('express-winston');
 
 const {requestLogger,createLog}= require('./src/middleware/logger');//import logger
+
+// require('./src/aws/config');
 
 // Initialize connection to Mongodb
 require('./src/db/conn');
@@ -38,17 +40,39 @@ expressWinston.responseWhitelist.push('body');
 
 
 
+
 // Public routes --------------------------------
 
 app.use('/', require('./src/routes/users')) // authorization
+app.get('/healthcheck', (req, res) => {
+    res.send('Server is up and running');
+
 app.use('/public', express.static(path.join(__dirname, 'public'))) // static content
+// serve experiment source files
+const zip = require('express-zip');
+app.get('/files', (req, res) => {
+  const fs = require('fs');
+  const files = 
+    fs.readdirSync(path.join(__dirname, 'files'))
+    .map((file)=> ({
+        path: path.join(__dirname, 'files', file),
+        name: file  
+      })
+    );
+  const archiveName = 'files.zip';
 
-// end Public routes --------------------------------
+  res.set('Content-Type', 'application/zip');
+  res.set('Content-Disposition', `attachment; filename=${archiveName}`);
 
+  res.zip(files, archiveName, (err) => {
+    if (err) {
+      console.log('Error sending files:', err);
+    } else {
+      console.log('Files sent successfully');
+    }
+  });
 
-
-
-
+}); });
 
 
 
@@ -75,4 +99,3 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
    // createLog(userID,`Server is running on port ${port}`);   
 });
-

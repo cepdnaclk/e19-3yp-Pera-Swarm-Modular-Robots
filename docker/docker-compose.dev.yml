@@ -1,0 +1,86 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: db-dev
+    image: mysql:8.0.34-debian
+    networks:
+      - server-net
+    command: "--default-authentication-plugin=mysql_native_password"
+    environment:
+      - MYSQL_DATABASE=LC_KANDY
+      - MYSQL_ROOT_PASSWORD=root
+      - LOG_LEVEL=error
+    expose:
+      - 3306
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
+    restart: always
+    cap_add:
+      - SYS_NICE
+    volumes:
+      - ./db/custom.cnf:/etc/mysql/conf.d/custom.cnf # custom settings file
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-dev
+    networks:
+      - server-net
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    restart: always
+    ports:
+      - 8080:80
+
+  server:
+    container_name: server-dev
+    build:
+      context: ./server
+      target: development
+    ports:
+      - 8081:8081
+    networks:
+      - server-net
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=root
+      - DATABASE_DB=LC_KANDY
+      - DATABASE_PORT=3306
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - type: bind
+        source: ./server
+        target: /app
+      - /app/node_modules
+
+  client:
+    container_name: client-dev
+    build:
+      context: ./client
+      target: development
+    ports:
+      - 3000:3000
+    depends_on:
+      - server
+    volumes:
+      - type: bind
+        source: ./client
+        target: /app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    restart: always
+
+networks:
+  server-net:
