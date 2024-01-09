@@ -77,7 +77,7 @@ exports.saveCodeFiles = async (req, res) => {
     console.log("\x1b[32mCode writing to files : DONE\x1b[0m");
     
     // TODO: call MQTT broker 
-    publishToTopic("server_directive", "run");
+    publishToTopic("server_directives", "run");
 
     res.status(201).json({ message: 'Code and requirements uploaded successfully.' });
 
