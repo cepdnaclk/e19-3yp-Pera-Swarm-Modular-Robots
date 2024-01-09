@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import Header from '../components/header';
 
 export default class CodeUpload extends Component {
   constructor(props) {
@@ -16,6 +17,8 @@ export default class CodeUpload extends Component {
 
   render() {
     return (
+      <div>
+        <Header/>
       <div className="flex h-screen">
         <div className="flex-none w-64 p-4 border-r flex flex-col">
           <div className="bg-container rounded p-4 flex-1">
@@ -46,6 +49,7 @@ export default class CodeUpload extends Component {
             {this.state.code}
           </SyntaxHighlighter>
         </div>
+      </div>
       </div>
     );
   }

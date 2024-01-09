@@ -66,4 +66,15 @@ router.delete("/logout", (req, res, next)=>{
   console.log("Logged Out");
 });
 
+
+// // Backend Endpoint to Fetch User Information
+// router.get("/user-info", authenticateToken, async (req, res) => {
+//   // req.user contains the decoded user information from the access token
+//   res.json({
+//     id: req.user.id,
+//     name: req.user.name,
+//     // Include other user information as needed
+//   });
+// });
+
 module.exports = router;
