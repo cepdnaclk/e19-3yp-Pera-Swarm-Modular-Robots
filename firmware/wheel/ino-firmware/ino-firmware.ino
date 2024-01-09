@@ -36,10 +36,10 @@ void onReceive(){
 void executeCommand(char command) {
   switch (command) {
     case '1':
-      forward(128);
+      forward(255);
       break;
-    case '0':
-      backward(128);
+    case '2':
+      backward(255);
       break;
   }
 }
