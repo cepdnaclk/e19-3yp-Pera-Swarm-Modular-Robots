@@ -27,18 +27,18 @@ const CodeUpload = () => {
 
   // Use React Router's useLocation to get query parameters
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch("/api/status");
-      const data = await response.json();
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await fetch("/api/status");
+  //     const data = await response.json();
 
-      // Update state of the robots and attachments based on the received data
-      setRobotStatus(data.robotStatus);
-      setAttachmentsStatus(data.attachmentsStatus);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  //     // Update state of the robots and attachments based on the received data
+  //     setRobotStatus(data.robotStatus);
+  //     setAttachmentsStatus(data.attachmentsStatus);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
 
   useEffect(() => {
     // Fetch data initially
