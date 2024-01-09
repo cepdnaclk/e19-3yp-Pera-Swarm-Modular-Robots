@@ -57,6 +57,8 @@ const Image = ({ id, src, onDrop }) => {
   );
 };
 
+const user = JSON.parse(localStorage.getItem("user"));
+
 const Container = ({
   id,
   name,
@@ -164,25 +166,15 @@ const RobotConfig = () => {
   };
 
   const sendDatatoBackend = () => {
-    // Create an array of container and image pairs
-    const containerImagePairs = droppedItems.map((item) => ({
-      containerId: item.containerId,
-      imageId: item.imageId,
+    // Create an array of key-value pairs with containerId as key and imageId as value
+    const attachments = droppedItems.map((item) => ({
+      [item.containerId]: item.imageId
     }));
-    console.log(
-      "Sending to backend:",
-      "Robot selected",
-      selectedOptionId,
-      "Conainer,img pairs",
-      containerImagePairs
-    );
-    // Send the data to the backend
+
+    const requestJSON = {userId:user.id, robotId: selectedOptionId, attachments };
+
     axios
-      .post(
-        "backend-api-endpoint",
-        { optionId: selectedOptionId },
-        { containerImagePairs }
-      )
+      .post("/api/experiment", requestJSON)
       .then((response) => {
         console.log("Backend response:", response.data);
         // Handle the response from the backend as needed
