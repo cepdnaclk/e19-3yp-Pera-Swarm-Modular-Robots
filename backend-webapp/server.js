@@ -1,6 +1,6 @@
 // Load environment variables
 require('dotenv').config({ path: `./.env.${process.env.NODE_ENV}` })
-
+    // "prod": "cross-env NODE_ENV=production node ./server.js"
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -74,7 +74,6 @@ app.get('/files', (req, res) => {
 
 }); });
 
-});
 
 
 
