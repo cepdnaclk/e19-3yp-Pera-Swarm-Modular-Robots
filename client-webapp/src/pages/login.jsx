@@ -74,7 +74,11 @@ const LoginForm = () => {
   };
 
 
+  const [showPassword, setShowPassword] = useState(false);
 
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
 
 
@@ -165,7 +169,7 @@ const LoginForm = () => {
 <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
+          <img className="w-8 h-8 mr-2" src="../src/assets/logo.svg" alt="logo" />
           PeraSwarm Experimentation
         </a>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -177,7 +181,13 @@ const LoginForm = () => {
               <div>
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Your email
+
+                  {getErrorForField("email") && (
+                  <span className="text-error ml-2"> {getErrorForField("email")}</span>
+                  )}
                 </label>
+
+
                 <input
                   type="email"
                   name="email"
@@ -192,22 +202,33 @@ const LoginForm = () => {
               </div>
               <div>
                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Password
+                  Password 
+                  {getErrorForField("password") && (
+                    <span className="text-error ml-2">{getErrorForField("password")}</span>
+                  )}                  
                 </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.password}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="••••••••"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    id="password"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.password}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="xoxo"
+                    required
+                  />
+                  {/* <span
+                    onClick={handleTogglePassword}
+                    className="cursor-pointer"
+                  >
+                    {showPassword ? '👁️' : '👁️‍🗨️'}
+                  </span> */}
+                </div>
               </div>
               <div className="flex items-center justify-between">
-                <div className="flex items-start">
+                {/* <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <input
                       id="remember"
@@ -222,7 +243,7 @@ const LoginForm = () => {
                       Remember me
                     </label>
                   </div>
-                </div>
+                </div> */}
               </div>
               <button
                 type="submit"
