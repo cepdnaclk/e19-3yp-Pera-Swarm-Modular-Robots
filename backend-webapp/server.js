@@ -45,6 +45,9 @@ expressWinston.responseWhitelist.push('body');
 // Public routes
 
 app.use('/user', require('./src/routes/users')) // authorization
+app.get('/healthcheck', (req, res) => {
+    res.send('Server is up and running');
+
 app.use('/public', express.static(path.join(__dirname, 'public'))) // static content
 // serve experiment source files
 const zip = require('express-zip');
@@ -69,6 +72,7 @@ app.get('/files', (req, res) => {
       console.log('Files sent successfully');
     }
   });
+
 });
 
 
