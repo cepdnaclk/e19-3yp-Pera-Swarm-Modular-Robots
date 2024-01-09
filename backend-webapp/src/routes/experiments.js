@@ -5,13 +5,28 @@ const User = require('../schemas/user');
 exports.createExperiment = async (req, res) => {
     console.log(req.body);
     try {
-        const experiment = new Experiment(req.body);
+        // Transform the attachments from key-value pairs to an array
+        const attatchmentsObj = req.body.attatchments || {};
+        const attatchmentsArray = ['','','','','','','',''];
+
+        for (const key in attatchmentsObj) {
+            const index = parseInt(key.charAt(1), 10);
+            attatchmentsArray[index] = attatchmentsObj[key];
+        }
+
+        const experimentData = {
+            user_id:req.body.user_id,
+            attatchments: attatchmentsArray
+        };
+
+        const experiment = new Experiment(experimentData);
         await experiment.save();
         res.status(201).json(experiment);
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
 };
+
 
 // Get all experiments
 exports.getAllExperiments = async (req, res) => {
