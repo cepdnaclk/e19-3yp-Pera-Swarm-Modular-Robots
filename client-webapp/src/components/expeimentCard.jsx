@@ -5,8 +5,8 @@ import edit from "../assets/edit.png";
 import dlt from "../assets/delete.png";
 import { Link } from "react-router-dom";
 
-const ExperimentCard = ({ experimentName, experimentId, handleDelete , status, attatchments, userDash,handleReady}) => {
-  console.log("attatchments", attatchments)
+const ExperimentCard = ({ experimentName, experimentId, handleDelete , status, attachments, userDash,handleReady}) => {
+  console.log("attachments", attachments)
   return (
     <div className="bg-container flex flex-1 flex-col items-center justify-end p-2.5 rounded-[12px] w-full">
       <div className="flex flex-col items-center justify-start mt-3.5 w-[99%] md:w-full">
@@ -22,68 +22,68 @@ const ExperimentCard = ({ experimentName, experimentId, handleDelete , status, a
                 >
                   Status: {status}
               </Text>
-              {attatchments &&<Text
+              {attachments &&<Text
                   className="md:mt-0 mt-[9px] text-gray-900 text-xl  font-serif italic "
                   size="txtInterRegular20"
                 >
-                  Attatchments :
+                  attachments :
               </Text>}
-              {attatchments && 
+              {attachments && 
                 <span >
-                  {attatchments[0]&& <Text
+                  {attachments[0]&& <Text
                     className="text-gray-900 text-xl  font-serif italic"
                     size="txtInterRegular20"
                   >
-                    TF: {attatchments[0]}
+                    TF: {attachments[0]}
   
                   </Text>}
-                  {attatchments[1]&&<Text
+                  {attachments[1]&&<Text
                     className="text-gray-900 text-xl  font-serif italic"
                     size="txtInterRegular20"
                   >
-                    TR: {attatchments[1]}
+                    TR: {attachments[1]}
   
                   </Text>}
-                  {attatchments[2]&&<Text
+                  {attachments[2]&&<Text
                     className="text-gray-900 text-xl  font-serif italic"
                     size="txtInterRegular20"
                   >
-                    TL: {attatchments[2]}
+                    TL: {attachments[2]}
   
                   </Text>}
-                  {attatchments[3]&&<Text
+                  {attachments[3]&&<Text
                     className="text-gray-900 text-xl  font-serif italic"
                     size="txtInterRegular20"
                   >
-                    TB: {attatchments[3]}
+                    TB: {attachments[3]}
   
                   </Text>}
-                  {attatchments[4]&&<Text
+                  {attachments[4]&&<Text
                     className="text-gray-900 text-xl  font-serif italic"
                     size="txtInterRegular20"
                   >
-                    BF: {attatchments[4]}
+                    BF: {attachments[4]}
   
                   </Text>}
-                  {attatchments[5]&&<Text
+                  {attachments[5]&&<Text
                     className="text-gray-900 text-xl  font-serif italic"
                     size="txtInterRegular20"
                   >
-                    BR: {attatchments[5]}
+                    BR: {attachments[5]}
   
                   </Text>}
-                  {attatchments[6]&&<Text
+                  {attachments[6]&&<Text
                     className="text-gray-900 text-xl  font-serif italic"
                     size="txtInterRegular20"
                   >
-                    BL: {attatchments[6]}
+                    BL: {attachments[6]}
   
                   </Text>}
-                  {attatchments[7]&&<Text
+                  {attachments[7]&&<Text
                     className="text-gray-900 text-xl  font-serif italic"
                     size="txtInterRegular20"
                   >
-                   BB: {attatchments[7]}
+                   BB: {attachments[7]}
   
                   </Text>}
                 </span>
