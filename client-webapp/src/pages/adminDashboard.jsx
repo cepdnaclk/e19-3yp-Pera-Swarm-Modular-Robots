@@ -109,7 +109,7 @@ const AdminDashboard = () => {
             orientation="vertical"
           >
             {experiments.map((experiment, index) => ( experiment.status === "pending" &&
-              (<ExperimentCard key={index} experimentName={experiment.name} experimentId={experiment._id} handleReady={handleReady }attatchments={experiment.attatchments} status = {experiment.status} />)
+              (<ExperimentCard key={index} experimentName={experiment.name} experimentId={experiment._id} handleReady={handleReady }attachments={experiment.attachments} status = {experiment.status} />)
               
             ) ) }
           </List>}

@@ -6,14 +6,13 @@ import { useLocation } from "react-router-dom";
 import axios from "../api/axios";
 import Header from '../components/header';
 
-const userJson = localStorage.getItem("user");
-const user = JSON.parse(userJson);
-const userId = user.id;
-console.log(userId);
+
 
 const CodeUpload = () => {
   //const userId = "659c3128f8e19ef45832ea4a";
-
+  const userJson = localStorage.getItem("user");
+  const user = JSON.parse(userJson);
+  const userId = user.id;
 
   const [robotStatus, setRobotStatus] = useState("Unknown");
   const [attachmentsStatus, setAttachmentsStatus] = useState({

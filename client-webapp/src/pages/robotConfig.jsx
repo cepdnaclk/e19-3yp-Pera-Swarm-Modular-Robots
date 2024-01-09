@@ -58,7 +58,7 @@ const Image = ({ id, src, onDrop }) => {
   );
 };
 
-const user = JSON.parse(localStorage.getItem("user"));
+
 
 const Container = ({
   id,
@@ -132,7 +132,7 @@ const RobotConfig = () => {
   const [droppedItems, setDroppedItems] = useState([]);
   const [selectedOptionId, setSelectedOptionId] = useState(null);
 
-
+  const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
   const handleDrop = (imageId, containerId) => {
