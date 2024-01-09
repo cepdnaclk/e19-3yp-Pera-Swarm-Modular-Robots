@@ -13,12 +13,16 @@ device.on('connect', () => {
     console.log('Connected to IoT Core')
 });
 
-device
-  .on('message', (topic, payload) => {
-    console.log('message', topic, payload.toString());
-});
+// device
+//   .on('message', (topic, payload) => {
+//     console.log('message', topic, payload.toString());
+// });
 
+// Function to publish a message to a certain topic
+function publishToTopic(topic, message) {
+  device.publish(topic, JSON.stringify(message));
+}
 
-module.exports = { device };
+module.exports = { device, publishToTopic };
 
 

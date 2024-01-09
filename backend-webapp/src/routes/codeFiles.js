@@ -1,4 +1,5 @@
 const path = require('path');
+const { publishToTopic } = require('../aws/config');
 const fs = require('fs');
 const { promisify } = require('util');
 const zip = require('express-zip');
@@ -34,7 +35,6 @@ exports.getFileForCode = async (req, res) => {
     res.status(500).send('Error reading files');
   }
 };
-
 
 exports.saveCodeFiles = async (req, res) => {
   try {
@@ -77,7 +77,7 @@ exports.saveCodeFiles = async (req, res) => {
     console.log("\x1b[32mCode writing to files : DONE\x1b[0m");
     
     // TODO: call MQTT broker 
-
+    publishToTopic("server_directive", "run");
 
     res.status(201).json({ message: 'Code and requirements uploaded successfully.' });
 
