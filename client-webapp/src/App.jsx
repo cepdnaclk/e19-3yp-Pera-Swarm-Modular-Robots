@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+
 import LoginForm from "../src/pages/login";
 import RobotConfig from "../src/pages/robotConfig";
 import Sandbox from "../src/pages/sandbox";
@@ -26,21 +28,3 @@ function App() {
 }
 
 export default App;
-
-///////////////////////
-// import { DndProvider } from "react-dnd";
-// import { HTML5Backend } from "react-dnd-html5-backend";
-// import DragDrop from "../src/components/dragdrop";
-
-// function App() {
-//   return (
-//     <DndProvider backend={HTML5Backend}>
-//       <div className="App">
-//         <DragDrop />
-//       </div>
-//     </DndProvider>
-//   );
-// }
-
-// export default App;
-//////////////////////

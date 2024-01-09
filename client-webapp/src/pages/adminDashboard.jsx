@@ -10,6 +10,7 @@ import Header from '../components/header';
 import axios from "../api/axios";
 import { useEffect, useState } from "react";
 
+
 const AdminDashboard = () => {
   const [experiments, setExperiments] = useState([]);
   //const userId = "659c3128f8e19ef45832ea4a";
@@ -17,19 +18,21 @@ const AdminDashboard = () => {
   const user = JSON.parse(userJson);
   const userId = user.id;
 
-  useEffect(()=>{
-      const fetchExperiments = async ()=>{
-        try{
-          const res = await axios.get(`/api/experiments`)
 
-          setExperiments(res.data) ;
+  const fetchExperiments = async () => {
+    try {
+      const res = await axios.get('/api/experiments');
+      console.log(res.data);
+      setExperiments(res.data);
+    } catch (error) {
+      console.error('Error:', error.response.data);
+    }
+  };
 
-        } catch (error) {
-          console.error('Error:', error.response.data);
-        }
-      }
-      fetchExperiments();
-    },[setExperiments])
+  
+  useEffect(() => {
+    fetchExperiments();
+  }, []);
 
   //update an experiment
   const handleReady = async (id) => {

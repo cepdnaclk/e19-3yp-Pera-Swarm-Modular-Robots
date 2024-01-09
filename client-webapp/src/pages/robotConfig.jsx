@@ -182,7 +182,7 @@ const RobotConfig = () => {
       .then((response) => {
         console.log("Backend response:", response.data);
         // Handle the response from the backend as needed
-        useNavigate('/userDashboard')
+        navigate('/userDashboard');
       })
       .catch((error) => {
         console.error("Error sending data to backend:", error);

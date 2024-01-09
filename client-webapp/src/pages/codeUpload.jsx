@@ -6,13 +6,14 @@ import { useLocation } from "react-router-dom";
 import axios from "../api/axios";
 import Header from '../components/header';
 
+const userJson = localStorage.getItem("user");
+const user = JSON.parse(userJson);
+const userId = user.id;
+console.log(userId);
 
 const CodeUpload = () => {
   //const userId = "659c3128f8e19ef45832ea4a";
-  const userJson = localStorage.getItem("user");
-  const user = JSON.parse(userJson);
-  const userId = user.id;
-  console.log(userId);
+
 
   const [robotStatus, setRobotStatus] = useState("Unknown");
   const [attachmentsStatus, setAttachmentsStatus] = useState({
@@ -42,18 +43,18 @@ const CodeUpload = () => {
   //   }
   // };
 
-  useEffect(() => {
-    // Fetch data initially
-    fetchData();
+  // useEffect(() => {
+  //   // Fetch data initially
+  //   fetchData();
 
-    // Set up interval for get updates every minute
-    const intervalId = setInterval(() => {
-      fetchData();
-    }, 60000);
+  //   // Set up interval for get updates every minute
+  //   const intervalId = setInterval(() => {
+  //     fetchData();
+  //   }, 60000);
 
-    // Clear interval on component unmount to avoid memory leaks
-    return () => clearInterval(intervalId);
-  }, []);
+  //   // Clear interval on component unmount to avoid memory leaks
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   const handleCodeChange = (e) => {
     setCode(e.target.value);
@@ -68,17 +69,17 @@ const CodeUpload = () => {
     }
 
     const apiUrl = `api/experiment/${userId}/code`;
-    console.log("Code:", code);
     //console.log("Api Url:", apiUrl);
-
-    const encodedCode = JSON.stringify(code);
-    const value = { code: encodedCode, requirement: "" };
+    
+    const encodedCode = (code);
+    const value = { code: encodedCode, requirements: "" };
+    console.log("req:", value);
     try {
       const response = await axios.post(apiUrl, value);
 
       console.log("Response:", response);
 
-      if (response.status === 200) {
+      if (response.status === 201 ) {
         console.log("Code submitted successfully");
         setIsUploadSuccessModalOpen(true);
       } else {
@@ -172,7 +173,7 @@ const CodeUpload = () => {
           className="w-full border rounded p-2 mt-4"
           onChange={handleCodeChange}
           />
-        <SyntaxHighlighter language="c" style={solarizedlight}>
+        <SyntaxHighlighter language="python" style={solarizedlight}>
           {code}
         </SyntaxHighlighter>
       </div>

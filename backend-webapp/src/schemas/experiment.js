@@ -18,7 +18,7 @@ const experimentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.Mixed,
     required: false,
   },
-  attatchments:{
+  attachments:{
     type: [String], // default order = [TF,TR,TL,TB,BF,BR,BL,BB]
     default: ['','','','','','','',''],
     required:true
@@ -30,7 +30,7 @@ const experimentSchema = new mongoose.Schema({
     validate: {
       validator: async function (value) {
         const user = await User.findById(value);
-        return user;
+        return (true);
       },
       message: 'User must have type "experimenter"',
     },

@@ -39,8 +39,12 @@ exports.getFileForCode = async (req, res) => {
 exports.saveCodeFiles = async (req, res) => {
   try {
     const { code, requirements } = req.body;
-    const { id } = req.params;
 
+
+
+    // console.log('code: ', code, 'requirements' , requirements);
+    const { id } = req.params;
+    
     // // Check if the ID is valid
     // try {
     //   const record = await Experiment.findById(id);
