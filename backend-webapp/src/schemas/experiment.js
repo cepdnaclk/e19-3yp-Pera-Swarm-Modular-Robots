@@ -4,11 +4,11 @@ const User = require('./user'); // Import the User model
 const experimentSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: false,
   },
   id: {
     type: Number,
-    required: true,
+    required: false,
   },
   log: {
     type: String,
@@ -20,7 +20,8 @@ const experimentSchema = new mongoose.Schema({
   },
   attatchments:{
     type: [String], // default order = [TF,TR,TL,TB,BF,BR,BL,BB]
-    default: ['','','','','','','','']
+    default: ['','','','','','','',''],
+    required:true
   },
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
@@ -29,7 +30,7 @@ const experimentSchema = new mongoose.Schema({
     validate: {
       validator: async function (value) {
         const user = await User.findById(value);
-        return user && user.type === 'experimenter';
+        return user;
       },
       message: 'User must have type "experimenter"',
     },
@@ -37,7 +38,7 @@ const experimentSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ['pending', 'running', 'completed','ready'],
-    default: 'pending',
+    default: 'ready',
   },
 });
 
