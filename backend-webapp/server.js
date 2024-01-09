@@ -38,16 +38,39 @@ expressWinston.responseWhitelist.push('body');
 
 
 
+
 // Public routes --------------------------------
 
 app.use('/', require('./src/routes/users')) // authorization
+app.get('/healthcheck', (req, res) => {
+    res.send('Server is up and running');
+
 app.use('/public', express.static(path.join(__dirname, 'public'))) // static content
+// serve experiment source files
+const zip = require('express-zip');
+app.get('/files', (req, res) => {
+  const fs = require('fs');
+  const files = 
+    fs.readdirSync(path.join(__dirname, 'files'))
+    .map((file)=> ({
+        path: path.join(__dirname, 'files', file),
+        name: file  
+      })
+    );
+  const archiveName = 'files.zip';
 
-// end Public routes --------------------------------
+  res.set('Content-Type', 'application/zip');
+  res.set('Content-Disposition', `attachment; filename=${archiveName}`);
 
+  res.zip(files, archiveName, (err) => {
+    if (err) {
+      console.log('Error sending files:', err);
+    } else {
+      console.log('Files sent successfully');
+    }
+  });
 
-
-
+});
 
 
 
