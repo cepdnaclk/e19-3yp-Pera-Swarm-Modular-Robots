@@ -5,18 +5,26 @@ const User = require('../schemas/user');
 exports.createExperiment = async (req, res) => {
     console.log(req.body);
     try {
-        // Transform the attachments from key-value pairs to an array
-        const attatchmentsObj = req.body.attatchments || {};
-        const attatchmentsArray = ['','','','','','','',''];
 
-        for (const key in attatchmentsObj) {
-            const index = parseInt(key.charAt(1), 10);
-            attatchmentsArray[index] = attatchmentsObj[key];
+        // Transform the attachments from key-value pairs to an array
+        const order = ['TF', 'TR', 'TL', 'TB', 'BF', 'BR', 'BL', 'BB'];
+        const attachmentsArray = Array(order.length).fill('');
+        const attachmentsObj = req.body.attachments;
+        
+        for (const attachment of attachmentsObj) {
+            const key = Object.keys(attachment)[0]; // Extract the key
+            const index = order.indexOf(key);
+            if (index !== -1) {
+              attachmentsArray[index] = attachment[key];
+            }
         }
+          
+        console.log(attachmentsObj);
+
 
         const experimentData = {
             user_id:req.body.user_id,
-            attatchments: attatchmentsArray
+            attachments: attachmentsArray
         };
 
         const experiment = new Experiment(experimentData);
