@@ -109,19 +109,22 @@ const ExperimentCard = ({ experimentName, experimentId, handleDelete , status, a
             </div>
             <span>
             {userDash ===1 ?(<div className="flex flex-col gap-4 h-8 items-center justify-start mr-5 w-8">
-              <button className="cursor-pointer transition ease-in-out delay-100 hover:-translate-y-1">
-                <Img
-                  className="h-8 md:h-auto object-cover w-8"
-                  src={edit}
-                  alt="editbutton"
-                />
-              </button>
+              
               <button className="cursor-pointer transition ease-in-out delay-100 hover:-translate-y-1" onClick={()=>handleDelete(experimentId)} >
                 <Img
                   className="h-8 md:h-auto ml-2 md:ml-[0] object-cover w-8"
                   src={dlt}
                   alt="dltbutton"
                 />
+              </button>
+              <button className="cursor-pointer transition ease-in-out delay-100 hover:-translate-y-1">
+              {status === "ready" && userDash===1 && <div className="flex flex-col gap-4 h-8 items-center justify-start mr-5 w-8">
+            <Link to={"/codeUpload"}>
+              <button className="cursor-pointer rounded-md leading-[normal] w-[200px] h-[40px] ml-auto md:text-[19px]  text-center text-f-accent bg-primary text-bg font-serif  transition ease-in-out delay-100 hover:-translate-y-1 ">
+                Run Experiment
+              </button>
+            </Link>
+              </div>}
               </button>
             </div> )
             : (<div className="flex flex-col gap-4 h-8 items-center justify-start mr-5 w-8">
@@ -133,13 +136,7 @@ const ExperimentCard = ({ experimentName, experimentId, handleDelete , status, a
                 />
               </button>
             </div>)}
-            {status === "ready" && <div className="flex flex-col gap-4 h-8 items-center justify-start mr-5 w-8">
-            <Link to={"/codeUpload"}>
-              <button className="cursor-pointer rounded-md leading-[normal] w-[200px] h-[40px] ml-auto md:text-[19px]  text-center color-white bg-primary text-bg font-serif  transition ease-in-out delay-100 hover:-translate-y-1 ">
-                Run Experiment
-              </button>
-            </Link>
-              </div>}
+            
             </span>
           </div>
         </div>

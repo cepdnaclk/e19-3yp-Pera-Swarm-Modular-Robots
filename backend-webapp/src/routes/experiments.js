@@ -16,7 +16,10 @@ exports.createExperiment = async (req, res) => {
 
         const experimentData = {
             user_id:req.body.user_id,
-            attatchments: attatchmentsArray
+            name: req.body.name,
+            videoFile: req.body.videoFile,
+            attatchments: attatchmentsArray,
+            log: req.body.log,
         };
 
         const experiment = new Experiment(experimentData);
