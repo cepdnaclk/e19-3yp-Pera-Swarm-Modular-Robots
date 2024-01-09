@@ -6,14 +6,8 @@ import { Button, Img, List, Text } from "../components";
 import logo from "../assets/logo.png";
 import usericon from "../assets/user.png";
 import ExperimentCard from "../components/expeimentCard";
-<<<<<<< HEAD
-import Header from '../components/header';
-
-
-=======
 import axios from "../api/axios";
 import { useEffect, useState } from "react";
->>>>>>> 6a33019afa8b9529bdd8babd835a8d8664a973ca
 
 const AdminDashboard = () => {
   const [experiments, setExperiments] = useState([]);
