@@ -67,7 +67,7 @@ const UserDashboard = () => {
             </Text> */}
 
             <Link to={"/sandbox"}>
-              <button className="cursor-pointer rounded-md leading-[normal] w-[200px] h-[40px] ml-auto md:text-[19px]  text-center color-white bg-primary text-bg font-serif  transition ease-in-out delay-100 hover:-translate-y-1 ">
+              <button className="cursor-pointer rounded-md leading-[normal] w-[200px] h-[40px] ml-auto md:text-[19px]  text-center text-f-accent bg-primary text-bg font-serif  transition ease-in-out delay-100 hover:-translate-y-1 ">
                 Setup Experiment
               </button>
             </Link>

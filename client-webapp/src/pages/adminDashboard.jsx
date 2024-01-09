@@ -67,7 +67,7 @@ const AdminDashboard = () => {
         <div className="bg-bgd font-inter items-center justify-start mx-auto  ">
             <Header/>
             <div className="px-3">
-        <div className="bg-bg border border-container-accent border-solid flex flex-col items-center justify-start max-w-[1410px] mx-auto p-3 pt-3 pb-3 md:px-5 rounded-[12px] ">
+        {/* <div className="bg-bg border border-container-accent border-solid flex flex-col items-center justify-start max-w-[1410px] mx-auto p-3 pt-3 pb-3 md:px-5 rounded-[12px] ">
 
           <div className="flex flex-col gap-[27px] justify-start mb-[3px] mt-2.5 w-full">
              <Text
@@ -84,7 +84,7 @@ const AdminDashboard = () => {
               </button>
             </Link>*
           </div>
-        </div>
+        </div> */}
         <div className="border border-container-accent border-solid flex flex-col items-center justify-start max-w-[1410px] mb-3.5 mx-auto p-3  md:px-5 rounded-[12px] w-full">
 
           <div className="flex flex-col gap-[19px] justify-start mb-[101px] w-full">
