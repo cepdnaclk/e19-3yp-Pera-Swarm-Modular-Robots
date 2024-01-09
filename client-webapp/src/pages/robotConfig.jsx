@@ -8,6 +8,7 @@ import camera from "../assets/camera.png";
 import hand from "../assets/hand.png";
 import wheel from "../assets/settings.png";
 import axios from "axios";
+import Header from '../components/header';
 
 const options = [
   { id: 1, value: "ModularRobot1", label: "Modular Robot 1" },
@@ -44,12 +45,15 @@ const Image = ({ id, src, onDrop }) => {
   });
 
   return (
+  
+      
     <img
       ref={drag}
       src={src}
       alt={`Image ${id}`}
       className="w-auto h-full m-2 cursor-pointer pt-2"
-    />
+      />
+  
   );
 };
 
@@ -62,53 +66,53 @@ const Container = ({
   setDroppedItems,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-
+  
   const [, drop] = useDrop({
     accept: ItemTypes.IMAGE,
     drop: (item) => onDrop(item.id, id),
   });
-
+  
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
-
+  
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
-
+  
   const handleRemoveButtonClick = () => {
     // Identify the container from which the image should be removed
     setDroppedItems((prevDroppedItems) => {
       const updatedDroppedItems = prevDroppedItems.filter(
         (image) => image.containerId !== id
-      );
-      return updatedDroppedItems;
-    });
-  };
-
-  return (
-    <div
+        );
+        return updatedDroppedItems;
+      });
+    };
+    
+    return (
+      <div
       ref={drop}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className="h-[300px] w-[235px] rounded-xl m-5 overflow-hidden shadow-lg border-4 bg-container border-primary relative"
-    >
+      >
       <div className="h-[220px] w-[210px] p-2 flex items-center justify-center relative">
         {droppedImages.map((image) => (
           <img
-            className="object-fit w-full h-auto"
-            key={image.id}
-            src={image.value}
-            alt={`Dropped Image ${image.id}`}
+          className="object-fit w-full h-auto"
+          key={image.id}
+          src={image.value}
+          alt={`Dropped Image ${image.id}`}
           />
-        ))}
+          ))}
 
         {children}
       </div>
       {isHovered && droppedImages.length > 0 && (
         <button
-          onClick={handleRemoveButtonClick}
-          className="absolute top-[10px] right-3 w-6 h-6 bg-f rounded-full text-primary-accent cursor-pointer"
+        onClick={handleRemoveButtonClick}
+        className="absolute top-[10px] right-3 w-6 h-6 bg-f rounded-full text-primary-accent cursor-pointer"
         >
           X
         </button>
@@ -117,6 +121,7 @@ const Container = ({
         <div className="font-bold text-l mb-1 text-primary-accent">{name}</div>
       </div>
     </div>
+  
   );
 };
 
@@ -189,9 +194,11 @@ const RobotConfig = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <DndProvider backend={HTML5Backend}>
       <>
-        <div className=" bg-bg flex flex-col font-inter items-end justify-end mx-auto p-[18px] h-screen w-full">
+        <div className=" bg-bg flex flex-col font-inter items-end justify-end mx-auto p-t5 h-screen w-full">
           <div className="flex flex-col gap-6 justify-start md:px-5 w-[94%] md:w-full">
             <div className="flex md:flex-row flex-row gap-[41px] items-center justify-start mr-[92px] w-[93%] md:w-full">
               <div className="border border-f border-solid flex flex-col gap-5 h-[590px]  items-start justify-start sm:px-5 rounded-[12px] w-[250px]">
@@ -202,12 +209,12 @@ const RobotConfig = () => {
                       className="h-[20px] md:h-auto my-0.5 mr-auto object-cover w-[20px]"
                       src={search}
                       alt="searchIcon"
-                    />
+                      />
                     <input
                       type="text"
                       className="w-full pl-4 py-1 text-base text-f placeholder-gray-900_05 focus:outline-none"
                       placeholder="Search Components"
-                    />
+                      />
                   </div>
                 </div>
                 <div className=" overflow-y-scroll">
@@ -244,15 +251,15 @@ const RobotConfig = () => {
                   <div className="flex flex-wrap w-[1120px] ">
                     {ContainersList.map((container) => (
                       <Container
-                        key={container.id}
-                        id={container.id}
-                        name={container.name}
-                        onDrop={handleDrop}
-                        droppedImages={droppedItems.filter(
-                          (item) => item.containerId === container.id
+                      key={container.id}
+                      id={container.id}
+                      name={container.name}
+                      onDrop={handleDrop}
+                      droppedImages={droppedItems.filter(
+                        (item) => item.containerId === container.id
                         )}
                         setDroppedItems={setDroppedItems}
-                      />
+                        />
                     ))}
                   </div>
                 </div>
@@ -266,7 +273,7 @@ const RobotConfig = () => {
               <Button
                 onClick={sendDatatoBackend}
                 className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-primary-accent bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1"
-              >
+                >
                 Next
               </Button>
             </div>
@@ -274,6 +281,8 @@ const RobotConfig = () => {
         </div>
       </>
     </DndProvider>
+                </div>
+  
   );
 };
 

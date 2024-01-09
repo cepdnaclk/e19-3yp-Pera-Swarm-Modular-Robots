@@ -4,6 +4,8 @@ import { solarizedlight } from "react-syntax-highlighter/dist/esm/styles/prism";
 //import Modal from "react-modal";
 import { useLocation } from "react-router-dom";
 import axios from "../api/axios";
+import Header from '../components/header';
+
 
 const CodeUpload = () => {
   //const userId = "659c3128f8e19ef45832ea4a";
@@ -97,6 +99,8 @@ const CodeUpload = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="flex h-screen">
       <div className="flex-none w-64 p-4 border-r flex flex-col">
         <div className="bg-container rounded p-4 flex-1">
@@ -119,7 +123,7 @@ const CodeUpload = () => {
           <button
             onClick={handleCodeSubmit}
             className="bg-primary hover:bg-container-accent text-f-accent px-4 py-2 rounded mb-2 mt-3 ml-1 mr-7"
-          >
+            >
             Submit
           </button>
           <button className="bg-primary hover:bg-container-accent text-f-accent px-4 py-2 rounded mb-2 mt-3 ml-6">
@@ -132,32 +136,32 @@ const CodeUpload = () => {
           isOpen={isUploadSuccessModalOpen}
           onRequestClose={closeUploadSuccessModal}
           contentLabel="Upload Success Modal"
-        >
+          >
           <div>
             <h2>Code Uploaded Successfully</h2>
             <button
-              className="bg-error mt-3 ml-[70px] w-[100px] h-[40px] rounded-md text-primary-accent"
-              onClick={closeUploadSuccessModal}
+            className="bg-error mt-3 ml-[70px] w-[100px] h-[40px] rounded-md text-primary-accent"
+            onClick={closeUploadSuccessModal}
             >
-              Close
+            Close
             </button>
-          </div>
-        </Modal> */}
+            </div>
+          </Modal> */}
 
         {/* <Modal
           className="w-[400px] h-[170px] bg-container ml-[600px] mt-[200px] p-5 rounded-md flex flex-col justify-center items-center"
           isOpen={isUploadFailedModalOpen}
           onRequestClose={closeUploadFailedModal}
           contentLabel="Upload Failed Modal"
-        >
+          >
           <div>
-            <h2 className="mb-8 md:text-[22px]">Code Uploading Failed !</h2>
-            <button
-              className="bg-error mt-3 ml-[70px] w-[100px] h-[40px] rounded-md text-primary-accent"
-              onClick={closeUploadFailedModal}
-            >
-              Close
-            </button>
+          <h2 className="mb-8 md:text-[22px]">Code Uploading Failed !</h2>
+          <button
+          className="bg-error mt-3 ml-[70px] w-[100px] h-[40px] rounded-md text-primary-accent"
+          onClick={closeUploadFailedModal}
+          >
+          Close
+          </button>
           </div>
         </Modal> */}
       </div>
@@ -167,12 +171,13 @@ const CodeUpload = () => {
           placeholder="Enter your code here..."
           className="w-full border rounded p-2 mt-4"
           onChange={handleCodeChange}
-        />
+          />
         <SyntaxHighlighter language="c" style={solarizedlight}>
           {code}
         </SyntaxHighlighter>
       </div>
     </div>
+          </div>
   );
 };
 
