@@ -129,28 +129,29 @@ const ExperimentCard = ({
             </div>
             <span>
               {userDash === 1 ? (
-                <div className="flex flex-col gap-4 h-8 items-center justify-start mr-5 w-8">
+                <div className="">
+                  {/* Delete Button on the right */}
                   <button
-                    className="cursor-pointer transition ease-in-out delay-100 hover:-translate-y-1"
+                    className="cursor-pointer transition ease-in-out delay-100 hover:-translate-y-1 w-[30px] "
                     onClick={() => handleDelete(experimentId)}
                   >
                     <Img
-                      className="h-8 md:h-auto ml-2 mt-[70px] md:ml-[0] object-cover w-8"
+                      className="h-8 md:h-auto ml-[140px] mt-6 object-cover w-8"
                       src={dlt}
                       alt="dltbutton"
                     />
                   </button>
-                  <button className="cursor-pointer transition ease-in-out delay-100 hover:-translate-y-1">
-                    {status === "ready" && userDash === 1 && (
-                      <div className="flex  flex-col gap-4 h-8 items-center justify-start mr-[180px] mt-[70px] mb-4 w-8">
-                        <Link to={"/codeUpload"}>
-                          <button className="cursor-pointer rounded-md leading-[normal] w-[180px] h-[50px] ml-auto md:text-[19px] text-center text-f-accent bg-primary text-bg font-serif transition ease-in-out delay-100 hover:-translate-y-1">
-                            Run Experiment
-                          </button>
-                        </Link>
+
+                  {/* Run Experiment Button in the middle */}
+                  {status === "ready" && userDash === 1 && (
+                    <Link to={"/codeUpload"}>
+                      <div className="">
+                        <button className="cursor-pointer mt-6 mb-2 rounded-md leading-[normal] w-[180px] h-[40px] md:text-[19px] text-center text-f-accent bg-primary text-bg font-serif transition ease-in-out delay-100 hover:-translate-y-1">
+                          Run Experiment
+                        </button>
                       </div>
-                    )}
-                  </button>
+                    </Link>
+                  )}
                 </div>
               ) : (
                 <div className="flex  flex-col gap-4 h-8 items-center justify-start mr-[180px] mt-[70px] mb-4 w-8">
