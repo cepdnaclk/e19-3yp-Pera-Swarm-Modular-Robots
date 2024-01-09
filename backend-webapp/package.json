@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./server.js",
-    "prod": "NODE_ENV=production node ./server.js",
-
+    "prod": "NODE_ENV=production node ./server.js"
   },
   "keywords": [],
   "author": "",
@@ -19,15 +18,14 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "express-winston": "^4.2.0",
     "express-zip": "^3.0.0",
+    "express-winston": "^4.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.0",
     "winston": "^3.11.0",
     "winston-mongodb": "^5.1.1"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
     "nodemon": "^3.0.1"
   },
   "nodemonConfig": {
