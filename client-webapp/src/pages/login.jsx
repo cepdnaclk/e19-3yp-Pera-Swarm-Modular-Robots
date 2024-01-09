@@ -27,7 +27,12 @@ const LoginForm = () => {
 
 
         // Redirect to the dashboard
-        navigate('/adminDashboard');
+
+        if(user.role == 'admin'){
+          navigate('/adminDashboard');
+        }else {
+          navigate('/userDashboard');
+        }
 
       } catch (error) {
         // If the request failed, display the error message
