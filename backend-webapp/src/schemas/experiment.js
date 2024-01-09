@@ -12,11 +12,11 @@ const experimentSchema = new mongoose.Schema({
   },
   log: {
     type: String,
-    required: true,
+    required: false,
   },
   videoFile: {
     type: mongoose.Schema.Types.Mixed,
-    required: true,
+    required: false,
   },
   attatchments:{
     type: [String], // default order = [TF,TR,TL,TB,BF,BR,BL,BB]
