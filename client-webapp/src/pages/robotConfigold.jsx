@@ -76,6 +76,7 @@ const RobotConfig = () => {
     return components.map((component) => (
       <div
         key={component.id}
+       
         className="bg-container flex flex-col w-[190px] h-[175px] items-center justify-start p-[3px] rounded-[12px] mb-6"
       >
         <div className="bg-trasnsparent flex flex-col w-[150px] h-[130px] items-center justify-start p-[3px] rounded-[12px]">

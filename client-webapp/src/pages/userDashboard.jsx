@@ -70,6 +70,7 @@ const UserDashboard = () => {
                 Setup Experiment
               </button>
             </Link>
+
           </div>
         </div>
         <div className="border border-container-accent border-solid flex flex-col items-center justify-start max-w-[1410px] mb-3.5 mx-auto p-3 md:px-5 rounded-[12px] w-full">
@@ -110,6 +111,11 @@ const UserDashboard = () => {
             )}
           </div>
         </div>
+        <Link to={"/adminDashboard"}>
+              <button className="cursor-pointer rounded-md leading-[normal] w-[200px] h-[40px] ml-auto md:text-[19px]  text-center text-f-accent bg-primary text-bg font-serif  transition ease-in-out delay-100 hover:-translate-y-1 ">
+                Admin
+              </button>
+            </Link>
       </div>
     </>
   );

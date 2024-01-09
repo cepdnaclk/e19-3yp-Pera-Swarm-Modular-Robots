@@ -94,11 +94,13 @@ const Container = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className="h-[300px] w-[235px] rounded-xl m-5 overflow-hidden shadow-lg border-4 bg-container border-primary relative"
+      data-testid={`container-${id}`}
     >
       <div className="h-[220px] w-[210px] p-2 flex items-center justify-center relative">
         {droppedImages.map((image) => (
           <img
             className="object-fit w-full h-auto"
+
             key={image.id}
             src={image.value}
             alt={`Dropped Image ${image.id}`}
@@ -229,7 +231,7 @@ const RobotConfig = () => {
                     <div className="bg-bg flex flex-col mr-5 rounded-[12px] ">
                       {imagesList.map((image) => (
                         <div className="bg-container flex flex-col w-[190px] h-[175px] items-center justify-start p-[3px] rounded-[12px] mb-6">
-                          <div className="bg-transparent flex flex-col w-[150px] h-[130px] items-center justify-center p-[4px] rounded-[12px]">
+                          <div className="bg-transparent flex flex-col w-[150px] h-[130px] items-center justify-center p-[4px] rounded-[12px]" data-testid={`image-${image.id}`}>
                             <Image
                               className="object-cover w-auto h-full"
                               key={image.id}
@@ -259,8 +261,10 @@ const RobotConfig = () => {
                     <div className="flex flex-wrap w-[1120px] ">
                       {ContainersList.map((container) => (
                         <Container
+                      
                           key={container.id}
                           id={container.id}
+                          
                           name={container.name}
                           onDrop={handleDrop}
                           droppedImages={droppedItems.filter(

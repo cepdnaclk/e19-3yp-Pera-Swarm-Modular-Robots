@@ -26,3 +26,11 @@
 
 
 import '@testing-library/cypress/dist/add-commands';
+
+Cypress.Commands.add('drag', { prevSubject: 'element' }, (subject, options) => {
+  cy.wrap(subject).trigger('mousedown', { which: 1 });
+
+  cy.get(options.dropTarget)
+    .trigger('mousemove')
+    .trigger('mouseup', { force: true });
+});
