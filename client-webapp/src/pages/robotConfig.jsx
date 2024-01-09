@@ -174,8 +174,21 @@ const RobotConfig = () => {
     const attachments = droppedItems.map((item) => ({
       [item.containerId]: item.imageId
     }));
+    const date = new Date(); 
 
-    const requestJSON = {user_id :user.id, robot_id: selectedOptionId, attachments };
+    const options = {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    };
+
+    const formattedDate = date.toLocaleString('en-US', options);
+
+
+    const requestJSON = {user_id :user.id, robot_id: selectedOptionId, attachments, name:formattedDate };
 
     axios
       .post("/api/experiment", requestJSON)

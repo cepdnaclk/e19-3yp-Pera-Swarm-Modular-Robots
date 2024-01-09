@@ -13,6 +13,8 @@ exports.createExperiment = async (req, res) => {
             const index = parseInt(key.charAt(1), 10);
             attatchmentsArray[index] = attatchmentsObj[key];
         }
+        console.log(attatchmentsArray);
+
 
         const experimentData = {
             user_id:req.body.user_id,

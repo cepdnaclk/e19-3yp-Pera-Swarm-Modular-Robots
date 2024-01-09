@@ -128,12 +128,15 @@ const ExperimentCard = ({ experimentName, experimentId, handleDelete , status, a
               </button>
             </div> )
             : (<div className="flex flex-col gap-4 h-8 items-center justify-start mr-5 w-8">
-                <button className="cursor-pointer transition ease-in-out delay-100 hover:-translate-y-1" onClick={()=>handleReady(experimentId)}>
+                {/* <button className="cursor-pointer transition ease-in-out delay-100 hover:-translate-y-1" onClick={()=>handleReady(experimentId)}>
                 <Img
                   className="h-8 md:h-auto object-cover w-8"
                   src={edit}
                   alt="editbutton"
                 />
+              </button> */}
+              <button className="cursor-pointer rounded-md leading-[normal] w-[200px] h-[40px] ml-auto md:text-[19px]  text-center text-f-accent bg-primary text-bg font-serif  transition ease-in-out delay-100 hover:-translate-y-1 " onClick={()=>handleReady(experimentId)}>
+                Ready
               </button>
             </div>)}
             
