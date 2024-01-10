@@ -17,16 +17,16 @@ const UserDashboard = () => {
   const user = JSON.parse(userJson);
   const userId = user.id;
 
-  useEffect(() => {
-    const fetchExperiments = async () => {
-      try {
-        const res = await axios.get(`/api/experiment/${userId}`);
+  const fetchExperiments = async () => {
+    try {
+      const res = await axios.get(`/api/experiment/${userId}`);
 
-        setExperiments(res.data);
-      } catch (error) {
-        console.error("Error:", error.response.data);
-      }
-    };
+      setExperiments(res.data);
+    } catch (error) {
+      console.error("Error:", error.response.data);
+    }
+  };
+  useEffect(() => {
     fetchExperiments();
   }, [setExperiments]);
 
@@ -61,6 +61,9 @@ const UserDashboard = () => {
               </button>
             </Link>
           </div>
+            <button onClick={fetchExperiments} className="cursor-pointer rounded-md leading-[normal] w-[200px] h-[40px] ml-auto md:text-[19px]  text-center text-f-accent bg-primary text-bg font-serif  transition ease-in-out delay-100 hover:-translate-y-1 ">
+                Refresh
+              </button>
         </div>
         <div className="border border-container-accent border-solid flex flex-col items-center justify-start max-w-[1410px] mb-3.5 mx-auto p-3 md:px-5 rounded-[12px] w-full">
           <div className="flex flex-col gap-[19px] justify-start mb-[101px] w-full">
