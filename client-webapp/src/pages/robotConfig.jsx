@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Button, Text } from "../components";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import Dropdown from "../components/dropdown";
 import search from "../assets/search.png";
 import camera from "../assets/camera.png";
 import hand from "../assets/hand.png";
 import wheel from "../assets/settings.png";
 import axios from "../api/axios";
-import Header from '../components/header';
+import Header from "../components/header";
 
 const options = [
   { id: 1, value: "ModularRobot1", label: "Modular Robot 1" },
@@ -46,19 +46,14 @@ const Image = ({ id, src, onDrop }) => {
   });
 
   return (
-  
-      
     <img
       ref={drag}
       src={src}
       alt={`Image ${id}`}
       className="w-auto h-full m-2 cursor-pointer pt-2"
-      />
-  
+    />
   );
 };
-
-
 
 const Container = ({
   id,
@@ -69,53 +64,53 @@ const Container = ({
   setDroppedItems,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  
+
   const [, drop] = useDrop({
     accept: ItemTypes.IMAGE,
     drop: (item) => onDrop(item.id, id),
   });
-  
+
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
-  
+
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
-  
+
   const handleRemoveButtonClick = () => {
     // Identify the container from which the image should be removed
     setDroppedItems((prevDroppedItems) => {
       const updatedDroppedItems = prevDroppedItems.filter(
         (image) => image.containerId !== id
-        );
-        return updatedDroppedItems;
-      });
-    };
-    
-    return (
-      <div
+      );
+      return updatedDroppedItems;
+    });
+  };
+
+  return (
+    <div
       ref={drop}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className="h-[300px] w-[235px] rounded-xl m-5 overflow-hidden shadow-lg border-4 bg-container border-primary relative"
-      >
+    >
       <div className="h-[220px] w-[210px] p-2 flex items-center justify-center relative">
         {droppedImages.map((image) => (
           <img
-          className="object-fit w-full h-auto"
-          key={image.id}
-          src={image.value}
-          alt={`Dropped Image ${image.id}`}
+            className="object-fit w-full h-auto"
+            key={image.id}
+            src={image.value}
+            alt={`Dropped Image ${image.id}`}
           />
-          ))}
+        ))}
 
         {children}
       </div>
       {isHovered && droppedImages.length > 0 && (
         <button
-        onClick={handleRemoveButtonClick}
-        className="absolute top-[10px] right-3 w-6 h-6 bg-f rounded-full text-primary-accent cursor-pointer"
+          onClick={handleRemoveButtonClick}
+          className="absolute top-[10px] right-3 w-6 h-6 bg-f rounded-full text-primary-accent cursor-pointer"
         >
           X
         </button>
@@ -124,7 +119,6 @@ const Container = ({
         <div className="font-bold text-l mb-1 text-primary-accent">{name}</div>
       </div>
     </div>
-  
   );
 };
 
@@ -172,30 +166,34 @@ const RobotConfig = () => {
   const sendDatatoBackend = () => {
     // Create an array of key-value pairs with containerId as key and imageId as value
     const attachments = droppedItems.map((item) => ({
-      [item.containerId]: item.imageId
+      [item.containerId]: item.imageId,
     }));
-    const date = new Date(); 
+    const date = new Date();
 
     const options = {
-      year: 'numeric',
-      month: 'short',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
     };
 
-    const formattedDate = date.toLocaleString('en-US', options);
+    const formattedDate = date.toLocaleString("en-US", options);
 
-
-    const requestJSON = {user_id :user.id, robot_id: selectedOptionId, attachments, name:formattedDate };
+    const requestJSON = {
+      user_id: user.id,
+      robot_id: selectedOptionId,
+      attachments,
+      name: formattedDate,
+    };
 
     axios
       .post("/api/experiment", requestJSON)
       .then((response) => {
         console.log("Backend response:", response.data);
         // Handle the response from the backend as needed
-        navigate('/userDashboard');
+        navigate("/userDashboard");
       })
       .catch((error) => {
         console.error("Error sending data to backend:", error);
@@ -204,95 +202,94 @@ const RobotConfig = () => {
   };
 
   return (
-    <div>
-      <Header/>
-    <DndProvider backend={HTML5Backend}>
-      <>
-        <div className=" bg-bg flex flex-col font-inter items-end justify-end mx-auto p-t5 h-screen w-full">
-          <div className="flex flex-col gap-6 justify-start md:px-5 w-[94%] md:w-full">
-            <div className="flex md:flex-row flex-row gap-[41px] items-center justify-start mr-[92px] w-[93%] md:w-full">
-              <div className="border border-f border-solid flex flex-col gap-5 h-[590px]  items-start justify-start sm:px-5 rounded-[12px] w-[250px]">
-                {/* search bar */}
-                <div className="relative w-full mt-5 mb-3">
-                  <div className="border-2 border-f border-solid flex items-center p-2.5 rounded-[12px] w-full h-[38px]">
-                    <img
-                      className="h-[20px] md:h-auto my-0.5 mr-auto object-cover w-[20px]"
-                      src={search}
-                      alt="searchIcon"
+    <div className="mr-[2%] ">
+      <Header />
+      <DndProvider backend={HTML5Backend}>
+        <>
+          <div className=" bg-bg flex flex-col font-inter items-end justify-end mx-auto  h-screen w-full">
+            <div className="flex flex-col gap-6 justify-start md:px-4 w-full md:w-full">
+              <div className="flex md:flex-row flex-row gap-[41px] items-center justify-start mr-[92px] w-[100%] md:w-full">
+                <div className="border border-f border-solid flex flex-col gap-5 mr-[40px] h-[590px]  items-start justify-start sm:px-5 rounded-[12px] w-[250px]">
+                  {/* search bar */}
+                  <div className="relative w-full mt-5 mb-3">
+                    <div className="border-2 border-f border-solid flex items-center p-2.5 rounded-[12px] w-full h-[38px]">
+                      <img
+                        className="h-[20px] md:h-auto my-0.5 mr-auto object-cover w-[20px]"
+                        src={search}
+                        alt="searchIcon"
                       />
-                    <input
-                      type="text"
-                      className="w-full pl-4 py-1 text-base text-f placeholder-gray-900_05 focus:outline-none"
-                      placeholder="Search Components"
+                      <input
+                        type="text"
+                        className="w-full pl-4 py-1 text-base text-f placeholder-gray-900_05 focus:outline-none"
+                        placeholder="Search Components"
                       />
+                    </div>
                   </div>
-                </div>
-                <div className=" overflow-y-scroll">
-                  <div className="bg-bg flex flex-col mr-5 rounded-[12px] ">
-                    {imagesList.map((image) => (
-                      <div className="bg-container flex flex-col w-[190px] h-[175px] items-center justify-start p-[3px] rounded-[12px] mb-6">
-                        <div className="bg-transparent flex flex-col w-[150px] h-[130px] items-center justify-center p-[4px] rounded-[12px]">
-                          <Image
-                            className="object-cover w-auto h-full"
-                            key={image.id}
-                            id={image.id}
-                            src={image.value}
-                            onDrop={handleDrop}
-                          />
+                  <div className=" overflow-y-scroll">
+                    <div className="bg-bg flex flex-col mr-5 rounded-[12px] ">
+                      {imagesList.map((image) => (
+                        <div className="bg-container flex flex-col w-[190px] h-[175px] items-center justify-start p-[3px] rounded-[12px] mb-6">
+                          <div className="bg-transparent flex flex-col w-[150px] h-[130px] items-center justify-center p-[4px] rounded-[12px]">
+                            <Image
+                              className="object-cover w-auto h-full"
+                              key={image.id}
+                              id={image.id}
+                              src={image.value}
+                              onDrop={handleDrop}
+                            />
+                          </div>
+                          <Text
+                            className={`mt-2 mb-1 text-2xl md:text-[18px] sm:text-xl `}
+                            size={image.size}
+                          >
+                            {image.label}
+                          </Text>
                         </div>
-                        <Text
-                          className={`mt-2 mb-1 text-2xl md:text-[18px] sm:text-xl `}
-                          size={image.size}
-                        >
-                          {image.label}
-                        </Text>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="border border-f grid w-[1120px] h-[590px]  flex-col rounded-[12px]  ">
-                {/* dropdownn and the cards */}
-                <div className="w-full ml-2 mb-5">
-                  <Dropdown items={options} onSelect={handleOptionSelect} />
-                </div>
-                {/* iterate through list positions and create cards */}
-                <div className="overflow-y-scroll mr-[428px]">
-                  <div className="flex flex-wrap w-[1120px] ">
-                    {ContainersList.map((container) => (
-                      <Container
-                      key={container.id}
-                      id={container.id}
-                      name={container.name}
-                      onDrop={handleDrop}
-                      droppedImages={droppedItems.filter(
-                        (item) => item.containerId === container.id
-                        )}
-                        setDroppedItems={setDroppedItems}
+                <div className="border border-f grid w-[1120px] h-[590px]  flex-col rounded-[12px]  ">
+                  {/* dropdownn and the cards */}
+                  <div className="w-full ml-2 mb-5">
+                    <Dropdown items={options} onSelect={handleOptionSelect} />
+                  </div>
+                  {/* iterate through list positions and create cards */}
+                  <div className="overflow-y-scroll mr-[428px]">
+                    <div className="flex flex-wrap w-[1120px] ">
+                      {ContainersList.map((container) => (
+                        <Container
+                          key={container.id}
+                          id={container.id}
+                          name={container.name}
+                          onDrop={handleDrop}
+                          droppedImages={droppedItems.filter(
+                            (item) => item.containerId === container.id
+                          )}
+                          setDroppedItems={setDroppedItems}
                         />
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="flex flex-row gap-4  ml-[1120px] w-[21%] md:w-full ">
-              <Button className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-primary-accent bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
-                Cancel
-              </Button>
+              <div className="flex flex-row gap-4 mb-4  ml-[1178px] w-[21%] md:w-full ">
+                <Button className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-primary-accent bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
+                  Cancel
+                </Button>
 
-              <Button
-                onClick={sendDatatoBackend}
-                className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-primary-accent bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1"
+                <Button
+                  onClick={sendDatatoBackend}
+                  className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-primary-accent bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1"
                 >
-                Next
-              </Button>
+                  Next
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-      </>
-    </DndProvider>
-                </div>
-  
+        </>
+      </DndProvider>
+    </div>
   );
 };
 

@@ -1,3 +1,4 @@
+const { log } = require('winston');
 const Experiment = require('../schemas/experiment');
 const User = require('../schemas/user');
 
@@ -24,7 +25,10 @@ exports.createExperiment = async (req, res) => {
 
         const experimentData = {
             user_id:req.body.user_id,
-            attachments: attachmentsArray
+            attachments: attachmentsArray,
+            log: req.body.log,
+            videoFile: req.body.videoFile,
+            name: req.body.name,
         };
 
         const experiment = new Experiment(experimentData);
