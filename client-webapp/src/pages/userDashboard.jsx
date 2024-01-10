@@ -3,6 +3,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Img, List, Text } from "../components";
+import Header from "../components/header";
 import logo from "../assets/logo.png";
 import usericon from "../assets/user.png";
 import ExperimentCard from "../components/expeimentCard";
@@ -42,19 +43,8 @@ const UserDashboard = () => {
   return (
     <>
       <div className="bg-bg flex flex-col font-inter gap-[18px] items-center justify-start mx-auto p-3 w-full">
-        <div className="bg-container flex flex-row items-center justify-start max-w-[1410px] mx-auto p-[3px] md:px-5 rounded-[12px] w-full">
-          <div className="flex flex-row md:gap-10 items-center justify-between my-0.5 w-full">
-            <Img
-              className="h-[75px] md:h-auto object-cover w-[60px]"
-              src={logo}
-              alt="logoOne"
-            />
-            <Img
-              className="h-[50px] md:h-auto object-cover w-[50px]"
-              src={usericon}
-              alt="usericon"
-            />
-          </div>
+        <div className=" w-screen  mr-[200px] ml-[200px] pl-[45px] pr-[45px] ">
+          <Header />
         </div>
         <div className="bg-bg  border-container-accent border-solid flex flex-col items-center justify-start max-w-[1410px] mx-auto  rounded-[12px] w-full">
           <div className="flex flex-col gap-[27px] justify-start mb-4 mt-4 ml-[1200px] w-full">

@@ -202,14 +202,14 @@ const RobotConfig = () => {
   };
 
   return (
-    <div>
+    <div className="mr-[2%] ">
       <Header />
       <DndProvider backend={HTML5Backend}>
         <>
-          <div className=" bg-bg flex flex-col font-inter items-end justify-end mx-auto p-t5 h-screen w-full">
-            <div className="flex flex-col gap-6 justify-start md:px-5 w-[94%] md:w-full">
-              <div className="flex md:flex-row flex-row gap-[41px] items-center justify-start mr-[92px] w-[93%] md:w-full">
-                <div className="border border-f border-solid flex flex-col gap-5 h-[590px]  items-start justify-start sm:px-5 rounded-[12px] w-[250px]">
+          <div className=" bg-bg flex flex-col font-inter items-end justify-end mx-auto  h-screen w-full">
+            <div className="flex flex-col gap-6 justify-start md:px-4 w-full md:w-full">
+              <div className="flex md:flex-row flex-row gap-[41px] items-center justify-start mr-[92px] w-[100%] md:w-full">
+                <div className="border border-f border-solid flex flex-col gap-5 mr-[40px] h-[590px]  items-start justify-start sm:px-5 rounded-[12px] w-[250px]">
                   {/* search bar */}
                   <div className="relative w-full mt-5 mb-3">
                     <div className="border-2 border-f border-solid flex items-center p-2.5 rounded-[12px] w-full h-[38px]">
@@ -273,7 +273,7 @@ const RobotConfig = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row gap-4  ml-[1140px] w-[21%] md:w-full ">
+              <div className="flex flex-row gap-4 mb-4  ml-[1178px] w-[21%] md:w-full ">
                 <Button className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-primary-accent bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
                   Cancel
                 </Button>

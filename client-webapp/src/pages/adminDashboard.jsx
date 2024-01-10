@@ -60,19 +60,8 @@ const AdminDashboard = () => {
 
         </div> */}
       <div className="bg-bgd font-inter items-center justify-start mx-auto  ">
-        <div className="bg-container flex flex-row items-center justify-start max-w-[1410px] mb-8 mx-auto p-[3px] md:px-5 rounded-[12px] w-full">
-          <div className="flex flex-row md:gap-10 items-center justify-between my-0.5 w-full">
-            <Img
-              className="h-[75px] md:h-auto object-cover w-[60px]"
-              src={logo}
-              alt="logoOne"
-            />
-            <Img
-              className="h-[50px] md:h-auto object-cover w-[50px]"
-              src={usericon}
-              alt="usericon"
-            />
-          </div>
+        <div className=" mr-[50px] ml-[50px] mb-[50px] ">
+          <Header />
         </div>
         <div className="px-3 ">
           {/* <div className="bg-bg border border-container-accent border-solid flex flex-col items-center justify-start max-w-[1410px] mx-auto p-3 pt-3 pb-3 md:px-5 rounded-[12px] ">
