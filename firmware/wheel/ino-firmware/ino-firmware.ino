@@ -8,7 +8,8 @@ void setup()
 
 void loop()
 {
-    TinyWireS_stop_check();
+    // TinyWireS_stop_check();
+    motorTest();
 }
 
 /* I2C */
@@ -62,4 +63,24 @@ void forward(byte speed){
 void backward(byte speed){
   analogWrite(MOTOR_PIN_A, 0);
   analogWrite(MOTOR_PIN_B, speed);
+}
+
+void motorTest(){
+  for(int i=0; i<=255; i+=1){
+    forward(i);
+    delay(20);
+  }
+  for(int i=255; i>=0; i-=1){
+    forward(i);
+    delay(20);
+  }
+  delay(500);
+  for(int i=0; i<=255; i+=1){
+    backward(i);
+    delay(20);
+  }
+  for(int i=255; i>=0; i-=1){
+    backward(i);
+    delay(20);
+  }
 }
