@@ -1,180 +1,165 @@
-// ExperimentCard.jsx
 import React from "react";
-import { Img, Text } from "../components";
-import edit from "../assets/edit.png";
-import dlt from "../assets/delete.png";
-import { Link } from "react-router-dom";
+import { XMarkIcon } from '@heroicons/react/20/solid';
 
-const ExperimentCard = ({
-  experimentName,
-  experimentId,
-  handleDelete,
-  status,
-  attachments,
-  userDash,
-  handleReady,
-}) => {
-  console.log("attachments", attachments);
+const ExperimentCard = ({experiment,userRole,handleDelete,handleAccept,handleDecline,handleStartExperiment,handleLog,handleVideo}) => {
+
+  const {name, id, status, attachments, schedule} = experiment;
+
+  const getStatusBadge = (status) => {
+    let badgeClass = "";
+    let badgeText = "";
+
+    switch (status) {
+      case "pending":
+        badgeClass = "bg-yellow-900 text-yellow-300";
+        badgeText = "Pending";
+        break;
+      case "ready":
+        badgeClass = "bg-purple-900 text-purple-300";
+        badgeText = "Ready";
+        break;
+      case "accepted":
+        badgeClass = "bg-green-900 text-green-300";
+        badgeText = "Accepted";
+        break;
+      case "declined":
+        badgeClass = "bg-red-900 text-red-300";
+        badgeText = "Declined";
+        break;
+      case "completed":
+        badgeClass = "bg-gray-700 text-gray-300";
+        badgeText = "Completed";
+        break;
+      default:
+        break;
+    }
+
+    return (
+      <span className={`inline-flex items-center text-xs font-medium me-2 px-2.5 py-0.5 rounded-full ${badgeClass}`}>
+        <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+        {badgeText}
+      </span>
+    );
+  };
+
+
+  const getSideButtons = (status, userRole) => {
+    if (userRole === 'admin') {
+      switch (status) {
+        case "pending":
+          return (
+            <>
+              <button type="button" onClick={() => handleAccept(id)} className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                Accept
+              </button>
+              <button type="button" onClick={() => handleDecline(id)} className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                Decline
+              </button>
+            </>
+          );
+        default:
+          break;
+      }
+    }
+
+    if (userRole === 'experimenter') {
+      switch (status) {
+        case "pending":
+          return (
+            <>
+
+            </>
+          );
+
+        case "ready":
+          return (
+            <>
+              <button type="button" onClick={() => handleStartExperiment(id)} className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Start Experiment</button>
+            </>
+          );
+
+        case "accepted":
+          return (
+            <>
+              
+            </>
+          );
+
+        case "declined":
+          return (
+            <>
+              
+            </>
+          );
+
+        case "completed":
+          return (
+            <>
+              <button type="button" onClick={() => handleLog(id)} className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Log</button>
+              <button type="button" onClick={() => handleVideo(id)} className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Video File</button>
+            </>
+          );
+
+
+        default:
+          break;
+      }
+    }
+  };
+
+
+
   return (
-    <div className="bg-container flex flex-1 flex-col items-center justify-end p-2 rounded-[12px] w-full">
-      <div className="flex flex-col items-center justify-start mt-3.5 w-[99%] md:w-full">
-        <div className="flex flex-col gap-[30px] justify-start w-full">
-          <Text className="md:text-2xl ml-3 text sm:text-[28px] text-[32px] text-gray-900 font-serif">
-            {experimentName}
-          </Text>
-          <div className="flex flex-row ml-1">
-            <div className="flex flex-col gap-3 gap-left-5 items-start justify-start ml-[50px] w-[98%] md:w-full">
-              <Text
-                className="md:mt-0 mt-[9px] text-gray-900 text-xl  font-serif italic "
-                size="txtInterRegular20"
-              >
-                Status: {status}
-              </Text>
-              {attachments && (
-                <Text
-                  className="md:mt-0 mt-[9px] text-gray-900 text-xl  font-serif italic "
-                  size="txtInterRegular20"
-                >
-                  attachments :
-                </Text>
-              )}
-              {attachments && (
-                <span>
-                  {attachments[0] && (
-                    <Text
-                      className="text-gray-900 text-xl  font-serif italic"
-                      size="txtInterRegular20"
-                    >
-                      TF: {attachments[0]}
-                    </Text>
-                  )}
-                  {attachments[1] && (
-                    <Text
-                      className="text-gray-900 text-xl  font-serif italic"
-                      size="txtInterRegular20"
-                    >
-                      TR: {attachments[1]}
-                    </Text>
-                  )}
-                  {attachments[2] && (
-                    <Text
-                      className="text-gray-900 text-xl  font-serif italic"
-                      size="txtInterRegular20"
-                    >
-                      TL: {attachments[2]}
-                    </Text>
-                  )}
-                  {attachments[3] && (
-                    <Text
-                      className="text-gray-900 text-xl  font-serif italic"
-                      size="txtInterRegular20"
-                    >
-                      TB: {attachments[3]}
-                    </Text>
-                  )}
-                  {attachments[4] && (
-                    <Text
-                      className="text-gray-900 text-xl  font-serif italic"
-                      size="txtInterRegular20"
-                    >
-                      BF: {attachments[4]}
-                    </Text>
-                  )}
-                  {attachments[5] && (
-                    <Text
-                      className="text-gray-900 text-xl  font-serif italic"
-                      size="txtInterRegular20"
-                    >
-                      BR: {attachments[5]}
-                    </Text>
-                  )}
-                  {attachments[6] && (
-                    <Text
-                      className="text-gray-900 text-xl  font-serif italic"
-                      size="txtInterRegular20"
-                    >
-                      BL: {attachments[6]}
-                    </Text>
-                  )}
-                  {attachments[7] && (
-                    <Text
-                      className="text-gray-900 text-xl  font-serif italic"
-                      size="txtInterRegular20"
-                    >
-                      BB: {attachments[7]}
-                    </Text>
-                  )}
-                </span>
-              )}
-              {userDash && (
-                <a className="cursor-pointer">
-                  <Text
-                    className="text-gray-900 text-xl underline font-serif italic"
-                    size="txtInterRegular20"
-                  >
-                    Video
-                  </Text>
-                </a>
-              )}
-              {userDash && (
-                <a className="cursor-pointer">
-                  <Text
-                    className="md:mt-0 mt-[9px] text-gray-900 text-xl underline font-serif italic "
-                    size="txtInterRegular20"
-                  >
-                    Log
-                  </Text>
-                </a>
-              )}
+    <a className="relative font-normal font-sans text-mainText block my-3 p-6 bg-secondary border border-gray-200 rounded-lg shadow hover:bg-gray-100  border-ternary hover:bg-mainText/20">
+          
+          {(status !== 'ready' && userRole !== 'admin') && (
+            <div className="absolute z-10 top-0 right-0 m-2">
+              <button type="button" onClick={()=> handleDelete(id)} className="focus:outline-none text-red-900 font-medium rounded-full text-sm w-5 h-auto bg-red-500/5 hover:bg-red-600 ">
+                <XMarkIcon className="w-5 text-mainText/50 " />
+              </button>
             </div>
-            <span>
-              {userDash === 1 ? (
-                <div className="">
-                  {/* Delete Button on the right */}
-                  <button
-                    className="cursor-pointer transition ease-in-out delay-100 hover:-translate-y-1 w-[30px] "
-                    onClick={() => handleDelete(experimentId)}
-                  >
-                    <Img
-                      className="h-8 md:h-auto ml-[140px] mt-6 object-cover w-8"
-                      src={dlt}
-                      alt="dltbutton"
-                    />
-                  </button>
+          )}
 
-                  {/* Run Experiment Button in the middle */}
-                  {status === "ready" && userDash === 1 && (
-                    <Link to={"/codeUpload"}>
-                      <div className="">
-                        <button className="cursor-pointer mt-6 mb-2 rounded-md leading-[normal] w-[180px] h-[40px] md:text-[19px] text-center text-f-accent bg-primary text-bg font-serif transition ease-in-out delay-100 hover:-translate-y-1">
-                          Run Experiment
-                        </button>
-                      </div>
-                    </Link>
-                  )}
-                </div>
-              ) : (
-                <div className="flex  flex-col gap-4 h-8 items-center justify-start mr-[180px] mt-[70px] mb-4 w-8">
-                  {/* <button className="cursor-pointer transition ease-in-out delay-100 hover:-translate-y-1" onClick={()=>handleReady(experimentId)}>
-                <Img
-                  className="h-8 md:h-auto object-cover w-8"
-                  src={edit}
-                  alt="editbutton"
-                />
-              </button> */}
-                  <button
-                    className="cursor-pointer rounded-md leading-[normal] w-[180px] h-[50px] ml-auto md:text-[19px] text-center text-f-accent bg-primary text-bg font-serif transition ease-in-out delay-100 hover:-translate-y-1"
-                    onClick={() => handleReady(experimentId)}
-                  >
-                    Ready
-                  </button>
-                </div>
-              )}
-            </span>
-          </div>
+      <div className="grid grid-cols-2">
+        <h5 className="mb-2 text-2xl font-bold tracking-tight ">{name}</h5>
+        <div className=" text-right">
+          {getStatusBadge(status)}
+          
         </div>
       </div>
-    </div>
+      <div className="grid grid-cols-2">
+        <div className=" bg-gray-100/10 p-4 rounded-lg shadow-md">
+          <p className="text-lg font-semibold mb-2">Experiment ID: {id}</p>
+          <p className="text-sm ">Schedule: {schedule}</p>
+        </div>
+        <div className=" text-right">
+          {getSideButtons(status, userRole)}                        
+        </div>
+      </div>
+      <br/>
+      <p className=" ">Attachments : </p>
+      <table className="m-2 text-center table-auto border-separate border-spacing-x-3 border ">
+        <thead>
+          <tr className="text-xs text-mainText/60">
+            <th>Bottom left up</th>
+            <th>Bottom left down</th>
+            <th>Bottom right down</th>
+            <th>Bottom right down</th>
+            <th>Top left up</th>
+            <th>Top left down</th>
+            <th>Top right up</th>
+            <th>Top right down</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {attachments.map((attachment, index) => ( 
+              <td key={index}>{attachment}</td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+    </a>
   );
 };
 

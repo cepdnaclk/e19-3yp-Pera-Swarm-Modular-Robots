@@ -1,107 +1,108 @@
-////////////////////////////////////////
-// UserDashboard.jsx
 import React from "react";
-import { Link } from "react-router-dom";
-import { Button, Img, List, Text } from "../components";
-import Header from "../components/header";
-import logo from "../assets/logo.png";
-import usericon from "../assets/user.png";
-import ExperimentCard from "../components/expeimentCard";
 import axios from "../api/axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { useNavigate } from 'react-router-dom';
+import { PlusIcon } from '@heroicons/react/20/solid';
+import { UserContext } from '../App';
+
+import ExperimentCard from "../components/expeimentCard";
 
 const UserDashboard = () => {
-  const [experiments, setExperiments] = useState([]);
-  //const userId = "659c3128f8e19ef45832ea4a";
-  const userJson = localStorage.getItem("user");
-  const user = JSON.parse(userJson);
-  const userId = user.id;
+  const user = useContext(UserContext);
+  const navigate = useNavigate();
 
-  const fetchExperiments = async () => {
-    try {
-      const res = await axios.get(`/api/experiment/${userId}`);
+  const [experiments, setExperiments] = useState([
+    {
+    name: "My experiment1",
+    id: "123456",
+    user_id: "user#123",
+    attachments: ["wheel", "wheel", "arm"],
+    schedule: "2024-04-05 1600h",
+    status: "completed"
+  },
 
-      setExperiments(res.data);
-    } catch (error) {
-      console.error("Error:", error.response.data);
-    }
-  };
-  useEffect(() => {
-    fetchExperiments();
-  }, [setExperiments]);
+    {
+    name: "My experiment2",
+    id: "78910",
+    user_id: "user#321",
+    attachments: ["Camera", "wheel", "arm"],
+    schedule: "2024-04-05 2400h",
+    status: "ready"
+  },
 
-  //delete an experiment
+
+]);
+
+const handleNewExperiment = () => {
+  navigate('/robotConfig');
+}
+
+// uncomment when backend is ready
+
+  // useEffect(() => {
+  //   fetchExperiments();
+  // }, [setExperiments]);
+
+  // const fetchExperiments = async () => {
+  //   try {
+  //     const res = await axios.get(`/api/experiment/${userId}`);
+  //     setExperiments(res.data);
+  //   } catch (error) {
+  //     console.error("Error:", error.response.data);
+  //     // TODO: throw error dialog
+  //   }
+  // };
+
+
+  // side button functions
+
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/experiment/${id}`);
-      setExperiments(experiments.filter((experiment) => experiment._id !== id));
+      // await axios.delete(`/api/experiment/${id}`);
+      // setExperiments(experiments.filter((experiment) => experiment._id !== id)); // TODO: check if this response is correct then filter out
+      console.log("Deleted experiment with id: ", id);
     } catch (error) {
       console.error("Error:", error.response.data);
+      // TODO: throw error dialog 
     }
   };
+
+  // TODO:
+  const handleStartExperiment = (id) => {
+    console.log("Handle Start Experiment",id);
+  }
+  const handleLog = (id) => {
+    console.log("Handle Log",id);
+  }
+  const handleVideo= (id) => {
+    console.log("Handle Video",id);
+  }
 
   return (
     <>
-      <div className="bg-bg flex flex-col font-inter gap-[18px] items-center justify-start mx-auto p-3 w-full">
-        <div className=" w-screen  mr-[200px] ml-[200px] pl-[45px] pr-[45px] ">
-          <Header />
-        </div>
-        <div className="bg-bg  border-container-accent border-solid flex flex-col items-center justify-start max-w-[1410px] mx-auto  rounded-[12px] w-full">
-          <div className="flex flex-col gap-[27px] justify-start mb-4 mt-4 ml-[1200px] w-full">
-            {/* <Text
-              className="mr-[938px] md:text-xl sm:text-[28px] text-[32px] text-f font-serif"
-              size="txtInterRegular12"
-            >
-              Incoming Request: John Doe
-            </Text> */}
+      <div className=" bg-primary/90  mx-auto my-5 shadow-lg rounded-2xl flex max-w-7xl p-3 ">
+        <div className="w-full grid grid-cols-3 gap-28 p-5">
 
-            <Link to={"/sandbox"}>
-              <button className="cursor-pointer rounded-md leading-[normal] w-[200px] h-[40px] ml-auto md:text-[19px]  text-center text-f-accent bg-primary text-bg font-serif  transition ease-in-out delay-100 hover:-translate-y-1 ">
-                Setup Experiment
-              </button>
-            </Link>
-          </div>
-            <button onClick={fetchExperiments} className="cursor-pointer rounded-md leading-[normal] w-[200px] h-[40px] ml-auto md:text-[19px]  text-center text-f-accent bg-primary text-bg font-serif  transition ease-in-out delay-100 hover:-translate-y-1 ">
-                Refresh
-              </button>
-        </div>
-        <div className="border border-container-accent border-solid flex flex-col items-center justify-start max-w-[1410px] mb-3.5 mx-auto p-3 md:px-5 rounded-[12px] w-full">
-          <div className="flex flex-col gap-[19px] justify-start mb-[101px] w-full">
-            <div className="flex flex-col items-center justify-center p-2.5 w-auto">
-              <Text
-                className="md:text-4xl sm:text-[28px] text-[35px] text-f w-auto font-serif"
-                size="txtInterRegular32"
-              >
-                Archive
-              </Text>
-            </div>
-            {experiments.length === 0 ? (
-              <div className="flex flex-col items-center justify-center p-2.5 w-auto">
-                <Text
-                  className="md:text-2xl sm:text-[28px] text-[35px] text-f w-auto font-serif"
-                  size="txtInterRegular32"
-                >
-                  No Experiments to show. Please setup an experiment.
-                </Text>
+          <div className="col-span-2 flex flex-col ">
+            <h1 className="text-mainText font-light text-4xl font-sans">Dashboard</h1>
+
+            <div className="block text-mainText my-3 p-6 bg-secondary border border-gray-200 rounded-lg shadow hover:bg-gray-100  border-ternary hover:bg-mainText/20">Upcoming Experiments : None</div>
+
+            {/* Iterate over experiments */}
+            {experiments.map((experiment) => (
+              <div key={experiment.id}>
+                <ExperimentCard experiment={experiment} userRole={user.role} handleDelete ={handleDelete} handleStartExperiment={handleStartExperiment} handleLog={handleLog} handleVideo={handleVideo}/>
               </div>
-            ) : (
-              <List
-                className="flex flex-col gap-[20px] items-center ml-2.5 md:ml-[0] w-full"
-                orientation="vertical"
-              >
-                {experiments.map((experiment, index) => (
-                  <ExperimentCard
-                    key={index}
-                    experimentName={experiment.name}
-                    experimentId={experiment._id}
-                    handleDelete={handleDelete}
-                    status={experiment.status}
-                    userDash={1}
-                  />
-                ))}
-              </List>
-            )}
+            ))}
           </div>
+
+          <div>
+            <a onClick={handleNewExperiment} className="cursor-pointer block text-right outline-dashed outline-mainText/50 outline-2 outline-offset-2 my-3  p-6 bg-secondary border border-gray-200 rounded-lg shadow hover:bg-lime-200/20  border-ternary ">
+              <h5 className="mb-2 text-2xl font-thin tracking-tight text-mainText text-center">Start a new Experiment</h5>
+              <div className="flex justify-center"><PlusIcon className="w-40 text-mainText/50 " /></div>
+            </a>
+          </div>
+
         </div>
       </div>
     </>
@@ -109,5 +110,6 @@ const UserDashboard = () => {
 };
 
 export default UserDashboard;
+          
 
-///////////////////////////////////////
+

@@ -13,8 +13,8 @@ router.post("/login", async (req, res, next) => {
 
     // Authenticate user
     const user = await User.findOne({ email });
-    if (!user || !user.comparePassword(password)) {
-        return res.status(401).json({ error: 'Invalid email or password' });
+    if (!(user && await user.comparePassword(password))) {
+        return res.status(401).json({ message: 'Invalid email or password' });
     }
 
     // Generate tokens
@@ -45,7 +45,7 @@ router.post("/token", (req, res, next)=>{
         const refreshToken = req.body.refreshToken;
 
         if (refreshToken == null)
-            return res.sendStatus(401).json({ error: "Unauthorized" });
+            return res.sendStatus(401).json({ message: "Unauthorized" });
         if (/* check if that refresh token is present in db*/ true) {
             jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, id) => {
                 if (err) throw err;

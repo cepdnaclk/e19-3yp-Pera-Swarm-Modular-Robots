@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Img, Text } from "../components";
+// import { Button, Img, Text } from "../components";
 import search from "../assets/search.png";
 import modular_bot from "../assets/robot.png";
 import obs_bot from "../assets/robot_obs.png";
@@ -134,14 +134,14 @@ const Sandbox = () => {
           </div>
         </div>
         <div className="flex flex-row gap-3.5 items-center justify-end md:ml-[0] ml-[1000px] w-[21%] md:w-full">
-          <Button className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-primary-accent bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
+          {/* <Button className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-primary-accent bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
             Cancel
           </Button>
           <Link to="/robotConfig">
             <Button className="common-pointer cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-primary-accent bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
               Next
             </Button>
-          </Link>
+          </Link> */}
           {/* <button
             className={`toggle flex items-center justify-center p-2 bg-primary text-f-accent font-semibold rounded-lg cursor-pointer transform transition-transform ${isDarkTheme ? 'rotate-180' : ''}`}
             onClick={toggleTheme}
