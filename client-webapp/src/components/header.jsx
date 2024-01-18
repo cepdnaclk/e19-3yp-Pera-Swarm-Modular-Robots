@@ -13,10 +13,23 @@ import { ChevronDoubleDownIcon } from '@heroicons/react/20/solid'
 
 export default function Header() {
 
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    // Check local storage for saved dark mode preference
+    const storedDarkMode = localStorage.getItem('darkMode');
+    return storedDarkMode ? JSON.parse(storedDarkMode) : false;
+  });
+
   const [showLogout, setShowLogout] = useState(false);
   const user = useContext(UserContext);
 
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode);
+    document.documentElement.classList.toggle('light', !darkMode);
+
+    // Save the current dark mode preference to local storage
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+    
+  }, [darkMode]);
   
   const handleLogout = ()=>{
     localStorage.removeItem('accessToken');
@@ -25,13 +38,7 @@ export default function Header() {
 
     window.location.reload();
   };
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', darkMode);
-    document.documentElement.classList.toggle('light', !darkMode);
-  }, [darkMode]);
-
-
+  
   return (
     <div className={`backdrop-blur-md bg-primary/40 mx-auto my-2 shadow-lg rounded-2xl flex max-w-7xl items-center justify-between p-3 lg:px-8 aria-label="Global"`}>
       <div className="flex lg:flex-1 ">

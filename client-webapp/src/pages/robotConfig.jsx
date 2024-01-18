@@ -5,9 +5,10 @@ import Container from '../components/dndContainer';
 import Component from '../components/dndComponent';
 import { Menu } from  '@headlessui/react';
 
-import camera from "../assets/camera.png";
-import hand from "../assets/hand.png";
-import wheel from "../assets/settings.png";
+import camera from "../assets/attachments/camera.svg";
+import hand from "../assets/attachments/hand.svg";
+import wheel from "../assets/attachments/wheel.svg";
+
 
 const ContainersList = [
   { id: "TF", name: "Top Front" },
@@ -120,12 +121,15 @@ const RobotConfig = () => {
               <select
                 id="robot-select"
                 className="block bg-primary w-full p-3 hover:outline-none rounded-md focus:outline-none"
-                value='Select Modular Robot'
+                
               >
 
-                {modularRobots.map((robot, index) => (
-                  <option key={index} value={robot.id} >{robot.name}</option>
-                ))}
+              {modularRobots.map((robot) => (
+                <option key={robot.id} value={robot.id}>
+                  {robot.name}
+                </option>
+              ))}
+
 
               </select>
 

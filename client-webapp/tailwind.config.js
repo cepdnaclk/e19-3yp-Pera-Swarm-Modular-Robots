@@ -13,6 +13,7 @@ module.exports = {
         secondary : "rgba(var(--secondary-color))",
         ternary : "rgba(var(--ternary-color))",
         mainText : "rgba(var(--text-color))",
+        swarm : "rgba(var(--swarm-color))",
       }
     },
 

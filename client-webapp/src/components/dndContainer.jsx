@@ -11,7 +11,7 @@ const Container = ({ id, name, component, onDrop, onRemove }) => {
     return (
       <div ref={drop} className="bg-primary m-2 p-2 rounded-md h-60">
         
-          <div className="bg-ternary p-2 h-48 rounded-md">
+          <div className="bg-ternary/30 p-2 h-48 rounded-md border-2 border-ternary/20">
         {component && (
             <>
            <div className="group text-center relative">
@@ -21,7 +21,7 @@ const Container = ({ id, name, component, onDrop, onRemove }) => {
                 <div className="">
                     <img src={component.image} alt={component.name} className="p-1 h-40 inline" />
                 </div>
-                <p className="text-sm font-medium ">{component.name}</p>
+                <p className="text-sm font-medium mb-3 ">{component.name}</p>
             </div>
             </>
             )}
