@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 //import Modal from "react-modal";
 import axios from "../api/axios";
-import { UserContext } from '../App';
-import { Menu } from '@headlessui/react'
-
+import { UserContext } from "../App";
+import { Menu } from "@headlessui/react";
+import GaugeChart from "react-gauge-chart";
+import GaugeComponent from "react-gauge-component";
 
 const LiveMonitoring = () => {
-
   const user = useContext(UserContext);
 
   const [consoleText, setConsoleText] = useState(">>> starting experiment");
@@ -44,7 +44,6 @@ const LiveMonitoring = () => {
   //   // Clear interval on component unmount to avoid memory leaks
   //   return () => clearInterval(intervalId);
   // }, []);
-
 
   //submitting code
   // const handleCodeSubmit = async () => {
@@ -87,42 +86,120 @@ const LiveMonitoring = () => {
 
   const getColorForValue = (value) => {
     switch (value.toLowerCase()) {
-      case 'unknown':
-        return 'gray';
-      case 'disconnected':
-        return 'red';
-      case 'connected':
-        return 'green';
+      case "unknown":
+        return "gray";
+      case "disconnected":
+        return "red";
+      case "connected":
+        return "green";
       default:
-        return 'black'; // Default color if none of the above match
+        return "black"; // Default color if none of the above match
+    }
   };
-  }  
 
-
-
-
+  const armAngle = 1;
 
   return (
     <>
       <div className=" bg-primary/90  mx-auto my-5 shadow-lg rounded-2xl flex max-w-7xl p-3  text-mainText">
-        
         <div className="w-full grid grid-cols-2 grid-rows-2  gap-5 p-5">
           {/* live feed */}
-        <div className="bg-ternary min-h-96 rounded-lg">
-          test
-        </div>
-        {/* console */}
-        <div className="bg-ternary min-h-96 rounded-lg font-mono p-5">
-          <p>
-            {consoleText}
-          </p>
-        </div>
+          <div className="bg-ternary min-h-96 rounded-lg">test</div>
+          {/* console */}
+          <div className="bg-ternary min-h-96 rounded-lg font-mono p-5">
+            <p>{consoleText}</p>
+          </div>
+          {/* meters */}
+          <div className="bg-ternary min-h-96 rounded-lg p-3">
+            <div className="text-text font-mono flex align-middle justify-center text-3xl mb-10">
+              Arm position
+            </div>
+            {/*<div className="flex align-middle justify-between mt-5 px-10 pt-5">
+              <span className="ml-[60px]">Left</span>
+              <span className="z-10">
+                <GaugeComponent
+                  value={armAngle}
+                  minValue={-90}
+                  maxValue={90}
+                  type="radial"
+                  labels={{
+                    valueLabel: {
+                      matchColorWithArc: true,
+                      formatTextValue: (value) => `${value}°`,
+                    },
+                    tickLabels: {
+                      type: "inner",
+                      ticks: [{ value: 0 }, { value: -45 }, { value: 45 }],
+                      defaultTickValueConfig: {
+                        formatTextValue: (value) => `${value}°`,
+                        style: {
+                          fontSize: "12px",
+                          fill: "#f0fff0",
+                        },
+                      },
+                    },
+                  }}
+                  arc={{
+                    colorArray: ["#ff6347", "#ffd700"],
+                    subArcs: [{ limit: 0 }, { limit: 90 }],
+                    padding: 0.02,
+                    width: 0.25,
+                  }}
+                  pointer={{
+                    type: "needle",
+                    elastic: true,
+                    animationDelay: 0,
+                    animationDuration: 1000,
+                    color: "black",
+                  }}
+                />
+              </span>{" "}
+              <span className="mr-[60px]">Right</span>
+            </div>*/}
+            <div className="flex align-middle justify-between mt-[60px] px-[60px] z-10">
+              Left <span className="">Right</span>
+            </div>
 
-        {/* meters */}
-        <div className="bg-ternary min-h-96 rounded-lg"></div>
-        {/* graph */}
-        <div className="bg-ternary min-h-96 rounded-lg"></div>
-         
+            <GaugeComponent
+              value={armAngle}
+              minValue={-90}
+              maxValue={90}
+              type="radial"
+              labels={{
+                valueLabel: {
+                  matchColorWithArc: true,
+                  formatTextValue: (value) => `${value}°`,
+                },
+                tickLabels: {
+                  type: "inner",
+                  ticks: [{ value: 0 }, { value: -45 }, { value: 45 }],
+                  defaultTickValueConfig: {
+                    formatTextValue: (value) => `${value}°`,
+                    style: {
+                      fontSize: "18px",
+                      fill: "#f0fff0",
+                    },
+                  },
+                },
+              }}
+              arc={{
+                colorArray: ["#ff6347", "#ffd700"],
+                subArcs: [{ limit: 0 }, { limit: 90 }],
+                padding: 0.02,
+                width: 0.25,
+              }}
+              pointer={{
+                type: "needle",
+                elastic: true,
+                animationDelay: 0,
+                animationDuration: 1000,
+                color: "black",
+              }}
+            />
+          </div>
+
+          {/* graph */}
+          <div className="bg-ternary min-h-96 rounded-lg"></div>
         </div>
       </div>
     </>
