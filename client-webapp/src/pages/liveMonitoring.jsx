@@ -3,8 +3,9 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "../api/axios";
 import { UserContext } from "../App";
 import { Menu } from "@headlessui/react";
-import GaugeChart from "react-gauge-chart";
+
 import GaugeComponent from "react-gauge-component";
+import LiveChart from "../components/livechart";
 
 const LiveMonitoring = () => {
   const user = useContext(UserContext);
@@ -114,7 +115,8 @@ const LiveMonitoring = () => {
             <div className="text-text font-mono flex align-middle justify-center text-3xl mb-10">
               Arm position
             </div>
-            {/*<div className="flex align-middle justify-between mt-5 px-10 pt-5">
+            {/* small meters 
+            <div className="flex align-middle justify-between mt-5 px-10 pt-5">
               <span className="ml-[60px]">Left</span>
               <span className="z-10">
                 <GaugeComponent
@@ -199,7 +201,9 @@ const LiveMonitoring = () => {
           </div>
 
           {/* graph */}
-          <div className="bg-ternary min-h-96 rounded-lg"></div>
+          <div className="bg-ternary min-h-96 rounded-lg p-3">
+            <LiveChart />
+          </div>
         </div>
       </div>
     </>
