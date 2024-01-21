@@ -7,25 +7,9 @@ exports.createExperiment = async (req, res) => {
     console.log(req.body);
     try {
 
-        // Transform the attachments from key-value pairs to an array
-        const order = ['TF', 'TR', 'TL', 'TB', 'BF', 'BR', 'BL', 'BB'];
-        const attachmentsArray = Array(order.length).fill('');
-        const attachmentsObj = req.body.attachments;
-        
-        for (const attachment of attachmentsObj) {
-            const key = Object.keys(attachment)[0]; // Extract the key
-            const index = order.indexOf(key);
-            if (index !== -1) {
-              attachmentsArray[index] = attachment[key];
-            }
-        }
-          
-        console.log(attachmentsObj);
-
-
         const experimentData = {
             user_id:req.body.user_id,
-            attachments: attachmentsArray,
+            attachments: req.body.attachments,
             log: req.body.log,
             videoFile: req.body.videoFile,
             name: req.body.name,
