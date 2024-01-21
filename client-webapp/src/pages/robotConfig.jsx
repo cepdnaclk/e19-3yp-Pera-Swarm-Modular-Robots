@@ -4,7 +4,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import Container from "../components/dndContainer";
 import Component from "../components/dndComponent";
 import { Menu } from "@headlessui/react";
-import axios from "axios";
+import axios from "../api/axios";
 
 import camera from "../assets/attachments/camera.svg";
 import hand from "../assets/attachments/hand.svg";
@@ -53,11 +53,11 @@ const RobotConfig = () => {
     setContainers(updatedContainers);
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     const orderedComponents = ContainersList.map((container) => {
       const componentId = containers[container.id];
       const componentName =
-        ComponentsList.find((comp) => comp.id === componentId)?.name || null;
+        ComponentsList.find((comp) => comp.id === componentId)?.name || "None";
       return componentName;
     });
     setOrder(orderedComponents);
@@ -73,26 +73,21 @@ const RobotConfig = () => {
     };
     const formattedDate = date.toLocaleString("en-US", options);
 
-    const requestJSON = {
+    const experimentDetails = {
       user_id: user.id,
+      //default selected robot is robot 1,
       robot_id: parseInt(selectedRobotId) || 1,
-      components: orderedComponents,
+      attachments: orderedComponents,
       name: formattedDate,
     };
-    console.log(requestJSON);
-    // axios
-    //   .post("/api/experiment", requestJSON)
-    //   .then((response) => {
-    //     console.log("Backend response:", response.data);
-    //     // Handle the response from the backend as needed
-    //     navigate("/userDashboard");
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error sending data to backend:", error);
-    //     // Handle errors
-    //   });
+    console.log(experimentDetails);
 
-    // also send the modular robot id-done
+    try {
+      const res = await axios.post("/api/experiment", experimentDetails);
+      console.log(res.data);
+    } catch (error) {
+      console.error("Error:", error.response.data);
+    }
   };
 
   const filteredComponents = ComponentsList.filter((component) =>
