@@ -9,6 +9,7 @@ import axios from "../api/axios";
 import camera from "../assets/attachments/camera.svg";
 import hand from "../assets/attachments/hand.svg";
 import wheel from "../assets/attachments/wheel.svg";
+import { useNavigate } from "react-router-dom";
 
 const ContainersList = [
   { id: "TF", name: "Top Front" },
@@ -53,6 +54,8 @@ const RobotConfig = () => {
     setContainers(updatedContainers);
   };
 
+  const navigate = useNavigate();
+
   const handleSend = async () => {
     const orderedComponents = ContainersList.map((container) => {
       const componentId = containers[container.id];
@@ -82,11 +85,15 @@ const RobotConfig = () => {
     };
 
     try {
-      const res = await axios.post("/api/experiment", experimentDetails);
+      await axios.post("/api/experiment", experimentDetails);
       //use a dialog box
       //console.log(res.data);
+
+      navigate("/dashboard");
     } catch (error) {
-      console.error("Error:", error.response.data);
+      //console.error("Error:", error.response.data);
+      //add dialog box
+      console.log("Error:", error);
     }
   };
 
