@@ -80,11 +80,11 @@ const RobotConfig = () => {
       attachments: orderedComponents,
       name: formattedDate,
     };
-    console.log(experimentDetails);
 
     try {
       const res = await axios.post("/api/experiment", experimentDetails);
-      console.log(res.data);
+      //use a dialog box
+      //console.log(res.data);
     } catch (error) {
       console.error("Error:", error.response.data);
     }
