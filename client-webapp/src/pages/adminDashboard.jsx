@@ -5,20 +5,21 @@ import usericon from "../assets/user.png";
 import ExperimentCard from "../components/expeimentCard";
 import axios from "../api/axios";
 import { useEffect, useState } from "react";
-
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
-  
   const [experiments, setExperiments] = useState([]);
-  //const userId = "659c3128f8e19ef45832ea4a";
+  const navigate = useNavigate();
+  // //const userId = "659c3128f8e19ef45832ea4a";
   const userJson = localStorage.getItem("user");
   const user = JSON.parse(userJson);
-  const userId = user.id;
+  // const userId = user.id;
 
   const fetchExperiments = async () => {
     try {
       const res = await axios.get("/api/experiments");
-      console.log(res.data);
+      //console.log(res.data);
       setExperiments(res.data);
     } catch (error) {
       console.error("Error:", error.response.data);
@@ -30,104 +31,85 @@ const AdminDashboard = () => {
   }, []);
 
   //update an experiment
+  // const handleReady = async (id) => {
+  //   try {
+  //     await axios.put(`/api/experiment/${id}`, { status: "ready" });
+  //     console.log("Experiment updated");
+  //     setExperiments(experiments.filter((experiment) => experiment._id !== id));
+  //   } catch (error) {
+  //     console.error("Error:", error.response.data);
+  //   }
+  // };
+
+  //accept an experiment
+  const handleAccept = async (id) => {
+    try {
+      await axios.put(`/api/experiment/${id}`, { status: "accepted" });
+      console.log("Experiment accepted");
+      setExperiments(experiments.filter((experiment) => experiment._id !== id));
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error:", error.response.data);
+    }
+  };
+
+  //setup it and ready to start
+  //accept an experiment
   const handleReady = async (id) => {
     try {
       await axios.put(`/api/experiment/${id}`, { status: "ready" });
+      console.log("Experiment accepted");
       setExperiments(experiments.filter((experiment) => experiment._id !== id));
+      //navigate("/dashboard");
+    } catch (error) {
+      console.error("Error:", error.response.data);
+    }
+  };
+
+  //Delete a request
+  const handleDecline = async (id) => {
+    try {
+      await axios.put(`/api/experiment/${id}`, { status: "declined" });
+      console.log("Experiment deleted");
+      setExperiments(experiments.filter((experiment) => experiment._id !== id));
+      //navigate("/dashboard");
     } catch (error) {
       console.error("Error:", error.response.data);
     }
   };
 
   return (
-    /* <>
-      <div className="bg-bg flex flex-col font-inter gap-[18px] items-center justify-start mx-auto p-3 w-full">
-        <div className="bg-container flex flex-row items-center justify-start max-w-[1410px] mx-auto p-[3px] md:px-5 rounded-[12px] w-full">
-          <div className="flex flex-row md:gap-10 items-center justify-between my-0.5 w-full">
-            <Img
-              className="h-[75px] md:h-auto object-cover w-[60px]"
-              src={logo}
-              alt="logoOne"
-            />
-            <Img
-              className="h-[50px] md:h-auto object-cover w-[50px]"
-              src={usericon}
-              alt="usericon"
-            />
-          </div>
-        </div>
-        <div className="bg-bgd font-inter items-center justify-start mx-auto  ">
-          <div className=" mr-[50px] ml-[50px] mb-[50px] ">
-            <Header />
-          </div>
-          <div className="px-3 ">
-            <div className="bg-bg border border-container-accent border-solid flex flex-col items-center justify-start max-w-[1410px] mx-auto p-3 pt-3 pb-3 md:px-5 rounded-[12px] ">
-              <div className="flex flex-col gap-[27px] justify-start mb-[3px] mt-2.5 w-full">
-                <Text
-                  className="mr-[938px] md:text-xl sm:text-[28px] text-[32px] text-f font-serif"
-                  size="txtInterRegular12"
-                >
-                  Incoming Request: John Doe
-                </Text> 
-                <Link to={"/sandbox"}>
-                  <button className="cursor-pointer rounded-md leading-[normal] w-[200px] h-[40px] ml-auto md:text-[19px]  text-center  bg-primary text-f-accent font-serif  transition ease-in-out delay-100 hover:-translate-y-1 ">
-                    Setup Experiment
-                  </button>
-                </Link>
-              </div>
+    <>
+      <div className=" bg-primary/90  mx-auto my-5 shadow-lg rounded-2xl flex max-w-7xl p-3 ">
+        <div className="w-full flex flex-cols-3 gap-0 p-5">
+          <div className="col-span-2 flex flex-col ">
+            <h1 className="text-mainText font-light text-4xl font-sans">
+              Dashboard
+            </h1>
+
+            <div className="block text-mainText my-3 p-6 bg-secondary border border-gray-200 rounded-lg shadow hover:bg-gray-100  border-ternary hover:bg-mainText/20">
+              Upcoming Experiments : None
             </div>
-            <div className="border border-container-accent border-solid flex flex-col items-center justify-start max-w-[1410px] mb-3.5 mx-auto p-3  md:px-5 rounded-[12px] w-full">
-              <button onClick={fetchExperiments} className="cursor-pointer rounded-md leading-[normal] w-[200px] h-[40px] ml-auto md:text-[19px]  text-center text-f-accent bg-primary text-bg font-serif  transition ease-in-out delay-100 hover:-translate-y-1 ">
-                Refresh
-              </button>
-              <div className="flex flex-col gap-[19px] justify-start mb-[101px] w-full">
-                <div className="flex flex-col items-center justify-center p-2.5 w-auto">
-                  <Text
-                    className="md:text-4xl sm:text-[28px] text-[35px] text-f w-auto font-serif"
-                    size="txtInterRegular32"
-                  >
-                    Pending Experiments
-                  </Text>
-                </div>
-                {experiments.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center p-2.5 w-auto">
-                    <Text
-                      className="md:text-2xl sm:text-[28px] text-[35px] text-f w-auto font-serif"
-                      size="txtInterRegular32"
-                    >
-                      No Experiments to show. Please setup an experiment.
-                    </Text>
-                  </div>
-                ) : (
-                  <List
-                    className="flex flex-col gap-[20px] items-center ml-2.5 md:ml-[0] w-full"
-                    orientation="vertical"
-                  >
-                    {experiments.map(
-                      (experiment, index) =>
-                        experiment.status === "pending" && (
-                          <ExperimentCard
-                            key={index}
-                            experimentName={experiment.name}
-                            experimentId={experiment._id}
-                            handleReady={handleReady}
-                            attachments={experiment.attachments}
-                            status={experiment.status}
-                          />
-                        )
-                    )}
-                  </List>
+
+            {/* Iterate over experiments */}
+            {experiments.map((experiment) => (
+              <div key={experiment._id}>
+                {experiment._id && (
+                  <ExperimentCard
+                    experiment={experiment}
+                    userRole={user.role}
+                    handleAccept={() => handleAccept(experiment._id)}
+                    handleDecline={() => handleDecline(experiment._id)}
+                    handleReady={() => handleReady(experiment._id)}
+                  />
                 )}
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
-    </> */
-    <div></div>
+    </>
   );
-  
 };
 
 export default AdminDashboard;
-
