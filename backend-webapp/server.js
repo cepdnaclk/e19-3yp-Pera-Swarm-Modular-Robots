@@ -84,7 +84,7 @@ const { authenticateToken } = require("./src/middleware/auth");
 // Private routes
 app.use('', require('./src/routes'));
 
-
+const client = require('./src/mqtt/client');
 
 
 // test user db data
