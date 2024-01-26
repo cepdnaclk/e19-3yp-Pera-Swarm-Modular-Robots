@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useParams } from 'react-router-dom';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Container from "../components/dndContainer";
 import Component from "../components/dndComponent";
-import { Menu } from "@headlessui/react";
 import axios from "../api/axios";
+import { UserContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 import camera from "../assets/attachments/camera.svg";
 import hand from "../assets/attachments/hand.svg";
 import wheel from "../assets/attachments/wheel.svg";
-import { useNavigate } from "react-router-dom";
+import { ErrorDialog } from "../components/dialogBox";
 
 const ContainersList = [
   { id: "TF", name: "Top Front" },
@@ -31,10 +33,15 @@ const ComponentsList = [
 ];
 
 const RobotConfig = () => {
-  //get user id
-  const user = JSON.parse(localStorage.getItem("user"));
-  //get robot id
+
+  const user = useContext(UserContext);
+
+  const { exp_name, exp_schedule } = useParams();
+  console.log(`exp_name: ${exp_name}, exp_schedule: ${exp_schedule}`);
+
   const [selectedRobotId, setSelectedRobotId] = useState(null);
+  const [showSuccessDialogBox, setShowSuccessDialogBox] = useState(false);
+
   const [containers, setContainers] = useState({});
   const [order, setOrder] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -43,6 +50,8 @@ const RobotConfig = () => {
     { id: 2, name: "Modular Robot 2" },
     { id: 3, name: "Modular Robot 3" },
   ]);
+
+  const navigate = useNavigate();
 
   const handleDrop = (containerId, componentId) => {
     const updatedContainers = { ...containers, [containerId]: componentId };
@@ -54,45 +63,35 @@ const RobotConfig = () => {
     setContainers(updatedContainers);
   };
 
-  const navigate = useNavigate();
-
   const handleSend = async () => {
     const orderedComponents = ContainersList.map((container) => {
       const componentId = containers[container.id];
       const componentName =
-        ComponentsList.find((comp) => comp.id === componentId)?.name || "None";
+        ComponentsList.find((comp) => comp.id === componentId)?.name || "-";
       return componentName;
     });
     setOrder(orderedComponents);
 
-    const date = new Date();
-    const options = {
-      year: "numeric",
-      month: "short",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    };
-    const formattedDate = date.toLocaleString("en-US", options);
+    
 
-    const experimentDetails = {
+    const newExperimentRequest = {
+      name: exp_name,
       user_id: user.id,
-      //default selected robot is robot 1,
-      robot_id: parseInt(selectedRobotId) || 1,
+      robot_id: parseInt(selectedRobotId) || 1, //default selected robot is robot 1
       attachments: orderedComponents,
-      name: formattedDate,
+      schedule: exp_schedule,
     };
 
     try {
-      await axios.post("/api/experiment", experimentDetails);
+      await axios.post("/api/experiment", newExperimentRequest);
       //use a dialog box
-      //console.log(res.data);
-
-      navigate("/dashboard");
+      
+      setShowSuccessDialogBox(true);
+      // navigate("/dashboard");
     } catch (error) {
       //console.error("Error:", error.response.data);
       //add dialog box
+      alert("Something is Wrong ! Please try again later.")
       console.log("Error:", error);
     }
   };
@@ -205,6 +204,16 @@ const RobotConfig = () => {
           </div>
         </DndProvider>
       </div>
+
+      {/* not error dialog box */}
+      <ErrorDialog
+        showState={showSuccessDialogBox}
+        closefn={()=>navigate("/dashboard")}
+        buttonClickFunction={()=>navigate("/dashboard")}
+        title="Yay!"
+        errMsg="✔ Experiment Created Successfully !"
+        btnText="okay"
+      />
     </div>
   );
 };

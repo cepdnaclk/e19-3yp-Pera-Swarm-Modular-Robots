@@ -37,6 +37,7 @@ router.delete('/api/robot/:id', robotController.deleteRobot);
 router.post('/api/experiment', experimentController.createExperiment);
 router.get('/api/experiments', experimentController.getAllExperiments);
 router.get('/api/experiment/:id', experimentController.getExperimentByUserId);
+router.get('/api/experiment/:id/attachmentStatus', experimentController.getAttachmentStatusById);
 router.put('/api/experiment/:id', experimentController.updateExperiment);
 router.delete('/api/experiment/:id', experimentController.deleteExperiment);
 

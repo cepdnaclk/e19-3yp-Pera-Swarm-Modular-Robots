@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "../../api/axios";
-import { Link } from "react-router-dom";
+import { Link , useParams , useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 import { highlight, languages } from "prismjs/components/prism-core";
 import Editor from "react-simple-code-editor";
@@ -9,11 +9,15 @@ import "./codeEditor.css";
 import { Menu } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { CheckIcon } from "@heroicons/react/20/solid";
+import { ErrorDialog } from "../../components/dialogBox";
 
 const CodeUpload = () => {
   const user = useContext(UserContext);
+  const { exp_id } = useParams();
+  const navigate = useNavigate();
 
   const [robotStatus, setRobotStatus] = useState("Unknown");
+  const [showFinishExpDialogBox, setShowFinishExpDialogBox] = useState(false);
   const [attachmentsStatus, setAttachmentsStatus] = useState({
     arm: "unknown",
     wheels: "connected",
@@ -27,8 +31,28 @@ const CodeUpload = () => {
     "robot3",
   ]);
 
+  useEffect(() => {
+    // Function to fetch attachments for a specific experiment
+    const fetchAttachments = async () => {
+      try {
+        const res = await axios.get(`/api/experiment/${exp_id}/attachmentStatus`);
+        setAttachmentsStatus(res.data);
+        
+      } catch (error) {
+        alert("Error fetching attachments");
+      }
+    };
+
+    // Call the fetchAttachments function when the component mounts
+    fetchAttachments();
+  }, [exp_id]);
+
+
   const [selectedRobot, setselectedRobot] = useState("Unknown");
   const [code, setCode] = useState("#type your code here");
+  const [uploading, setUploading] = useState(false);
+  const [serverUploadSuccess, setServerUploadSuccess] = useState(null);
+  const [botUploadSuccess, setBotUploadSuccess] = useState(null);
 
   const getColorForValue = (value) => {
     switch (value.toLowerCase()) {
@@ -48,48 +72,79 @@ const CodeUpload = () => {
   };
 
   const UploadStatus = ({ message, success }) => {
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-      const timeout = setTimeout(() => {
-        setLoading(false);
-      }, 2000); // Simulating a 2-second loading time (adjust as needed)
-
-      return () => clearTimeout(timeout);
-    }, []);
-
     return (
       <div className="inline-flex items-center m-1.5">
-        {loading ? (
-          <span className="w-5 h-5 me-2 text-sm font-semibold bg-gray-200 rounded-full flex-shrink-0 flex items-center justify-center">
-            <svg
-              className="w-4 h-4 animate-spin"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z"
-                className="spinner_aj0A"
-              />
-            </svg>
-          </span>
-        ) : (
-          <span
-            className={`w-5 h-5 me-2 text-sm font-semibold rounded-full flex-shrink-0 ${
-              success ? "bg-lime-200" : "bg-red-200"
-            }`}
-          >
-            {success ? (
-              <CheckIcon className="w-5 h-auto text-lime-800" />
-            ) : (
-              <XMarkIcon className="w-5 h-auto text-red-800" />
-            )}
-          </span>
-        )}
-        <p className="inline-block">{message}</p>
+        <span
+          className={`w-5 h-5 me-2 text-sm font-semibold rounded-full flex-shrink-0 ${
+            success === null ? "bg-gray-300" : success ? "bg-lime-200" : "bg-red-200"
+          }`}
+        >
+          {success === null ? (
+            <div className="w-5 h-5 bg-gray-300 rounded-full" />
+          ) : success ? (
+            <CheckIcon className="w-5 h-auto text-lime-800" />
+          ) : (
+            <XMarkIcon className="w-5 h-auto text-red-800" />
+          )}
+        </span>
+        <p className={`inline-block ${success === null ? 'opacity-30' : ''}`}>{message}</p>
       </div>
     );
   };
+
+
+
+  const handleCodeSubmit = async () => {
+    try {
+      // Disable the upload button during the upload process
+      setUploading(true);
+
+      // Simulate loading by setting both success states to null
+      setServerUploadSuccess(null);
+      setBotUploadSuccess(null);
+
+      const req = { code: code, requirements: "" };
+
+      // await setLoading(null);
+      const res = await axios.post(`/api/experiment/${exp_id}/code`, req);
+      // Simulate success for both server and bot uploads
+      setServerUploadSuccess(res.data.backendUpload);
+      setBotUploadSuccess(res.data.botUpload);
+    } catch (error) {
+      // Handle error, set success states to false
+      setServerUploadSuccess(false);
+      setBotUploadSuccess(false);
+    } finally {
+      // Enable the upload button after the upload process is complete
+      setUploading(false);
+    }
+  };
+
+
+
+  const handleFinishExperiment = async () => {
+    try {
+      await axios.put(`/api/experiment/${exp_id}`, { status: "completed" });
+      navigate(`/dashboard`);
+    } catch (error) {
+      console.error("Error finishing experiment", error);
+      // Handle error if needed
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <>
@@ -109,10 +164,10 @@ const CodeUpload = () => {
                 </Menu.Button>
                 <Menu.Items className="absolute z-10 bg-black rounded-md mt-1 w-full">
                   {robotsAvailable.map((robot) => (
-                    <Menu.Item key={robot} className="">
+                    <Menu.Item key={robot} className="cursor-pointer">
                       {({ active }) => (
                         <a
-                          href={"#"}
+                          
                           onClick={() => {
                             handleRobotSelection(robot);
                           }}
@@ -155,15 +210,27 @@ const CodeUpload = () => {
                 </div>
               </div>
               <div className="bg-primary/50 border-4 border-mainText/30 border-dashed  rounded-lg p-2 py-3 my-5 ">
-                <button
-                  type="button"
-                  className=" focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg w-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                >
-                  Upload
-                </button>
+              <button
+                type="button"
+                onClick={handleCodeSubmit}
+                disabled={uploading} // Disable the button during the upload process
+                className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg w-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+              >
+                <div className="flex items-center justify-center">
+                {uploading ? (
+                  // Show loading spinner during upload
+                  
+                    <div className="w-5 h-5 border-t-2 border-l-2 border-gray-200 animate-spin rounded-full" />
+                 
+                ) : (
+                  // Show "Upload" text when not uploading
+                  "Upload"
+                )}
+                 </div>
+              </button>
                 <div className="bg-primary/90 rounded-lg p-3 my-3 text-sm font-sans">
-                  <UploadStatus message="Uploaded to server" success={true} />
-                  <UploadStatus message="Uploaded to bot" success={false} />
+                  <UploadStatus message="Uploaded to server" success={serverUploadSuccess} />
+                  <UploadStatus message="Uploaded to bot" success={botUploadSuccess} />
                 </div>
               </div>
               <div className="text-center">
@@ -207,6 +274,7 @@ const CodeUpload = () => {
             <div className="text-right m-4 mt-20">
               <button
                 type="button"
+                onClick={()=>setShowFinishExpDialogBox(true)}
                 className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
               >
                 Finish Experiment
@@ -214,6 +282,15 @@ const CodeUpload = () => {
             </div>
           </div>
         </div>
+              {/* not error dialog box */}
+            <ErrorDialog
+              showState={showFinishExpDialogBox}
+              closefn={()=>{setShowFinishExpDialogBox(false)}}
+              buttonClickFunction={() => handleFinishExperiment()}
+              title="Attention !!"
+              errMsg="Do You Want to Finish the Experiment"
+              btnText="Yes"
+            />
       </div>
     </>
   );

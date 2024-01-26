@@ -8,7 +8,7 @@ User.deleteMany({})
     // Create and save multiple users
     const usersData = [
       {
-        name: 'usr1',
+        name: 'user1',
         type: 'experimenter',
         email: 'usr1@example.com',
         password: 'mail12345',

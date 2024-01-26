@@ -40,6 +40,12 @@ const experimentSchema = new mongoose.Schema({
     enum: ['pending', 'running', 'completed','ready','accepted','declined'],
     default: 'pending',
   },
+  
+  schedule: {
+    type: String,
+    required: false,
+  },
+
 });
 
 module.exports = mongoose.model('Experiment', experimentSchema);

@@ -40,7 +40,7 @@ exports.saveCodeFiles = async (req, res) => {
   try {
     const { code, requirements } = req.body;
 
-
+    const uploadStatus = {backendUpload : false, botUpload : false };
 
     // console.log('code: ', code, 'requirements' , requirements);
     const { id } = req.params;
@@ -68,18 +68,30 @@ exports.saveCodeFiles = async (req, res) => {
 
     // Write code to run.py
     const codeFilePath = path.join(filesPath, codeFileName);
-    await writeFileAsync(codeFilePath, code);
-
-    // Write requirements to requirements.txt
     const requirementsFilePath = path.join(filesPath, requirementsFileName);
-    await writeFileAsync(requirementsFilePath, requirements);
+    try {
+          await writeFileAsync(codeFilePath, code);
+          await writeFileAsync(requirementsFilePath, requirements);
+
+          uploadStatus.backendUpload = true ;
+    } catch (error) {
+          uploadStatus.backendUpload = false ;
+    }
+
+    
+    
 
     console.log("\x1b[32mCode writing to files : DONE\x1b[0m");
     
     // TODO: call MQTT broker 
-    publishToTopic("server_directives", "run");
+   try {
+    //  publishToTopic("server_directives", "run");
+      uploadStatus.botUpload = true;
+   } catch (error) {
+      uploadStatus.botUpload = false;
+   }
 
-    res.status(201).json({ message: 'Code and requirements uploaded successfully.' });
+    res.send(uploadStatus);
 
 
   } catch (error) {

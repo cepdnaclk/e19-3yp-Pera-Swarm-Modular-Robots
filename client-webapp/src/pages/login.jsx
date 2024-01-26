@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from '../api/axios';
-import ErrorDialog from '../components/dialogBox';
+import { ErrorDialog } from '../components/dialogBox';
 
 const LoginForm = () => {
   const [errMsg, setErrMsg] = useState(null);

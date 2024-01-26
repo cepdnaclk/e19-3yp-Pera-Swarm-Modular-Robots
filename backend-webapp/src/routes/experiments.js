@@ -13,6 +13,7 @@ exports.createExperiment = async (req, res) => {
             log: req.body.log,
             videoFile: req.body.videoFile,
             name: req.body.name,
+            schedule: req.body.schedule,
         };
 
         const experiment = new Experiment(experimentData);
@@ -46,6 +47,29 @@ exports.getExperimentById = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
+// Get a attachement status of a experiment
+exports.getAttachmentStatusById = async (req, res) => {
+    try {
+        const { attachments } = await Experiment.findById(req.params.id);
+        if (!attachments) {
+            return res.status(404).json({ message: 'Experiment not found' });
+        }
+
+        // Convert the array to an object and remove null values
+        const attachmentsObject = attachments.reduce((acc, attachment) => {
+            if (attachment !== '-') {
+                acc[attachment] = 'connected'; // Assuming default status is "connected"
+            }
+            return acc;
+        }, {});
+
+        res.json(attachmentsObject);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
 
 // Update an experiment by ID
 exports.updateExperiment = async (req, res) => {

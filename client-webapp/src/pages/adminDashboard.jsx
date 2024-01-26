@@ -1,27 +1,29 @@
-///////////  TODO  ///////////
-
 import React from "react";
-import usericon from "../assets/user.png";
 import ExperimentCard from "../components/expeimentCard";
 import axios from "../api/axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../App";
+import CountUp from 'react-countup';
 
 const AdminDashboard = () => {
   const [experiments, setExperiments] = useState([]);
+  const [totalexperiments, setTotalExperiments] = useState(0);
+  const [totalReq, setTotalReq] = useState(0);
   const navigate = useNavigate();
-  // //const userId = "659c3128f8e19ef45832ea4a";
-  const userJson = localStorage.getItem("user");
-  const user = JSON.parse(userJson);
-  // const userId = user.id;
+  
+  const user = useContext(UserContext);
+
 
   const fetchExperiments = async () => {
     try {
       const res = await axios.get("/api/experiments");
-      //console.log(res.data);
       setExperiments(res.data);
+      setTotalExperiments(res.data.length);
+      setTotalReq(res.data.filter(experiment => experiment.status === "pending").length);
     } catch (error) {
+      alert("Oh no ! Something went wrong with backend.");
       console.error("Error:", error.response.data);
     }
   };
@@ -30,65 +32,58 @@ const AdminDashboard = () => {
     fetchExperiments();
   }, []);
 
-  //update an experiment
-  // const handleReady = async (id) => {
+
+  const updateExperimentStatus = async (id, status) => {
+    try {
+      await axios.put(`/api/experiment/${id}`, { status });
+      // Update the local state without a page reload
+      setExperiments((prevExperiments) =>
+        prevExperiments.map((experiment) =>
+          experiment._id === id ? { ...experiment, status } : experiment
+        )
+      );
+    } catch (error) {
+      console.error("Error:", error.response.data);
+    }
+  };
+
+  const handleAccept = (id) => {
+    updateExperimentStatus(id, "accepted");
+    setTotalReq(totalReq - 1);
+  };
+
+  const handleReady = (id) => {
+    updateExperimentStatus(id, "ready");
+    
+  };
+
+  // CAN ADMIN DELETE REQUEST ???? SHOULD BE ABLE TO DECLINE ONLY right???
+
+  //Delete a request
+  // const handleDecline = async (id) => {
   //   try {
-  //     await axios.put(`/api/experiment/${id}`, { status: "ready" });
-  //     console.log("Experiment updated");
-  //     setExperiments(experiments.filter((experiment) => experiment._id !== id));
+  //     await axios.put(`/api/experiment/${id}`, { status: "declined" });
+  //     console.log("Experiment declined");
+  //     window.location.reload();
   //   } catch (error) {
   //     console.error("Error:", error.response.data);
   //   }
   // };
 
-  //accept an experiment
-  const handleAccept = async (id) => {
-    try {
-      await axios.put(`/api/experiment/${id}`, { status: "accepted" });
-      console.log("Experiment accepted");
-      setExperiments(experiments.filter((experiment) => experiment._id !== id));
-      navigate("/dashboard");
-    } catch (error) {
-      console.error("Error:", error.response.data);
-    }
-  };
-
-  //setup it and ready to start
-  //accept an experiment
-  const handleReady = async (id) => {
-    try {
-      await axios.put(`/api/experiment/${id}`, { status: "ready" });
-      console.log("Experiment accepted");
-      setExperiments(experiments.filter((experiment) => experiment._id !== id));
-      //navigate("/dashboard");
-    } catch (error) {
-      console.error("Error:", error.response.data);
-    }
-  };
-
-  //Delete a request
-  const handleDecline = async (id) => {
-    try {
-      await axios.put(`/api/experiment/${id}`, { status: "declined" });
-      console.log("Experiment deleted");
-      setExperiments(experiments.filter((experiment) => experiment._id !== id));
-      //navigate("/dashboard");
-    } catch (error) {
-      console.error("Error:", error.response.data);
-    }
-  };
-
   return (
     <>
       <div className=" bg-primary/90  mx-auto my-5 shadow-lg rounded-2xl flex max-w-7xl p-3 ">
-        <div className="w-full flex flex-cols-3 gap-0 p-5">
+        <div className="w-full grid grid-cols-3 gap-28 p-5">
           <div className="col-span-2 flex flex-col ">
             <h1 className="text-mainText font-light text-4xl font-sans">
               Dashboard
             </h1>
-
-            <div className="block text-mainText my-3 p-6 bg-secondary border border-gray-200 rounded-lg shadow hover:bg-gray-100  border-ternary hover:bg-mainText/20">
-              Upcoming Experiments : None
+            <div className="inline-flex items-center text-mainText my-3 p-6 bg-secondary border border-gray-200 rounded-lg shadow hover:bg-gray-100  border-ternary hover:bg-red-300/20">
+            <span class="relative flex h-3 w-3 me-5">
+              <span className="absolute inline-flex h-full w-full bg-red-300 rounded-full animate-ping"></span>
+              <span className="relative inline-flex h-full w-full bg-red-500 rounded-full "></span>
+            </span>
+              <font className="font-thin me-5"># of experiments </font><font className="text-red-500"><font className="font-semibold me-5"> ready to start</font> <font className=" font-black"> {experiments.filter(experiment => experiment.status === "ready").length}</font></font>
             </div>
 
             {/* Iterate over experiments */}
@@ -105,6 +100,27 @@ const AdminDashboard = () => {
                 )}
               </div>
             ))}
+          </div>
+
+          <div>
+            <div className="cursor-pointer block text-right outline-solid   outline-mainText/50 outline-2 outline-offset-2 my-3  p-6 bg-secondary border-8 border-gray-200 rounded-2xl shadow hover:bg-yellow-200/20  border-ternary/50 ">
+              <h5 className="mb-2 text-xl font-thin tracking-tight text-mainText text-center ">
+                Pending Requests
+              </h5>
+              <h5 className="mb-2 text-8xl font-bold tracking-tight text-mainText text-center">
+                <CountUp end= { totalReq } duration={1} />
+              </h5>
+            </div>
+
+            <div className="cursor-pointer block text-right outline-solid   outline-mainText/50 outline-2 outline-offset-2 my-3  p-6 bg-secondary border-8 border-gray-200 rounded-2xl shadow hover:bg-sky-200/20  border-ternary/50 ">
+              <h5 className="mb-2 text-xl font-thin tracking-tight text-mainText text-center ">
+                Total # of Experiments
+              </h5>
+              <h5 className="mb-2 text-8xl font-thin tracking-tight text-mainText text-center">
+                <CountUp end= {totalexperiments} duration={3} />
+              </h5>
+            </div>
+
           </div>
         </div>
       </div>

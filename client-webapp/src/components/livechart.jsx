@@ -97,7 +97,7 @@ const LiveChart = () => {
   }, []); // Empty dependency array to run the effect only once on mount
 
   return (
-    <div>
+    <div > 
       <ReactApexChart
         options={chartOptions}
         series={series}

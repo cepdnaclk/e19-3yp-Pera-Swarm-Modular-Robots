@@ -2,7 +2,7 @@ import { useEffect, useState, Fragment, useRef, useContext } from 'react';
 import { MoonIcon, SunIcon } from '@heroicons/react/20/solid';
 import { Switch, Menu, Transition } from '@headlessui/react'
 import { UserContext } from '../App';
-import ErrorDialog from '../components/dialogBox';
+import {ErrorDialog} from '../components/dialogBox';
 
 import lightLogo from '../assets/logo_light.svg';
 import darkLogo from '../assets/logo_dark.svg';
