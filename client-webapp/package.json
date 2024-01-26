@@ -23,6 +23,7 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
     "react-gauge-chart": "^0.4.1",
     "react-gauge-component": "^1.1.30",
     "react-player": "^2.14.1",

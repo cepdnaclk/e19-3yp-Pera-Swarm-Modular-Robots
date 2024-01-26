@@ -10,6 +10,7 @@ import { Menu } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import { ErrorDialog } from "../../components/dialogBox";
+import { useDropzone } from 'react-dropzone';
 
 const CodeUpload = () => {
   const user = useContext(UserContext);
@@ -49,10 +50,24 @@ const CodeUpload = () => {
 
 
   const [selectedRobot, setselectedRobot] = useState("Unknown");
-  const [code, setCode] = useState("#type your code here");
+  const [code, setCode] = useState("");
   const [uploading, setUploading] = useState(false);
   const [serverUploadSuccess, setServerUploadSuccess] = useState(null);
   const [botUploadSuccess, setBotUploadSuccess] = useState(null);
+
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: (acceptedFiles) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setCode(reader.result); // Set code editor content with file content
+        };
+        reader.readAsText(file);
+      }
+    }
+  });
 
   const getColorForValue = (value) => {
     switch (value.toLowerCase()) {
@@ -256,6 +271,9 @@ const CodeUpload = () => {
             <div
               className="bg-primary rounded-xl flex-1 m-4 p-4 overflow-auto"
               style={{ maxHeight: "90vh" }}
+
+              {...getRootProps()}
+              
             >
               <Editor
                 value={code}
@@ -269,6 +287,8 @@ const CodeUpload = () => {
                   fontSize: 16,
                   minHeight: "80vh",
                 }}
+                placeholder=">> Type your code here OR Drag and Drop a file"
+                onClick={(e) => e.stopPropagation()}  
               />
             </div>
             <div className="text-right m-4 mt-20">
