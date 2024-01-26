@@ -1,15 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "../api/axios";
+import { Link, useParams } from "react-router-dom";
 import { UserContext } from "../App";
 import GaugeComponent from "react-gauge-component";
-
+import ReactPlayer from "react-player";
 
 import LiveChart from "../components/livechart";
 
 const LiveMonitoring = () => {
   const user = useContext(UserContext);
-  const [consoleText, setConsoleText] = useState(">>> starting experiment");
-  const armAngle = 45;
+  const { exp_id } = useParams();
+
+  const [consoleText, setConsoleText] = useState(">>> starting experiment  starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment");
+  const [armAngle, setArmAngle] = useState(45);
+  const [robotSpeed, setRobotSpeed] = useState(300);
+  const [chartYalues, setChartYalues] = useState({xVal:0, yVal:0}); //TODO:: change livechart component to accept these variables
+  const liveStreamUrl = "https://www.youtube.com/watch?v=of9EQmuZ_ck";
 
   const getColorForValue = (value) => {
     switch (value.toLowerCase()) {
@@ -25,64 +31,157 @@ const LiveMonitoring = () => {
   };
 
   return (
-    <div className="bg-primary/90 mx-auto my-5 shadow-lg rounded-2xl flex max-w-7xl p-3 text-mainText">
+    <div className="bg-primary/90 mx-auto my-5 shadow-lg rounded-2xl  max-w-7xl p-3 text-mainText">
+      <div className="flex justify-between mx-5">
+        <Link to={`/codeUpload/${exp_id}`}>
+          <button
+            type="button"
+            // onClick={() => {}}
+            className="focus:outline-none text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:sky-red-900"
+          >
+            Back
+          </button>
+        </Link>
+        {/* <button
+          type="button"
+          onClick={() => {}}
+          className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+        >
+          Finish Experiment
+        </button> */}
+      </div>
+
       <div className="grid grid-cols-2 grid-rows-2 gap-5 p-5 w-full">
-        <div className="bg-ternary min-h-28 rounded-lg">test</div>
-        <div className="bg-ternary min-h-28 rounded-lg font-mono p-5 overscroll-contain">
-          {consoleText}
-        </div>
-        <div className="bg-ternary min-h-28 rounded-lg p-3 font-sans text-mainText">
-          <div className="text-text font-thin flex items-center justify-center text-3xl mb-10">
-            Arm position
-          </div>
-          {/* <div className="flex items-center justify-between mt-[60px] px-[60px] z-10">
-            <span>Left</span>
-            <span>Right</span>
-          </div> */}
-          <GaugeComponent
-            value={armAngle}
-            minValue={-90}
-            maxValue={90}
-            type="radial"
-            className="font-semibold "
+        <div className="bg-ternary max-h-96 rounded-lg border-8 p-2 border-secondary">
 
-            labels={{
-              valueLabel: {
-                matchColorWithArc: true,
-                formatTextValue: (value) => `${value}°`,
-                
+          <ReactPlayer
+            url={liveStreamUrl}
+            width="100%"
+            height="100%"
+            controls={true}
+            playing={true}
+            muted={true}
+            config={{
+              file: {
+                forceAudio: true,
               },
-
-              tickLabels: {
-                type: "inner",
-                ticks: [{ value: 0 }, { value: -45 }, { value: 45 }],
-                defaultTickValueConfig: {
-                  formatTextValue: (value) => `${value}°`,
-
-                },
-
-
-
-              },
-
-            }}
-            arc={{
-              colorArray: ["#ff6347", "#ffd700"],
-              subArcs: [{ limit: 0 }, { limit: 90 }],
-              padding: 0.02,
-              width: 0.25,
-            }}
-            pointer={{
-              type: "needle",
-              elastic: true,
-              animationDelay: 0,
-              animationDuration: 1000,
-              color: "black",
             }}
           />
+
+        </div>
+        <div className="bg-ternary max-h-96 rounded-lg font-mono p-2 overscroll-auto overflow-scroll scroll-smooth">
+          <div className="bg-secondary/70  rounded-md p-2">
+            {consoleText}
+          </div>
+        </div>
+        <div className="bg-ternary/20 border-8 border-sky-200/50 max-h-96 rounded-lg p-1 font-sans text-mainText grid grid-rows-4">
+
+          <div className=" font-thin flex items-center justify-center text-3xl">
+            Real time status
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 place-items-center">
+
+            <div>
+              <div className=" font-thin flex items-center justify-center text-xl mb-0">
+                Arm position
+              </div>
+
+
+              <GaugeComponent
+                className=" w-auto"
+                value={armAngle}
+                minValue={-90}
+                maxValue={90}
+                type="radial"
+                labels={{
+                  valueLabel: {
+                    matchColorWithArc: true,
+                    formatTextValue: (value) => `${value}°`,
+                  },
+                  tickLabels: {
+                    type: "inner",
+                    ticks: [{ value: 0 }, { value: -45 }, { value: 45 }],
+                    defaultTickValueConfig: {
+                      formatTextValue: (value) => `${value}°`,
+                      style: {
+                        fontSize: "12px",
+                        fill: "rgba(var(--text-color))",
+                      },
+                    },
+                  },
+                }}
+                arc={{
+                  colorArray: ["#ff6347", "#ffd700"],
+                  subArcs: [{ limit: 0 }, { limit: 90 }],
+                  // padding: 0.02,
+                  // width: 0.25,
+                }}
+                pointer={{
+                  type: "needle",
+                  elastic: true,
+                  animationDelay: 0,
+                  animationDuration: 1000,
+                  width: 10,
+                }}
+              />
+
+              
+            </div>
+            <div>
+              <div className="text-text font-thin flex justify-center text-xl mb-2">
+                Robot Speed
+              </div>
+
+              <GaugeComponent
+                arc={{
+                  className: "w-full",
+                  nbSubArcs: 150,
+                  colorArray: ['#5BE12C', '#F5CD19', '#EA4228'],
+                  width: 0.3,
+                  padding: 0.003
+                }}
+                labels={{
+                  valueLabel: {
+                    fontSize: 40,
+                    style: {
+                      fill: 'rgba(var(--text-color))',
+                      textShadow: ""
+                    },
+                    formatTextValue: value => `${value} m/h`
+                  },
+                  tickLabels: {
+                    type: "outer",
+                    ticks: [
+                      { value: 100 },
+                      { value: 200 },
+                      { value: 300 },
+                      { value: 400 },
+                      { value: 500 },
+                      { value: 600 },
+                      { value: 700 },
+                      { value: 800 },
+                      { value: 900 },
+                      { value: 1000 },
+                    ],
+                    valueConfig: {
+                      formatTextValue: value => `${value} m/h`,
+                    }
+                  }
+                }}
+                value={robotSpeed}
+                maxValue={1000}
+              />
+
+
+            </div>
+          </div>
+
         </div>
         <div className="bg-ternary rounded-lg p-3">
-          {/* <LiveChart /> */}
+
+          <LiveChart />
+
         </div>
       </div>
     </div>

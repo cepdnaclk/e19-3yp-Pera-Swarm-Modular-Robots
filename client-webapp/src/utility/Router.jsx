@@ -37,7 +37,7 @@ const CustomRoutes = () => {
                 <Route path="/sandbox" element={<Sandbox />} />
                 <Route path="/robotConfig/:exp_name/:exp_schedule" element={<RobotConfig />} />
                 <Route path="/codeUpload/:exp_id" element={<CodeUpload />} />
-                <Route path="/live" element={<LiveMonitoring />} />
+                <Route path="/live/:exp_id" element={<LiveMonitoring />} />
               </>
             )}
 

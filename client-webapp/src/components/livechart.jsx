@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 
 const LiveChart = () => {
-  const [chartOptions, setChartOptions] = useState({
+  const chartOptions = {
     chart: {
       id: "realtime",
       animations: {
         enabled: false,
         easing: "linear",
         dynamicAnimation: {
-          speed: 100,
+          speed: 1000,
         },
       },
       toolbar: {
@@ -31,10 +31,16 @@ const LiveChart = () => {
 
       style: {
         fontSize: "30px",
-        fontWeight: 300,
-        fontFamily: "monospace",
+        fontWeight: 100,
+        fontFamily:'ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";',
+        color: "rgba(var(--text-color))",
       },
     },
+
+    grid: {
+      borderColor: 'rgba(186,230,253,0.5)',
+    },
+
     markers: {
       size: 0,
     },
@@ -44,7 +50,9 @@ const LiveChart = () => {
         text: "Time (seconds)",
         style: {
           fontSize: "14px",
-          fontWeight: 600,
+          fontWeight: 200,
+          fontFamily:'ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";',
+          color: "rgba(var(--text-color))",
         },
       },
       tickAmount: 6,
@@ -57,7 +65,9 @@ const LiveChart = () => {
         text: "Distance (cm)",
         style: {
           fontSize: "14px",
-          fontWeight: 600,
+          fontWeight: 200,
+          fontFamily:'ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";',
+          color: "rgba(var(--text-color))",
         },
       },
       max: 100,
@@ -65,12 +75,10 @@ const LiveChart = () => {
     legend: {
       show: false,
     },
-  });
+  };
 
   const [series, setSeries] = useState([
-    {
-      data: [],
-    },
+    { data: [] }
   ]);
 
   useEffect(() => {
@@ -83,26 +91,27 @@ const LiveChart = () => {
       setSeries((prevSeries) => {
         const newData = [...prevSeries[0].data, { x: xVal, y: yVal }];
         console.log(`x: ${xVal}, y: ${yVal}`);
-        return [{ data: newData.slice(-10) }]; // Display only the last 10 points
+        return [{ data: newData.slice(-30) }]; // Display only the last 10 points
       });
 
       xVal++;
     };
 
-    intervalId = setInterval(updateChart, 1000);
+    // Set interval dynamically based on animation speed
+    const animationSpeed = chartOptions.chart.animations.dynamicAnimation.speed || 50;
+    intervalId = setInterval(updateChart, animationSpeed);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, []); // Empty dependency array to run the effect only once on mount
+  }, [chartOptions.chart.animations.dynamicAnimation.speed]); // Dependency on animation speed
 
   return (
-    <div > 
+    <div>
       <ReactApexChart
         options={chartOptions}
         series={series}
         type="line"
-        height={500}
       />
     </div>
   );
