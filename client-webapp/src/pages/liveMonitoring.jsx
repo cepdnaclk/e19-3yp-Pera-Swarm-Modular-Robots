@@ -7,6 +7,8 @@ import ReactPlayer from "react-player";
 
 import LiveChart from "../components/livechart";
 
+import camNotAvailable from "../assets/liveFeedNotAvailable.png";
+
 const LiveMonitoring = () => {
   const user = useContext(UserContext);
   const { exp_id } = useParams();
@@ -15,7 +17,7 @@ const LiveMonitoring = () => {
   const [armAngle, setArmAngle] = useState(45);
   const [robotSpeed, setRobotSpeed] = useState(300);
   const [chartYalues, setChartYalues] = useState({xVal:0, yVal:0}); //TODO:: change livechart component to accept these variables
-  const liveStreamUrl = "https://www.youtube.com/watch?v=of9EQmuZ_ck";
+  const liveStreamUrl = "https://664adff265fae6a8.p60.rt3.io/html/cam_pic_new.php?time=1706377684978&pDelay=40000";
 
   const getColorForValue = (value) => {
     switch (value.toLowerCase()) {
@@ -52,9 +54,9 @@ const LiveMonitoring = () => {
       </div>
 
       <div className="grid grid-cols-2 grid-rows-2 gap-5 p-5 w-full">
-        <div className="bg-ternary max-h-96 rounded-lg border-8 p-2 border-secondary">
+        <div className="bg-ternary max-h-96 rounded-lg p-2">
 
-          <ReactPlayer
+          {/* <ReactPlayer
             url={liveStreamUrl}
             width="100%"
             height="100%"
@@ -66,7 +68,16 @@ const LiveMonitoring = () => {
                 forceAudio: true,
               },
             }}
-          />
+          /> */}
+          <img className="w-full h-full rounded-lg" 
+          src={liveStreamUrl}
+          onError={(e) => {
+            e.target.onerror = null; // Prevent infinite loop
+            e.target.src = camNotAvailable; // Replace with the path to your default image
+            e.target.alt = "Default Image"; // Replace with your alt text
+          }}
+          loading="lazy"
+          ></img>
 
         </div>
         <div className="bg-ternary max-h-96 rounded-lg font-mono p-2 overscroll-auto overflow-scroll scroll-smooth">
