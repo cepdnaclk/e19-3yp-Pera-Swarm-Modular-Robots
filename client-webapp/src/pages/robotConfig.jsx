@@ -72,26 +72,25 @@ const RobotConfig = () => {
     });
     setOrder(orderedComponents);
 
-    
-
     const newExperimentRequest = {
       name: exp_name,
       user_id: user.id,
       robot_id: parseInt(selectedRobotId) || 1, //default selected robot is robot 1
       attachments: orderedComponents,
       schedule: exp_schedule,
+      status: user.role === 'experimenter_home' ? 'ready' : 'pending',
     };
 
     try {
       await axios.post("/api/experiment", newExperimentRequest);
       //use a dialog box
-      
+
       setShowSuccessDialogBox(true);
       // navigate("/dashboard");
     } catch (error) {
       //console.error("Error:", error.response.data);
       //add dialog box
-      alert("Something is Wrong ! Please try again later.")
+      alert("Something is Wrong ! Please try again later.");
       console.log("Error:", error);
     }
   };

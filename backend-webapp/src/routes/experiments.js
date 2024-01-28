@@ -14,6 +14,7 @@ exports.createExperiment = async (req, res) => {
             videoFile: req.body.videoFile,
             name: req.body.name,
             schedule: req.body.schedule,
+            status: req.body.status,
         };
 
         const experiment = new Experiment(experimentData);

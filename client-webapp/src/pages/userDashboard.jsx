@@ -38,7 +38,7 @@ const UserDashboard = () => {
 
   const NewExperimentStart = () => {
     const [experimentName, setExperimentName] = useState('');
-    const [schedule, setSchedule] = useState('');
+    const [schedule, setSchedule] = useState(new Date().toISOString().slice(0, 16));
 
     const handleConfirm = () => {
       // console.log("Experiment Name: ", experimentName, "Schedule: ", schedule);
@@ -57,16 +57,18 @@ const UserDashboard = () => {
             required
           />
         </label>
+          {user.role !== "experimenter_home" && (
         <label className="flex flex-col">
           <span style={{ fontWeight: 'bold' }}>Schedule:</span>
-          <input
-            type="datetime-local"
-            value={schedule}
-            onChange={e => setSchedule(e.target.value)}
-            className="px-2 m-1 py-1 border border-gray-300 rounded-md"
-            required
-          />
+            <input
+              type="datetime-local"
+              value={schedule}
+              onChange={e => setSchedule(e.target.value)}
+              className="px-2 m-1 py-1 border border-gray-300 rounded-md"
+              required
+            />
         </label>
+          )}
         <button
           type="submit"
           onClick={handleConfirm}

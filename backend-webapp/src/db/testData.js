@@ -21,7 +21,7 @@ User.deleteMany({})
       },
       {
         name: 'usr3',
-        type: 'experimenter',
+        type: 'experimenter_home',
         email: 'usr3@example.com',
         password: 'experiment123',
       },

@@ -123,6 +123,64 @@ const ExperimentCard = ({experiment,userRole,handleDelete,handleAccept,handleDec
           break;
       }
     }
+
+
+
+    if (userRole === 'experimenter_home') {
+      switch (status) {
+        case "pending":
+          return (
+            <>
+
+            </>
+          );
+
+        case "ready":
+          return (
+            <>
+            <button type="button" onClick={() => handleStartExperiment(id)} >
+        
+              <span className=" text-white  bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Start Experiment</span>
+              
+            </button>
+            </>
+          );
+
+        case "accepted":
+          return (
+            <>
+              
+            </>
+          );
+
+        case "declined":
+          return (
+            <>
+              
+            </>
+          );
+
+        case "completed":
+          return (
+            <>
+              <button type="button" onClick={() => handleLog(id)} className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Log</button>
+              <button type="button" onClick={() => handleVideo(id)} className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Video File</button>
+            </>
+          );
+
+
+        default:
+          break;
+      }
+    }
+
+
+
+
+
+
+
+
   };
 
 

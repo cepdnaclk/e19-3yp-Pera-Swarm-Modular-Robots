@@ -41,6 +41,16 @@ const CustomRoutes = () => {
               </>
             )}
 
+            {user.role === 'experimenter_home' && (
+              <>
+                <Route path="/dashboard" element={<UserDashboard />} />
+                <Route path="/sandbox" element={<Sandbox />} />
+                <Route path="/robotConfig/:exp_name/:exp_schedule" element={<RobotConfig />} />
+                <Route path="/codeUpload/:exp_id" element={<CodeUpload />} />
+                <Route path="/live/:exp_id" element={<LiveMonitoring />} />
+              </>
+            )}
+
             {/* Redirect to /dashboard for any unknown routes */}
             <Route path="/*" element={<Navigate to="/dashboard" replace />} />
           </>
