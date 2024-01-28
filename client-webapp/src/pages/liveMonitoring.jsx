@@ -44,9 +44,10 @@ const LiveMonitoring = () => {
         setRobotSpeed(liveData.robotSpeed);
         setConsoleText((prevConsoleText) => prevConsoleText + liveData.consoleText + "<br />");
         setChartValues(() => ({
-          xVal: parseFloat(liveData.distanceToObject[0]),
-          yVal: parseFloat(liveData.distanceToObject[1]),
+          xVal: parseFloat(liveData.distanceToObject.xVal),
+          yVal: parseFloat(liveData.distanceToObject.yVal),
         }));
+
       };
   
       // Handle connection closure
