@@ -8,6 +8,7 @@ const robotController = require("../routes/robots");
 const experimentController = require("../routes/experiments");
 const logController = require("../routes/viewLogs");
 const codeFilesController = require("./codeFiles");
+const liveController = require("./live");
 
 
 
@@ -42,6 +43,9 @@ router.put('/api/experiment/:id', experimentController.updateExperiment);
 router.delete('/api/experiment/:id', experimentController.deleteExperiment);
 
 router.post('/api/experiment/:id/code', codeFilesController.saveCodeFiles);
+
+//live
+router.get('/api/live', liveController.getLiveData);
 
 // Logs Endpoints
 router.get('/api/logs', logController.getAllLogs);

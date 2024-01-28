@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const LiveChart = () => {
+const LiveChart = ({values}) => {
+
   const chartOptions = {
     chart: {
       id: "realtime",
@@ -82,37 +83,20 @@ const LiveChart = () => {
   ]);
 
   useEffect(() => {
-    let xVal = 0;
-    let intervalId;
-
     const updateChart = () => {
-      const yVal = Math.floor(Math.random() * 100) + 1;
-
       setSeries((prevSeries) => {
-        const newData = [...prevSeries[0].data, { x: xVal, y: yVal }];
-        console.log(`x: ${xVal}, y: ${yVal}`);
-        return [{ data: newData.slice(-30) }]; // Display only the last 10 points
+        const newData = [...prevSeries[0].data, { x: values.xVal, y: values.yVal }];
+        return [{ data: newData.slice(-30) }]; // Display only the last 30 points
       });
-
-      xVal++;
     };
 
-    // Set interval dynamically based on animation speed
-    const animationSpeed = chartOptions.chart.animations.dynamicAnimation.speed || 50;
-    intervalId = setInterval(updateChart, animationSpeed);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [chartOptions.chart.animations.dynamicAnimation.speed]); // Dependency on animation speed
+    // Update the chart when new values are received
+    updateChart();
+  }, [values]);
 
   return (
     <div>
-      <ReactApexChart
-        options={chartOptions}
-        series={series}
-        type="line"
-      />
+      <ReactApexChart options={chartOptions} series={series} type="line" />
     </div>
   );
 };

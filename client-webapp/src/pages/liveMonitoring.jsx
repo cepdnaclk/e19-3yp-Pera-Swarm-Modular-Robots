@@ -13,10 +13,10 @@ const LiveMonitoring = () => {
   const user = useContext(UserContext);
   const { exp_id } = useParams();
 
-  const [consoleText, setConsoleText] = useState(">>> starting experiment  starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment starting experiment");
-  const [armAngle, setArmAngle] = useState(45);
-  const [robotSpeed, setRobotSpeed] = useState(300);
-  const [chartYalues, setChartYalues] = useState({xVal:0, yVal:0}); //TODO:: change livechart component to accept these variables
+  const [consoleText, setConsoleText] = useState(">>> starting experiment <br/>");
+  const [armAngle, setArmAngle] = useState(0);
+  const [robotSpeed, setRobotSpeed] = useState(0);
+  const [chartValues, setChartValues] = useState({xVal:0, yVal:0}); //TODO:: change livechart component to accept these variables
   const liveStreamUrl = "https://664adff265fae6a8.p60.rt3.io/html/cam_pic_new.php?time=1706377684978&pDelay=40000";
 
   const getColorForValue = (value) => {
@@ -31,6 +31,45 @@ const LiveMonitoring = () => {
         return "black"; // Default color if none of the above match
     }
   };
+
+  useEffect(() => {
+    try {
+      const eventSource = new EventSource(`${import.meta.env.VITE_API_SERVER}/api/live`);
+  
+      // Handle events from the server
+      eventSource.onmessage = (event) => {
+        // Update your component state with the received data
+        let liveData = JSON.parse(event.data);
+        setArmAngle(liveData.armAngle);
+        setRobotSpeed(liveData.robotSpeed);
+        setConsoleText((prevConsoleText) => prevConsoleText + liveData.consoleText + "<br />");
+        setChartValues(() => ({
+          xVal: parseFloat(liveData.distanceToObject[0]),
+          yVal: parseFloat(liveData.distanceToObject[1]),
+        }));
+      };
+  
+      // Handle connection closure
+      eventSource.onclose = () => {
+        // Reconnect or handle closure as needed
+        console.log('Connection closed');
+      };
+  
+      // Handle connection errors
+      eventSource.onerror = (error) => {
+        setConsoleText((prevConsoleText) => prevConsoleText + "Connection error: cannot connect to the backend" + "<br />");
+      };
+  
+      return () => {
+        // Close the event source when the component unmounts
+        eventSource.close();
+      };
+    } catch (error) {
+      console.error("Error:", error.message);
+      setConsoleText((prevConsoleText) => prevConsoleText + "Error: " + error.message + "<br />");
+    }
+  }, []);
+  
 
   return (
     <div className="bg-primary/90 mx-auto my-5 shadow-lg rounded-2xl  max-w-7xl p-3 text-mainText">
@@ -81,9 +120,8 @@ const LiveMonitoring = () => {
 
         </div>
         <div className="bg-ternary max-h-96 rounded-lg font-mono p-2 overscroll-auto overflow-scroll scroll-smooth">
-          <div className="bg-secondary/70  rounded-md p-2">
-            {consoleText}
-          </div>
+        <div className="bg-secondary/70 rounded-md p-2 code-editor-container" dangerouslySetInnerHTML={{ __html: consoleText }} />
+
         </div>
         <div className="bg-ternary/20 border-8 border-sky-200/50 max-h-96 rounded-lg p-1 font-sans text-mainText grid grid-rows-4">
 
@@ -191,7 +229,7 @@ const LiveMonitoring = () => {
         </div>
         <div className="bg-ternary rounded-lg p-3">
 
-          <LiveChart />
+          <LiveChart values={chartValues} />
 
         </div>
       </div>
