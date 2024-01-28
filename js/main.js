@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // Dynamically load images from the 'images/ui' folder
-const numImages = 7; // Change this to the actual number of images
+const numImages = 16; // Change this to the actual number of images
 const slideshowContainer = document.querySelector(".slideshow-container");
 
 for (let i = 1; i <= numImages; i++) {
@@ -314,7 +314,8 @@ for (let i = 1; i <= numImages; i++) {
   
   const img = document.createElement("img");
   img.src = `images/ui/${i}.png`;
-  img.style.width = "75%";
+  img.style.width = "880px";
+  img.style.height = "550px";
   img.style.borderRadius = "20px";
   img.style.border = "2px solid";
   
