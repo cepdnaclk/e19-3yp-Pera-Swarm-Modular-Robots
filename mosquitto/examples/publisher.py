@@ -11,7 +11,7 @@ client.connect("18.141.58.80", 1883, 60*5)  # Connect to the local broker
 
 try:
     while True:
-        client.publish("hello_topic", "hello")
+        client.publish("live_data", "hello")
         time.sleep(5)  # Publish every 5 seconds
 
 except KeyboardInterrupt:
