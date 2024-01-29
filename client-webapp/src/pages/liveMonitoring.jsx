@@ -15,7 +15,7 @@ const LiveMonitoring = () => {
 
   const [consoleText, setConsoleText] = useState(">>> starting experiment <br/>");
   const [armAngle, setArmAngle] = useState(0);
-  const [robotSpeed, setRobotSpeed] = useState(0);
+  const [robotBattery, setRobotBattery] = useState(0);
   const [chartValues, setChartValues] = useState({xVal:0, yVal:0}); //TODO:: change livechart component to accept these variables
   const liveStreamUrl = "https://26fcd54367a603a2.p60.rt3.io/html/cam_pic_new.php?time=1706519630930&pDelay=50000";
   
@@ -41,15 +41,27 @@ const LiveMonitoring = () => {
       eventSource.onmessage = (event) => {
         // Update your component state with the received data
         let liveData = JSON.parse(event.data);
-        setArmAngle(liveData.armAngle);
-        setRobotSpeed(liveData.robotSpeed);
-        setConsoleText((prevConsoleText) => prevConsoleText + liveData.consoleText + "<br />");
-        setChartValues(() => ({
-          xVal: parseFloat(liveData.distanceToObject.xVal),
-          yVal: parseFloat(liveData.distanceToObject.yVal),
-        }));
+        // setArmAngle(liveData.armAngle);
+
+        if (liveData.battery_level !== null) {
+          setRobotBattery(liveData.battery_level);
+        }
+        
+        if (liveData.consoleText !== null) {
+          setConsoleText((prevConsoleText) => prevConsoleText + liveData.consoleText + "<br />");
+        }
+        
+        // setRandomArmPosition();
+        // generateRandomChartData();
+
+        // setChartValues(() => ({
+        //   xVal: parseFloat(liveData.distanceToObject.xVal),
+        //   yVal: parseFloat(liveData.distanceToObject.yVal),
+        // }));
 
       };
+
+
   
       // Handle connection closure
       eventSource.onclose = () => {
@@ -71,7 +83,26 @@ const LiveMonitoring = () => {
       setConsoleText((prevConsoleText) => prevConsoleText + "Error: " + error.message + "<br />");
     }
   }, []);
+
   
+function setRandomArmPosition() {
+  // TODO: Implement logic to get arm position
+  const armPosition = Math.floor(Math.random() * (90 - (-90) + 1) + (-90));
+  setArmAngle(armPosition);
+}
+
+const generateRandomChartData = () => {
+  setChartValues((prevChartValues) => {
+    const randomYVal = (Math.random() * 100).toFixed(3); // Generate a random positive yVal
+    const currentXVal = prevChartValues.xVal + 1; // Increase the xVal by 1
+
+    return {
+      xVal: currentXVal,
+      yVal: randomYVal,
+    };
+  });
+};
+
 
   return (
     <div className="bg-primary/90 mx-auto my-5 shadow-lg rounded-2xl  max-w-7xl p-3 text-mainText">
@@ -181,14 +212,14 @@ const LiveMonitoring = () => {
             </div>
             <div>
               <div className="text-text font-thin flex justify-center text-xl mb-2">
-                Robot Speed
+                Battery level
               </div>
 
               <GaugeComponent
                 arc={{
                   className: "w-full",
                   nbSubArcs: 150,
-                  colorArray: ['#5BE12C', '#F5CD19', '#EA4228'],
+                  colorArray: [ '#F5CD19', '#EA4228', '#5BE12C'],
                   width: 0.3,
                   padding: 0.003
                 }}
@@ -199,29 +230,29 @@ const LiveMonitoring = () => {
                       fill: 'rgba(var(--text-color))',
                       textShadow: ""
                     },
-                    formatTextValue: value => `${value} m/h`
+                    formatTextValue: value => `${value} %`
                   },
                   tickLabels: {
                     type: "outer",
                     ticks: [
+                      { value: 10 },
+                      { value: 20 },
+                      { value: 30 },
+                      { value: 40 },
+                      { value: 50 },
+                      { value: 60 },
+                      { value: 70 },
+                      { value: 80 },
+                      { value: 90 },
                       { value: 100 },
-                      { value: 200 },
-                      { value: 300 },
-                      { value: 400 },
-                      { value: 500 },
-                      { value: 600 },
-                      { value: 700 },
-                      { value: 800 },
-                      { value: 900 },
-                      { value: 1000 },
                     ],
                     valueConfig: {
-                      formatTextValue: value => `${value} m/h`,
+                      formatTextValue: value => `${value} %`,
                     }
                   }
                 }}
-                value={robotSpeed}
-                maxValue={1000}
+                value={robotBattery}
+                maxValue={100}
               />
 
 
