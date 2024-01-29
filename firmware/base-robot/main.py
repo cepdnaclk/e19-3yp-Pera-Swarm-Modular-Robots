@@ -1,50 +1,62 @@
-from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
-import logging
-import time
-import argparse
-import json
-from os.path import abspath
-import subprocess
+from config_loader import load_config
+import paho.mqtt.client as mqtt
+from paho.mqtt.subscribeoptions import SubscribeOptions
 
-# Custom MQTT message callback
-def customCallback(client, userdata, message):
-    print("Received a new message: ")
-    print(message.payload)
-    print("from topic: ")
-    print(message.topic)
-    print("----------------------")
+mqtt_username = None
+experiment_process = None
 
-def serverDirectivesHandler(client, userdata, message):
-    instr = str(message.payload.decode("utf-8"))
+
+def handle_run_directive(client):
+    client.publish(f"{mqtt_username}/server-directives", "Downloading code")
+    subprocess.run(["python3", "get_exp.py"])
+    client.publish(f"{mqtt_username}/server-directives", "Running code")
+    experiment_process = subprocess.Popen(["python3", "exp/run.py"])
+
+def handle_stop_directive():
+    if (experiment_process != None):
+        experiment_process.kill()
+        experiment_process = None
+
+" MQTT Broker Connect Handler"
+def on_connect(client, userdata, flags, rc):
+    print("Connected with result code " + str(rc))
+    # username = userdata.get('username', 'test')
+    options = SubscribeOptions(qos=1, noLocal=True) # prevent callback on messages you publish
+    client.subscribe(f"{mqtt_username}/#", options=options)
+    client.publish(f"{mqtt_username}/server-directives", "Connected to MQTT Broker")
+
+    # start battery publisher service
+
+" MQTT Broker Message Handler "
+def on_message(client, userdata, msg):
+    instr = str(msg.payload.decode("utf-8"))
+    print(msg.topic + " " + str(instr))
     if (instr == "run"):
-        print("Downloading code")
-        # subprocess.run(["python3", "get_exp.py"])
-        subprocess.run(["python3", "exp/run.py"])
+        handle_run_directive(client)
+    if (instr == "stop"):
+        handle_stop_directive(client)
 
-# Configure logging
-# logger = logging.getLogger("AWSIoTPythonSDK.core")
-# logger.setLevel(logging.DEBUG)
-# streamHandler = logging.StreamHandler()
-# formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-# streamHandler.setFormatter(formatter)
-# logger.addHandler(streamHandler)
+if __name__ == "__main__":
+    # Load config file
+    rc, config = load_config() 
+    if (rc != 0): 
+        exit(rc)
 
-# Init AWSIoTMQTTClient
-myAWSIoTMQTTClient = AWSIoTMQTTClient("base-robot")
-myAWSIoTMQTTClient.configureEndpoint("a30e34y7s9413e-ats.iot.ap-southeast-1.amazonaws.com", 8883)
-myAWSIoTMQTTClient.configureCredentials(abspath("./certs/Amazon-root-CA-1.pem"), abspath("./certs/private.pem.key"), abspath("./certs/device.pem.crt")) 
+    # Connect to mqtt broker
+    mqtt_hostname = config['MQTT BROKER']['hostname']
+    mqtt_port = int(config['MQTT BROKER']['port'])
+    mqtt_username = config['MQTT BROKER']['username']
+    mqtt_password = config['MQTT BROKER']['password']
 
-# AWSIoTMQTTClient connection configuration
-# myAWSIoTMQTTClient.configureAutoReconnectBackoffTime(1, 32, 20)
-# myAWSIoTMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
-# myAWSIoTMQTTClient.configureDrainingFrequency(2)  # Draining: 2 Hz
-# myAWSIoTMQTTClient.configureConnectDisconnectTimeout(10)  # 10 sec
-# myAWSIoTMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
+    client = mqtt.Client()
+    client.username_pw_set(username=mqtt_username, password=mqtt_password)
 
-# Connect and subscribe to AWS IoT
-myAWSIoTMQTTClient.connect()
-myAWSIoTMQTTClient.subscribe("server_directives", 1, serverDirectivesHandler)
+    client.on_connect = on_connect
+    client.on_message = on_message
 
-while (True):
-    pass
+    client.connect(mqtt_hostname, mqtt_port, 60)
+
+    client.loop_forever()
+
+
 
