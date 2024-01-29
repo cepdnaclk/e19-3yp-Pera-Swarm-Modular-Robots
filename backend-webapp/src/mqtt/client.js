@@ -2,16 +2,25 @@ const mqtt = require("mqtt");
 const client = mqtt.connect(process.env.MOSQUITTO_URL);
 
 client.on("connect", () => {
-  client.subscribe("presence", (err) => {
-    if (!err) {
-        console.log("Connected to Mosquitto Broker");
-      client.publish("presence", "Hello mqtt");
-    }
-  });
+  console.log("Connected to Mosquitto Broker");
 });
 
-client.on("message", (topic, message) => {
-  // message is Buffer
-  console.log(message.toString());
-  client.end();
-});
+function publishToTopic(topic, message) {
+  client.publish(topic, message);
+}
+
+function subscribeToTopic(topic, callback) {
+  client.subscribe(topic);
+  client.on("message", (receivedTopic, message) => {
+    if (receivedTopic === topic) {
+      callback(message.toString());
+    }
+  });
+}
+
+
+
+module.exports = {
+  client,
+  publishToTopic
+};

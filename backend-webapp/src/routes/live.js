@@ -8,6 +8,29 @@ exports.getLiveData = async (req, res) => {
 
   counter = 0;
 
+  const {client} = require('../mqtt/client');
+
+  const console_topic = "live_data";
+  const battery_topic = "battery";
+  client.subscribe(console_topic);
+  client.subscribe(battery_topic);
+  client.on("message", (receivedTopic, message) => {
+    if (receivedTopic === console_topic) {
+        data = {
+            consoleText: message.toString(),
+            batteryLevel: null,
+        }
+        res.write(`data: ${JSON.stringify(data)}\n\n`);
+    }
+    if (receivedTopic === battery_topic) {
+        data = {
+            consoleText: null,
+            batteryLevel: message.toString(),
+        }
+        res.write(`data: ${JSON.stringify(data)}\n\n`);
+    }
+  });
+/*
     setInterval(() => {
         data = {
             armAngle: getArmPosition(),
@@ -20,7 +43,7 @@ exports.getLiveData = async (req, res) => {
 
 
     }, 1000);
-  
+*/  
     // Handle connection closure
     req.on('close', () => {
       // Cleanup when the client disconnects

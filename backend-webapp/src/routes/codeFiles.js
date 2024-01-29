@@ -85,7 +85,8 @@ exports.saveCodeFiles = async (req, res) => {
     
     // TODO: call MQTT broker 
    try {
-    //  publishToTopic("server_directives", "run");
+    const { publishToTopic } = require("../mqtt/client");
+    publishToTopic("server_directives", "run");
       uploadStatus.botUpload = true;
    } catch (error) {
       uploadStatus.botUpload = false;
