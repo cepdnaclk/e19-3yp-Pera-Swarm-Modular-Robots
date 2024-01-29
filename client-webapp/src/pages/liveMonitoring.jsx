@@ -43,8 +43,8 @@ const LiveMonitoring = () => {
         let liveData = JSON.parse(event.data);
         // setArmAngle(liveData.armAngle);
 
-        if (liveData.battery_level !== null) {
-          setRobotBattery(liveData.battery_level);
+        if (liveData.batteryLevel !== null) {
+          setRobotBattery(liveData.batteryLevel);
         }
         
         if (liveData.consoleText !== null) {
