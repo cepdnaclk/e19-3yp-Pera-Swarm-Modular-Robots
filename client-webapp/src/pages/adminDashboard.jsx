@@ -11,6 +11,8 @@ const AdminDashboard = () => {
   const [experiments, setExperiments] = useState([]);
   const [totalexperiments, setTotalExperiments] = useState(0);
   const [totalReq, setTotalReq] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const navigate = useNavigate();
   
   const user = useContext(UserContext);
@@ -31,6 +33,13 @@ const AdminDashboard = () => {
   useEffect(() => {
     fetchExperiments();
   }, []);
+
+  // Function to filter experiments based on search term
+  const filterExperiments = () => {
+    return experiments.filter((experiment) =>
+      experiment.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
 
 
   const updateExperimentStatus = async (id, status) => {
@@ -86,20 +95,43 @@ const AdminDashboard = () => {
               <font className="font-thin me-5"># of experiments </font><font className="text-red-500"><font className="font-semibold me-5"> ready to start</font> <font className=" font-black"> {experiments.filter(experiment => experiment.status === "ready").length}</font></font>
             </div>
 
+            {/* Search input */}
+            <div className="flex mb-3">
+              <input
+                type="text"
+                placeholder=">> Search by experiment name"
+                className="outline-none bg-primary ring-2 ring-mainText/5 shadow-lg block w-96 rounded-md border-0 px-3.5 py-2 text-mainText  placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+
             {/* Iterate over experiments */}
-            {experiments.map((experiment) => (
-              <div key={experiment._id}>
-                {experiment._id && (
-                  <ExperimentCard
-                    experiment={experiment}
-                    userRole={user.role}
-                    handleAccept={() => handleAccept(experiment._id)}
-                    handleDecline={() => handleDecline(experiment._id)}
-                    handleReady={() => handleReady(experiment._id)}
-                  />
-                )}
-              </div>
-            ))}
+            {searchTerm === "" ? (
+              experiments.map((experiment) => (
+                <div key={experiment._id}>
+                  {experiment._id && (
+                    <ExperimentCard
+                      experiment={experiment}
+                      handleAccept={() => handleAccept(experiment._id)}
+                      handleReady={() => handleReady(experiment._id)}
+                    />
+                  )}
+                </div>
+              ))
+            ) : (
+              filterExperiments().map((experiment) => (
+                <div key={experiment._id}>
+                  {experiment._id && (
+                    <ExperimentCard
+                      experiment={experiment}
+                      handleAccept={() => handleAccept(experiment._id)}
+                      handleReady={() => handleReady(experiment._id)}
+                    />
+                  )}
+                </div>
+              ))
+            )}
           </div>
 
           <div>

@@ -86,7 +86,7 @@ const LiveChart = ({values}) => {
     const updateChart = () => {
       setSeries((prevSeries) => {
         const newData = [...prevSeries[0].data, { x: values.xVal, y: values.yVal }];
-        return [{ data: newData.slice(-30) }]; // Display only the last 30 points
+        return [{ data: newData.slice(-10) }]; // Display only the last 30 points
       });
     };
 

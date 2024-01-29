@@ -2,7 +2,7 @@ import { useEffect, useState, Fragment, useRef, useContext } from 'react';
 import { MoonIcon, SunIcon } from '@heroicons/react/20/solid';
 import { Switch, Menu, Transition } from '@headlessui/react'
 import { UserContext } from '../App';
-import {ErrorDialog} from '../components/dialogBox';
+import {ErrorDialog , ConfirmationDialog } from '../components/dialogBox';
 
 import lightLogo from '../assets/logo_light.svg';
 import darkLogo from '../assets/logo_dark.svg';
@@ -126,7 +126,8 @@ export default function Header() {
 
       </div>
 
-      <ErrorDialog showState = {showLogout} closefn={setShowLogout}  buttonClickFunction={handleLogout} title="Logout" errMsg="Are you Sure ?" btnText="Yes"  />
+      {/* <ErrorDialog showState = {showLogout} closefn={setShowLogout}  buttonClickFunction={handleLogout} title="Logout" errMsg="Are you Sure ?" btnText="Yes"  /> */}
+      <ConfirmationDialog showState = {showLogout} closefn={setShowLogout} cancelFunction={()=>{setShowLogout(false)}}  confirmFunction={handleLogout} title="Logout" message="Are you Sure ?" confirmText="Yes"  cancelText="No" />
 
     </div>
   );

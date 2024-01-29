@@ -17,7 +17,8 @@ const LiveMonitoring = () => {
   const [armAngle, setArmAngle] = useState(0);
   const [robotSpeed, setRobotSpeed] = useState(0);
   const [chartValues, setChartValues] = useState({xVal:0, yVal:0}); //TODO:: change livechart component to accept these variables
-  const liveStreamUrl = "https://664adff265fae6a8.p60.rt3.io/html/cam_pic_new.php?time=1706377684978&pDelay=40000";
+  const liveStreamUrl = "https://26fcd54367a603a2.p60.rt3.io/html/cam_pic_new.php?time=1706519630930&pDelay=50000";
+  
 
   const getColorForValue = (value) => {
     switch (value.toLowerCase()) {

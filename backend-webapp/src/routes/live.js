@@ -6,6 +6,8 @@ exports.getLiveData = async (req, res) => {
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
 
+  counter = 0;
+
     setInterval(() => {
         data = {
             armAngle: getArmPosition(),

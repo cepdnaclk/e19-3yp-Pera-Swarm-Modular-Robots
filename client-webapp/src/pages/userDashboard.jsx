@@ -1,17 +1,18 @@
 import React from "react";
 import axios from "../api/axios";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
-import { PlusIcon } from "@heroicons/react/20/solid";
+import { PlusIcon  } from "@heroicons/react/20/solid";
 import { UserContext } from "../App";
 import { HtmlDialog } from "../components/dialogBox";
 
 import ExperimentCard from "../components/expeimentCard";
+const ExperimentCardLoading = React.lazy(() => import('../components/expeimentCard_loading'));
 
 const UserDashboard = () => {
   const user = useContext(UserContext);
   const [ showStartNewExperiment , setShowStartNewExperiment] = useState(false);
-
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   //   const [experiments, setExperiments] = useState([
@@ -88,15 +89,29 @@ const UserDashboard = () => {
   const fetchExperiments = async () => {
     try {
       const res = await axios.get(`/api/experiment/${user.id}`);
-      setExperiments(res.data);
+
+      // Sort experiments based on status
+      const sortedExperiments = res.data.sort((a, b) => {
+        if (a.status === "ready" && b.status !== "ready") {
+          return -1;
+        } else if (a.status !== "ready" && b.status === "ready") {
+          return 1;
+        } else if (a.status === "completed" && b.status !== "completed") {
+          return 1;
+        } else if (a.status !== "completed" && b.status === "completed") {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+
+      setExperiments(sortedExperiments);
 
       // Filter experiments with status "ready"
-      const readyExperiments = res.data.filter(
+      const readyExperiments = sortedExperiments.filter(
         (experiment) => experiment.status === "ready"
       );
       setreadyExperiments(readyExperiments);
-
-
     } catch (error) {
       console.error("Error:", error.response.data);
     }
@@ -133,6 +148,13 @@ const UserDashboard = () => {
     console.log("Handle Video", id);
   };
 
+  // Function to filter experiments based on search term
+  const filterExperiments = () => {
+    return experiments.filter((experiment) =>
+      experiment.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
+
   return (
     <>
       <div className=" bg-primary/90  mx-auto my-5 shadow-lg rounded-2xl flex max-w-7xl p-3 ">
@@ -142,32 +164,64 @@ const UserDashboard = () => {
               Dashboard
             </h1>
 
-            <div className="block text-mainText my-3 p-6 bg-secondary border border-gray-200 rounded-lg shadow hover:bg-gray-100  border-ternary hover:bg-mainText/20">
-              <h2 className="italic font-light">Now :</h2>
+            <div className="block text-white my-3 p-6 bg-secondary border border-gray-200 rounded-lg shadow hover:bg-gray-100  border-ternary hover:bg-mainText/20">
+              <h2 className="bg-red-800 w-16 px-2 font-bold rounded-sm mb-1">Now :</h2>
               {
               readyExperiments.length > 0 ? (
                 readyExperiments.map(experiment =>
-                  <p key={experiment.name} className="animate-pulse font-semibold">{experiment.name}</p>)
+                  <p key={experiment.name} className="pl-3 text-mainText animate-pulse font-normal">{experiment.name}</p>)
               ) : (
-                <p className=" font-medium">None</p>
+                <p className="pl-3 text-mainText  font-normal">None</p>
               )}
             </div>
 
+            <div className="flex mb-3 ">
+              <input
+                type="text"
+                placeholder=">> Search by experiment name"
+                className="outline-none bg-primary ring-2 ring-mainText/5 shadow-lg block w-96 rounded-md border-0 px-3.5 py-2 text-mainText  placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+
+            <Suspense fallback={<ExperimentCardLoading />}>
             {/* Iterate over experiments */}
-            {experiments.map((experiment) => (
-              <div key={experiment._id}>
-                <ExperimentCard
-                  experiment={experiment}
-                  userRole={user.role}
-                  handleDelete={() => handleDelete(experiment._id)}
-                  handleStartExperiment={() =>
-                    handleStartExperiment(experiment._id)
-                  }
-                  handleLog={handleLog}
-                  handleVideo={handleVideo}
-                />
-              </div>
-            ))}
+      {/* Iterate over experiments */}
+      {searchTerm === "" ? (
+        // If no search term, show all experiments
+        experiments.map((experiment) => (
+          <div key={experiment._id}>
+            <ExperimentCard
+              experiment={experiment}
+              userRole={user.role}
+              handleDelete={() => handleDelete(experiment._id)}
+              handleStartExperiment={() =>
+                handleStartExperiment(experiment._id)
+              }
+              handleLog={handleLog}
+              handleVideo={handleVideo}
+            />
+          </div>
+        ))
+      ) : (
+        // If there's a search term, show only filtered experiments
+        filterExperiments().map((experiment) => (
+          <div key={experiment._id}>
+            <ExperimentCard
+              experiment={experiment}
+              userRole={user.role}
+              handleDelete={() => handleDelete(experiment._id)}
+              handleStartExperiment={() =>
+                handleStartExperiment(experiment._id)
+              }
+              handleLog={handleLog}
+              handleVideo={handleVideo}
+            />
+          </div>
+        ))
+      )}
+            </Suspense>
           </div>
 
           <div>
