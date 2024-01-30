@@ -4,23 +4,24 @@ const User = require('./user'); // Import the User model
 const experimentSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: false,
   },
   id: {
     type: Number,
-    required: true,
+    required: false,
   },
   log: {
     type: String,
-    required: true,
+    required: false,
   },
   videoFile: {
     type: mongoose.Schema.Types.Mixed,
-    required: true,
+    required: false,
   },
-  attatchments:{
-    type: [string], // default order = [TF,TR,TL,TB,BF,BR,BL,BB]
-    default: ['','','','','','','','']
+  attachments:{
+    type: [String], // default order = [TF,TR,TL,TB,BF,BR,BL,BB]
+    default: ['','','','','','','',''],
+    required:true
   },
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
@@ -29,11 +30,22 @@ const experimentSchema = new mongoose.Schema({
     validate: {
       validator: async function (value) {
         const user = await User.findById(value);
-        return user && user.type === 'experimenter';
+        return (true);
       },
       message: 'User must have type "experimenter"',
     },
   },
+  status: {
+    type: String,
+    enum: ['pending', 'running', 'completed','ready','accepted','declined'],
+    default: 'pending',
+  },
+  
+  schedule: {
+    type: String,
+    required: false,
+  },
+
 });
 
 module.exports = mongoose.model('Experiment', experimentSchema);

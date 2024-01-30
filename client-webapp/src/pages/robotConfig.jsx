@@ -1,30 +1,17 @@
-import React, { useState } from "react";
-import { Button, Text } from "../components";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
+import React, { useState, useContext } from "react";
+import { useParams } from 'react-router-dom';
+import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import Dropdown from "../components/dropdown";
-import search from "../assets/search.png";
-import camera from "../assets/camera.png";
-import hand from "../assets/hand.png";
-import wheel from "../assets/settings.png";
-import axios from "axios";
+import Container from "../components/dndContainer";
+import Component from "../components/dndComponent";
+import axios from "../api/axios";
+import { UserContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
-const options = [
-  { id: 1, value: "ModularRobot1", label: "Modular Robot 1" },
-  { id: 2, value: "ModularRobot2", label: "Modular Robot 2" },
-  { id: 3, value: "ModularRobot3", label: "Modular Robot 3" },
-];
-
-const ItemTypes = {
-  IMAGE: "image",
-  CONTAINER: "container",
-};
-
-const imagesList = [
-  { id: "wheel", value: wheel, label: "Wheel", size: "txtInterRegular24" },
-  { id: "arm", value: hand, label: "Gripper Arm", size: "txtInterRegular24" },
-  { id: "camera", value: camera, label: "Camera", size: "txtInterRegular24" },
-];
+import camera from "../assets/attachments/camera.svg";
+import hand from "../assets/attachments/hand.svg";
+import wheel from "../assets/attachments/wheel.svg";
+import { ErrorDialog } from "../components/dialogBox";
 
 const ContainersList = [
   { id: "TF", name: "Top Front" },
@@ -37,244 +24,196 @@ const ContainersList = [
   { id: "BB", name: "Bottom Back" },
 ];
 
-const Image = ({ id, src, onDrop }) => {
-  const [, drag] = useDrag({
-    type: ItemTypes.IMAGE,
-    item: { id },
-  });
-
-  return (
-    <img
-      ref={drag}
-      src={src}
-      alt={`Image ${id}`}
-      className="w-auto h-full m-2 cursor-pointer"
-    />
-  );
-};
-
-const Container = ({
-  id,
-  name,
-  onDrop,
-  children,
-  droppedImages,
-  setDroppedItems,
-}) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const [, drop] = useDrop({
-    accept: ItemTypes.IMAGE,
-    drop: (item) => onDrop(item.id, id),
-  });
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
-
-  const handleRemoveButtonClick = () => {
-    // Identify the container from which the image should be removed
-    setDroppedItems((prevDroppedItems) => {
-      const updatedDroppedItems = prevDroppedItems.filter(
-        (image) => image.containerId !== id
-      );
-      return updatedDroppedItems;
-    });
-  };
-
-  return (
-    <div
-      ref={drop}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className="h-[300px] w-[235px] rounded-xl m-5 overflow-hidden shadow-lg border-4 bg-container border-primary relative"
-    >
-      <div className="h-[220px] w-[210px] p-2 flex items-center justify-center relative">
-        {droppedImages.map((image) => (
-          <img
-            className="object-fit w-full h-auto"
-            key={image.id}
-            src={image.value}
-            alt={`Dropped Image ${image.id}`}
-          />
-        ))}
-
-        {children}
-      </div>
-      {isHovered && droppedImages.length > 0 && (
-        <button
-          onClick={handleRemoveButtonClick}
-          className="absolute top-[10px] right-3 w-6 h-6 bg-f rounded-full text-primary-accent cursor-pointer"
-        >
-          X
-        </button>
-      )}
-      <div className="w-full flex items-center justify-center py-2 bg-primary mt-[35px]">
-        <div className="font-bold text-l mb-1 text-primary-accent">{name}</div>
-      </div>
-    </div>
-  );
-};
+const ComponentsList = [
+  { id: "C1", name: "Camera", image: camera },
+  { id: "C2", name: "Hand", image: hand },
+  { id: "C3", name: "Wheel", image: wheel },
+  { id: "C4", name: "Wheel", image: wheel },
+  { id: "C5", name: "Wheel", image: wheel },
+];
 
 const RobotConfig = () => {
-  const [droppedItems, setDroppedItems] = useState([]);
-  const [selectedOptionId, setSelectedOptionId] = useState(null);
 
-  const handleDrop = (imageId, containerId) => {
-    console.log(
-      `Image ID: ${imageId} dropped into Container ID: ${containerId}`
-    );
+  const user = useContext(UserContext);
 
-    const existingItemIndex = droppedItems.findIndex(
-      (item) => item.containerId === containerId
-    );
+  const { exp_name, exp_schedule } = useParams();
+  console.log(`exp_name: ${exp_name}, exp_schedule: ${exp_schedule}`);
 
-    if (existingItemIndex !== -1) {
-      // Replace existing image in the container
-      droppedItems[existingItemIndex] = {
-        imageId,
-        containerId,
-        value: imagesList.find((image) => image.id === imageId).value,
-      };
-      setDroppedItems([...droppedItems]);
-    } else {
-      // Add new image to the container
-      const newDroppedItem = {
-        imageId,
-        containerId,
-        value: imagesList.find((image) => image.id === imageId).value,
-      };
-      setDroppedItems([...droppedItems, newDroppedItem]);
+  const [selectedRobotId, setSelectedRobotId] = useState(null);
+  const [showSuccessDialogBox, setShowSuccessDialogBox] = useState(false);
+
+  const [containers, setContainers] = useState({});
+  const [order, setOrder] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [modularRobots, setModularRobots] = useState([
+    { id: 1, name: "Modular Robot 1" },
+    { id: 2, name: "Modular Robot 2" },
+    { id: 3, name: "Modular Robot 3" },
+  ]);
+
+  const navigate = useNavigate();
+
+  const handleDrop = (containerId, componentId) => {
+    const updatedContainers = { ...containers, [containerId]: componentId };
+    setContainers(updatedContainers);
+  };
+
+  const handleRemove = (containerId) => {
+    const updatedContainers = { ...containers, [containerId]: null };
+    setContainers(updatedContainers);
+  };
+
+  const handleSend = async () => {
+    const orderedComponents = ContainersList.map((container) => {
+      const componentId = containers[container.id];
+      const componentName =
+        ComponentsList.find((comp) => comp.id === componentId)?.name || "-";
+      return componentName;
+    });
+    setOrder(orderedComponents);
+
+    const newExperimentRequest = {
+      name: exp_name,
+      user_id: user.id,
+      robot_id: parseInt(selectedRobotId) || 1, //default selected robot is robot 1
+      attachments: orderedComponents,
+      schedule: exp_schedule,
+      status: user.role === 'experimenter_home' ? 'ready' : 'pending',
+    };
+
+    try {
+      await axios.post("/api/experiment", newExperimentRequest);
+      //use a dialog box
+
+      setShowSuccessDialogBox(true);
+      // navigate("/dashboard");
+    } catch (error) {
+      //console.error("Error:", error.response.data);
+      //add dialog box
+      alert("Something is Wrong ! Please try again later.");
+      console.log("Error:", error);
     }
   };
 
-  //Select the dropdown id
-  const handleOptionSelect = (optionId) => {
-    setSelectedOptionId(optionId);
-    console.log("Selected robot:", optionId);
-  };
-
-  const sendDatatoBackend = () => {
-    // Create an array of container and image pairs
-    const containerImagePairs = droppedItems.map((item) => ({
-      containerId: item.containerId,
-      imageId: item.imageId,
-    }));
-    console.log(
-      "Sending to backend:",
-      "Robot selected",
-      selectedOptionId,
-      "Conainer,img pairs",
-      containerImagePairs
-    );
-    // Send the data to the backend
-    axios
-      .post(
-        "backend-api-endpoint",
-        { optionId: selectedOptionId },
-        { containerImagePairs }
-      )
-      .then((response) => {
-        console.log("Backend response:", response.data);
-        // Handle the response from the backend as needed
-      })
-      .catch((error) => {
-        console.error("Error sending data to backend:", error);
-        // Handle errors
-      });
-  };
+  const filteredComponents = ComponentsList.filter((component) =>
+    component.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <>
-        <div className=" bg-bg flex flex-col font-inter items-end justify-end mx-auto p-[18px] h-screen w-full">
-          <div className="flex flex-col gap-6 justify-start md:px-5 w-[94%] md:w-full">
-            <div className="flex md:flex-row flex-row gap-[41px] items-center justify-start mr-[92px] w-[93%] md:w-full">
-              <div className="border border-f border-solid flex flex-col gap-5 h-[590px]  items-start justify-start sm:px-5 rounded-[12px] w-[250px]">
-                {/* search bar */}
-                <div className="relative w-full mt-5 mb-3">
-                  <div className="border-2 border-f border-solid flex items-center p-2.5 rounded-[12px] w-full h-[38px]">
-                    <img
-                      className="h-[20px] md:h-auto my-0.5 mr-auto object-cover w-[20px]"
-                      src={search}
-                      alt="searchIcon"
-                    />
-                    <input
-                      type="text"
-                      className="w-full pl-4 py-1 text-base text-f placeholder-gray-900_05 focus:outline-none"
-                      placeholder="Search Components"
-                    />
-                  </div>
-                </div>
-                <div className=" overflow-y-scroll">
-                  <div className="bg-bg flex flex-col mr-5 rounded-[12px] ">
-                    {imagesList.map((image) => (
-                      <div className="bg-container flex flex-col w-[190px] h-[175px] items-center justify-start p-[3px] rounded-[12px] mb-6">
-                        <div className="bg-transparent flex flex-col w-[150px] h-[130px] items-center justify-center p-[4px] rounded-[12px]">
-                          <Image
-                            className="object-cover w-auto h-full"
-                            key={image.id}
-                            id={image.id}
-                            src={image.value}
-                            onDrop={handleDrop}
-                          />
-                        </div>
-                        <Text
-                          className={`mt-2 mb-1 text-2xl md:text-[18px] sm:text-xl `}
-                          size={image.size}
-                        >
-                          {image.label}
-                        </Text>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="border border-f grid w-[1120px] h-[590px]  flex-col rounded-[12px]  ">
-                {/* dropdownn and the cards */}
-                <div className="w-full ml-2 mb-5">
-                  <Dropdown items={options} onSelect={handleOptionSelect} />
-                </div>
-                {/* iterate through list positions and create cards */}
-                <div className="overflow-y-scroll mr-[428px]">
-                  <div className="flex flex-wrap w-[1120px] ">
-                    {ContainersList.map((container) => (
-                      <Container
-                        key={container.id}
-                        id={container.id}
-                        name={container.name}
-                        onDrop={handleDrop}
-                        droppedImages={droppedItems.filter(
-                          (item) => item.containerId === container.id
-                        )}
-                        setDroppedItems={setDroppedItems}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-row gap-4  ml-[1120px] w-[21%] md:w-full ">
-              <Button className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-primary-accent bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
-                Cancel
-              </Button>
-
-              <Button
-                onClick={sendDatatoBackend}
-                className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-primary-accent bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1"
+    <div className="bg-primary/90 mx-auto my-5 shadow-lg rounded-2xl flex max-w-7xl p-3">
+      <div className="w-full grid grid-cols-4 text-mainText ">
+        <DndProvider backend={HTML5Backend}>
+          <div className="bg-ternary rounded-md col-span-1 flex flex-col p-4 font-sans m-2 w-64 items-center ">
+            <form>
+              <label
+                htmlFor="default-search"
+                className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
               >
-                Next
-              </Button>
+                Search
+              </label>
+              <div className="relative flex items-center  bg-primary rounded-md  text-sm text-mainText mb-2">
+                <svg
+                  className="feather feather-search m-2"
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" x2="16.65" y1="21" y2="16.65" />
+                </svg>
+
+                <input
+                  type="search"
+                  id="default-search"
+                  className="block bg-primary w-full p-3 hover:outline-none rounded-md focus:outline-none"
+                  placeholder="Search Component"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  required
+                />
+              </div>
+            </form>
+            <div className="overflow-y-scroll max-h-screen">
+              {filteredComponents.map((component) => (
+                <Component key={component.id} {...component} />
+              ))}
             </div>
           </div>
-        </div>
-      </>
-    </DndProvider>
+
+          <div className="bg-ternary rounded-md col-span-3 flex flex-col p-4 font-sans m-2">
+            <h1 className="font-light text-4xl font-sans mb-4">
+              Configure Your Robot
+            </h1>
+            <form>
+              <div className="relative flex items-center  bg-primary rounded-md  text-sm text-mainText mb-2">
+                <label
+                  htmlFor="robot-select"
+                  className="p-4 mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+                >
+                  Search
+                </label>
+
+                <select
+                  id="robot-select"
+                  className="block bg-primary w-full p-3 hover:outline-none rounded-md focus:outline-none"
+                  onChange={(e) => setSelectedRobotId(e.target.value)}
+                  value={selectedRobotId || ""}
+                >
+                  <option value="" disabled>
+                    Select a robot
+                  </option>
+                  {modularRobots.map((robot) => (
+                    <option key={robot.id} value={robot.id}>
+                      {robot.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </form>
+
+            <div className="grid grid-cols-4">
+              {ContainersList.map((container) => (
+                <Container
+                  key={container.id}
+                  id={container.id}
+                  name={container.name}
+                  component={ComponentsList.find(
+                    (comp) => comp.id === containers[container.id]
+                  )}
+                  onDrop={handleDrop}
+                  onRemove={handleRemove}
+                />
+              ))}
+            </div>
+            <div className="text-right mt-10">
+              <button
+                type="button"
+                className="w-40 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                onClick={handleSend}
+              >
+                Send Setup
+              </button>
+            </div>
+          </div>
+        </DndProvider>
+      </div>
+
+      {/* not error dialog box */}
+      <ErrorDialog
+        showState={showSuccessDialogBox}
+        closefn={()=>navigate("/dashboard")}
+        buttonClickFunction={()=>navigate("/dashboard")}
+        title="Yay!"
+        errMsg="✔ Experiment Created Successfully !"
+        btnText="okay"
+      />
+    </div>
   );
 };
-
 export default RobotConfig;

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Img, Text } from "../components";
+// import { Button, Img, Text } from "../components";
 import search from "../assets/search.png";
 import modular_bot from "../assets/robot.png";
 import obs_bot from "../assets/robot_obs.png";
 
 const Sandbox = () => {
-  const [gridCells, setGridCells] = useState(Array.from({ length: 81 }, () => null));
+  const [gridCells, setGridCells] = useState(
+    Array.from({ length: 81 }, () => null)
+  );
   const [hoveredCell, setHoveredCell] = useState(null);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
@@ -44,7 +46,7 @@ const Sandbox = () => {
   const GridCell = ({ cellContent, index, onDragOver, onDrop }) => (
     <div
       key={index}
-      className={`border border-gray-400 relative ${isDarkTheme ? 'dark' : ''}`}
+      className={`border border-gray-400 relative ${isDarkTheme ? "dark" : ""}`}
       onDragOver={(e) => onDragOver(e)}
       onDrop={(e) => onDrop(e, index)}
       onMouseEnter={() => setHoveredCell(index)}
@@ -69,7 +71,11 @@ const Sandbox = () => {
   );
 
   return (
-    <div className={`bg-bg ${isDarkTheme ? 'dark' : ''} flex flex-col font-inter items-end justify-end mx-auto p-[18px] w-full`}>
+    <div
+      className={`bg-bg ${
+        isDarkTheme ? "dark" : ""
+      } flex flex-col font-inter items-end justify-end mx-auto p-[18px] w-full`}
+    >
       <div className="flex flex-col gap-6 justify-start mt-4 md:px-5 w-[94%] md:w-full">
         <div className="flex md:flex-row flex-row gap-[41px] items-center justify-start mr-[92px] w-[93%] md:w-full">
           <div className="border border-f border-solid flex flex-col gap-5 h-[1100px] items-start justify-start sm:px-5 rounded-[12px] w-[250px]">
@@ -127,21 +133,21 @@ const Sandbox = () => {
             ))}
           </div>
         </div>
-        <div className="flex flex-row gap-3.5 items-center justify-end md:ml-[0] ml-[1043px] w-[21%] md:w-full">
-          <Button className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-bg bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
+        <div className="flex flex-row gap-3.5 items-center justify-end md:ml-[0] ml-[1000px] w-[21%] md:w-full">
+          {/* <Button className="cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-primary-accent bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
             Cancel
           </Button>
           <Link to="/robotConfig">
-            <Button className="common-pointer cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-bg bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
+            <Button className="common-pointer cursor-pointer leading-[normal] w-[128px] h-[38px] text-2xl md:text-[18px] text-center text-primary-accent bg-primary rounded-md transition ease-in-out delay-100 hover:-translate-y-1">
               Next
             </Button>
-          </Link>
-          <button
+          </Link> */}
+          {/* <button
             className={`toggle flex items-center justify-center p-2 bg-primary text-f-accent font-semibold rounded-lg cursor-pointer transform transition-transform ${isDarkTheme ? 'rotate-180' : ''}`}
             onClick={toggleTheme}
           >
             {isDarkTheme ? "☀️" : "☀️"} | {isDarkTheme ? "🌙" : "🌙"}
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

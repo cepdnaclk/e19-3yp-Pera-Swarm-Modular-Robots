@@ -1,1 +1,1 @@
-print("Hello from public folder")
+print("hello")

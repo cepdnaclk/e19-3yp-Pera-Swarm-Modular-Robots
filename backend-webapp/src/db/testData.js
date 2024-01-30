@@ -4,18 +4,36 @@ const User = require('../schemas/user.js');
 User.deleteMany({})
   .then(() => {
     console.log('User collection cleared');
-    
-    // Then insert the new user
-    const user = new User({
-      // populate the fields according to your schema
-      name: 'swarmbot',
-      type: 'admin',
-      email: 'testuser@example.com',
-      password: 'mail123',
-      // add more fields as needed
+
+    // Create and save multiple users
+    const usersData = [
+      {
+        name: 'user1',
+        type: 'experimenter',
+        email: 'usr1@example.com',
+        password: 'mail12345',
+      },
+      {
+        name: 'usr2',
+        type: 'admin',
+        email: 'usr2@example.com',
+        password: 'admin12345',
+      },
+      {
+        name: 'usr3',
+        type: 'experimenter_home',
+        email: 'usr3@example.com',
+        password: 'experiment123',
+      },
+      // Add more users as needed
+    ];
+
+    const saveUserPromises = usersData.map(userData => {
+      const user = new User(userData);
+      return user.save();
     });
 
-    return user.save();
+    return Promise.all(saveUserPromises);
   })
-  .then(() => console.log('Test User saved successfully'))
+  .then(() => console.log('Test Users saved successfully'))
   .catch(err => console.error('Error:', err));

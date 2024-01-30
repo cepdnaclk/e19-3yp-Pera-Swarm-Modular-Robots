@@ -1,19 +1,15 @@
 // Load environment variables
 require('dotenv').config({ path: `./.env.${process.env.NODE_ENV}` })
-
-
+    // "prod": "cross-env NODE_ENV=production node ./server.js"
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const user =require('./src/schemas/user')
-const {requestLogger,createLog}= require('./src/middleware/logger'); //import logger
 const path = require('path')
 const expressWinston = require('express-winston');
 
+const {requestLogger,createLog}= require('./src/middleware/logger');//import logger
 
-
-
-//user.create({name:"swarmbot",type:"admin",email:"mail@mail.com",password:"mail123"})
+// require('./src/aws/config');
 
 // Initialize connection to Mongodb
 require('./src/db/conn');
@@ -21,17 +17,15 @@ require('./src/db/conn');
 const app = express();
 const port = process.env.PORT || 3001;
 
-// Middleware
+// code get endpoint for mqtt 
+app.get('/files', require("./src/routes/codeFiles").getFileForCode);
+
+
+// Middleware ----------------------------------------------------------------
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-
-
-
-// test data
-require('./src/db/testData');
 
 
 //middleware for logging errors and warnings in requests
@@ -42,9 +36,14 @@ app.use(expressWinston.logger({
 expressWinston.requestWhitelist.push('body'); //log body of request
 expressWinston.responseWhitelist.push('body');
 
-// Public routes
 
-app.use('/user', require('./src/routes/users')) // authorization
+
+
+
+
+// Public routes --------------------------------
+
+app.use('/', require('./src/routes/users')) // authorization
 app.get('/healthcheck', (req, res) => {
     res.send('Server is up and running');
 
@@ -73,29 +72,30 @@ app.get('/files', (req, res) => {
     }
   });
 
-});
+}); });
 
 
 
 
 // jwt authentication
 const { authenticateToken } = require("./src/middleware/auth");
-const { get } = require('mongoose');
 //app.use(authenticateToken);
 
 // Private routes
 app.use('', require('./src/routes'));
 
+const client = require('./src/mqtt/client');
 
 
+// test user db data
+require('./src/db/testData');
 
 
 // TODO: Error Handling Middleware
 
-const userID = "1111";
+// const userID = "1111";
 // Start server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-    createLog(userID,`Server is running on port ${port}`);   
+   // createLog(userID,`Server is running on port ${port}`);   
 });
-
