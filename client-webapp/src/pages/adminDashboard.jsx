@@ -88,7 +88,7 @@ const AdminDashboard = () => {
               Dashboard
             </h1>
             <div className="inline-flex items-center text-mainText my-3 p-6 bg-secondary border border-gray-200 rounded-lg shadow hover:bg-gray-100  border-ternary hover:bg-red-300/20">
-            <span class="relative flex h-3 w-3 me-5">
+            <span className="relative flex h-3 w-3 me-5">
               <span className="absolute inline-flex h-full w-full bg-red-300 rounded-full animate-ping"></span>
               <span className="relative inline-flex h-full w-full bg-red-500 rounded-full "></span>
             </span>
@@ -112,6 +112,7 @@ const AdminDashboard = () => {
                 <div key={experiment._id}>
                   {experiment._id && (
                     <ExperimentCard
+                      userRole = {user.role}
                       experiment={experiment}
                       handleAccept={() => handleAccept(experiment._id)}
                       handleReady={() => handleReady(experiment._id)}
@@ -124,6 +125,7 @@ const AdminDashboard = () => {
                 <div key={experiment._id}>
                   {experiment._id && (
                     <ExperimentCard
+                      userRole = {user.role}
                       experiment={experiment}
                       handleAccept={() => handleAccept(experiment._id)}
                       handleReady={() => handleReady(experiment._id)}
