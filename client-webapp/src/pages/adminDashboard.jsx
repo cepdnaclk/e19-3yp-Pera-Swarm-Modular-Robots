@@ -110,15 +110,16 @@ const AdminDashboard = () => {
             {searchTerm === "" ? (
               experiments.map((experiment) => (
                 <div key={experiment._id}>
-                  {experiment._id && (
-                    <ExperimentCard
-                      userRole = {user.role}
-                      experiment={experiment}
-                      handleAccept={() => handleAccept(experiment._id)}
-                      handleReady={() => handleReady(experiment._id)}
-                    />
-                  )}
-                </div>
+                {experiment._id && (
+                  <ExperimentCard
+                    experiment={experiment}
+                    userRole={user.role}
+                    handleAccept={() => handleAccept(experiment._id)}
+                    handleDecline={() => handleDecline(experiment._id)}
+                    handleReady={() => handleReady(experiment._id)}
+                  />
+                )}
+              </div>
               ))
             ) : (
               filterExperiments().map((experiment) => (
