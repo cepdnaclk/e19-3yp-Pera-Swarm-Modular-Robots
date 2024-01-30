@@ -41,6 +41,16 @@ const AdminDashboard = () => {
     );
   };
 
+    const handleDecline = async (id) => {
+    try {
+      await axios.put(`/api/experiment/${id}`, { status: "declined" });
+      console.log("Experiment declined");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error:", error.response.data);
+    }
+  };
+
 
   const updateExperimentStatus = async (id, status) => {
     try {
