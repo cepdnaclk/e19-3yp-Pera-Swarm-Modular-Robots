@@ -1,0 +1,31 @@
+{
+    "team": [
+          {
+            "name": "K.N.N. Jayawardhana",
+            "email": "e19170@eng.pdn.ac.lk",
+            "eNumber": "E/19/170"
+        },
+        {
+            "name": "M.S. Peeris",
+            "email": "e19275@eng.pdn.ac.lk",
+            "eNumber": "E/19/275"
+        },
+        {
+            "name": "W.A.M.P. Senevirathne",
+            "email": "e19366@eng.pdn.ac.lk",
+            "eNumber": "E/19/366"
+        },
+         {
+            "name": "G.T.G. Wickramasinghe",
+            "email": "e19436@eng.pdn.ac.lk",
+            "eNumber": "E/19/436"
+        },
+        {
+            "name": "I.M.K.D.I. Wijerathna",
+            "email": "e19446@eng.pdn.ac.lk",
+            "eNumber": "E/19/446"
+        }
+    ],
+    "supervisors": [],
+    "tags": ["Web", "Embedded Systems"]
+}
